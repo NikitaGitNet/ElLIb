@@ -16,8 +16,6 @@
     <Folder Include="wwwroot\sass\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\images\" />
-    <Folder Include="Domain\" />
-    <Folder Include="Service\" />
   </ItemGroup>
 
   <ItemGroup>
