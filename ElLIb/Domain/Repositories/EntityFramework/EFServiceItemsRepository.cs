@@ -13,7 +13,7 @@ namespace ElLIb.Domain.Repositories.EntityFramework
         {
             this.context = context;
         }
-        public IQueryable<ServiceItem> ServiceItems()
+        public IQueryable<ServiceItem> GetServiceItems()
         {
             return context.ServiceItems;
         }

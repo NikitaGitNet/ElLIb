@@ -6,7 +6,7 @@ namespace ElLIb.Domain.Repositories.Abstract
 {
     public interface IServiceItemsRepository
     {
-        IQueryable<ServiceItem> ServiceItems();
+        IQueryable<ServiceItem> GetServiceItems();
         ServiceItem GetServiceItemById(Guid id);
         void SaveServiceItem(ServiceItem entity);
         void DeleteServiceItem(Guid id);
