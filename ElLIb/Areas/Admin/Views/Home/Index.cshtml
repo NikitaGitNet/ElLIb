@@ -16,10 +16,10 @@
                 @foreach (ServiceItem entity in Model)
                 {
                     <div>
-                        <a aasp-area="Admin" asp-controller="ServiceItem" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
+                        <a asp-area="Admin" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
                         <form style="display: inline-block;" id="form-@entity.Id" asp-area="Admin" asp-controller="ServiceItems" asp-action="Delete" method="post">
                             <input type="hidden" name="id" value="@entity.Id">
-                            <a href="#" onclick="document.getElementById('form-@entity.Id').simbit();">Удалить</a>
+                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">Удалить</a>
                         </form>
                         <a asp-area="" asp-controller="Services" asp-action="Index" asp-route-id="@entity.Id">
                             @($"{entity.Title}")
@@ -32,8 +32,8 @@
     <div class="div-box">
         <h3>Редактирование страницы сайта</h3>
         <a asp-area="Admin" asp-controller="TextFields" asp-action="Edit" asp-route-codeWord="PageIndex">Главная</a>
-        <a asp-area="Admin" asp-controller="TextFields" asp-action="Edit" asp-route-codeWord="PageIndex">Наши книги</a>
-        <a asp-area="Admin" asp-controller="TextFields" asp-action="Edit" asp-route-codeWord="PageIndex">Контакты</a>
+        <a asp-area="Admin" asp-controller="TextFields" asp-action="Edit" asp-route-codeWord="PageServices">Наши книги</a>
+        <a asp-area="Admin" asp-controller="TextFields" asp-action="Edit" asp-route-codeWord="PageContacts">Контакты</a>
     </div>
     <div class="div-box">
         <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
