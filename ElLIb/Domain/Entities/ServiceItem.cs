@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ElLIb.Domain.Entities
 {
@@ -11,5 +12,6 @@ namespace ElLIb.Domain.Entities
         public override string SubTitle { get; set; }
         [Display(Name = "Полное описание книги")]
         public override string Text { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

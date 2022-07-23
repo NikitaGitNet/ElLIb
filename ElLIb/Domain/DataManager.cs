@@ -6,10 +6,12 @@ namespace ElLIb.Domain
     {
         public ITextFieldsRepository TextFields { get; set; }
         public IServiceItemsRepository ServiceItems { get; set; }
-        public DataManager(ITextFieldsRepository textFields, IServiceItemsRepository serviceItems)
+        public ICommentRepository Comment { get; set; }
+        public DataManager(ITextFieldsRepository textFields, IServiceItemsRepository serviceItems, ICommentRepository comment)
         {
             TextFields = textFields;
             ServiceItems = serviceItems;
+            Comment = comment;
         }
     }
 }

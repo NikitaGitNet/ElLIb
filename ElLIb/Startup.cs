@@ -1,4 +1,5 @@
 using ElLIb.Domain;
+using ElLIb.Domain.Entities;
 using ElLIb.Domain.Repositories.Abstract;
 using ElLIb.Domain.Repositories.EntityFramework;
 using ElLIb.Service;
@@ -27,13 +28,15 @@ namespace ElLIb
         {
             Configuration.Bind("Project", new Config());
 
+            services.AddHttpContextAccessor();
             services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>();
             services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
+            services.AddTransient<ICommentRepository, EFCommentsRepository>();
             services.AddTransient<DataManager>();
 
             services.AddDbContext<AppDbContext>(x=>x.UseSqlServer(Config.ConnectionString));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(opts =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
                 opts.Password.RequiredLength = 6;

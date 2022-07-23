@@ -6,11 +6,12 @@ using System;
 
 namespace ElLIb.Domain
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<TextField> TextFields { get; set; }
         public DbSet<ServiceItem> ServiceItems { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -20,7 +21,7 @@ namespace ElLIb.Domain
                 Name = "admin",
                 NormalizedName = "ADMIN"
             });
-            builder.Entity<IdentityUser>().HasData(new IdentityUser
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
                 Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                 UserName = "admin",
@@ -28,7 +29,7 @@ namespace ElLIb.Domain
                 Email = "my@email.com",
                 NormalizedEmail = "MY@EMAIL.COM",
                 EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "superpassword"),
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "superpassword"),
                 SecurityStamp = string.Empty
             });
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
