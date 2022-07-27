@@ -30,7 +30,7 @@ namespace ElLIb.Areas.Admin.Controllers
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageServices");
             return View(dataManager.ServiceItems.GetServiceItems());
         }
-
+        // сделать эту хуйню асинхронной
         [HttpPost]
         public IActionResult Write(Comment comment)
         {
