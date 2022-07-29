@@ -47,7 +47,7 @@ namespace ElLIb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceItems",
+                name: "Books",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -62,7 +62,7 @@ namespace ElLIb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceItems", x => x.Id);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,7 +200,7 @@ namespace ElLIb.Migrations
                     CreateOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ServiceItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,9 +212,9 @@ namespace ElLIb.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Comments_ServiceItems_ServiceItemId",
-                        column: x => x.ServiceItemId,
-                        principalTable: "ServiceItems",
+                        name: "FK_Comments_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -222,21 +222,21 @@ namespace ElLIb.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "8af10569-b018-4fe7-a380-7d6a14c70b74", "2ccc99a9-e242-4cdb-8a31-05aad478f903", "admin", "ADMIN" });
+                values: new object[] { "8af10569-b018-4fe7-a380-7d6a14c70b74", "896b26ca-73f5-442c-a8a1-7224d289fd9e", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "d3df8577-fd71-4c7b-8a3a-f5d57fe2e497", "my@email.com", true, false, null, "MY@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEIk4X/XMTAcA/wmaK6j08EoBz83D3hjH8OEwOw0autpkPrrljo14CzvYbIBRlBJzcQ==", null, false, "", false, "admin" });
+                values: new object[] { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "9e62e1c2-1d26-49f0-ae4b-c875f2f461a1", "my@email.com", true, false, null, "MY@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEMnVUkut4eWwkSl9I9lmX+YMnnPGk9jfngn02u+F4kz10eRcyc6ZV3YNhkQz2LjEdQ==", null, false, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "TextFields",
                 columns: new[] { "Id", "CodeWord", "DateAdded", "MetaDescription", "MetaKeywords", "MetaTitle", "SubTitle", "Text", "Title", "TitleImagePath" },
                 values: new object[,]
                 {
-                    { new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"), "PageIndex", new DateTime(2022, 7, 23, 14, 22, 36, 764, DateTimeKind.Utc).AddTicks(510), null, null, null, null, "Содержание заполняется администратором", "Главная", null },
-                    { new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"), "PageServices", new DateTime(2022, 7, 23, 14, 22, 36, 764, DateTimeKind.Utc).AddTicks(2133), null, null, null, null, "Содержание заполняется администратором", "Книги", null },
-                    { new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"), "PageContacts", new DateTime(2022, 7, 23, 14, 22, 36, 764, DateTimeKind.Utc).AddTicks(2166), null, null, null, null, "Содержание заполняется администратором", "Контакты", null }
+                    { new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"), "PageIndex", new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(7136), null, null, null, null, "Содержание заполняется администратором", "Главная", null },
+                    { new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"), "PageBooks", new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(9664), null, null, null, null, "Содержание заполняется администратором", "Книги", null },
+                    { new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"), "PageContacts", new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(9696), null, null, null, null, "Содержание заполняется администратором", "Контакты", null }
                 });
 
             migrationBuilder.InsertData(
@@ -284,9 +284,9 @@ namespace ElLIb.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_ServiceItemId",
+                name: "IX_Comments_BookId",
                 table: "Comments",
-                column: "ServiceItemId");
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_UserId",
@@ -324,7 +324,7 @@ namespace ElLIb.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "ServiceItems");
+                name: "Books");
         }
     }
 }

@@ -5,12 +5,12 @@ namespace ElLIb.Domain
     public class DataManager
     {
         public ITextFieldsRepository TextFields { get; set; }
-        public IServiceItemsRepository ServiceItems { get; set; }
+        public IBooksRepository Books { get; set; }
         public ICommentRepository Comment { get; set; }
-        public DataManager(ITextFieldsRepository textFields, IServiceItemsRepository serviceItems, ICommentRepository comment)
+        public DataManager(ITextFieldsRepository textFields, IBooksRepository books, ICommentRepository comment)
         {
             TextFields = textFields;
-            ServiceItems = serviceItems;
+            Books = books;
             Comment = comment;
         }
     }

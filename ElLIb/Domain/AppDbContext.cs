@@ -10,7 +10,7 @@ namespace ElLIb.Domain
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<TextField> TextFields { get; set; }
-        public DbSet<ServiceItem> ServiceItems { get; set; }
+        public DbSet<Book> Books { get; set; }
         public DbSet<Comment> Comments { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -46,7 +46,7 @@ namespace ElLIb.Domain
             builder.Entity<TextField>().HasData(new TextField 
             { 
                 Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
-                CodeWord = "PageServices",
+                CodeWord = "PageBooks",
                 Title = "Книги"
             });
             builder.Entity<TextField>().HasData(new TextField

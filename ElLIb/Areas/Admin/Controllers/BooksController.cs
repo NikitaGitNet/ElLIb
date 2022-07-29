@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace ElLIb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ServiceItemsController : Controller
+    public class BooksController : Controller
     {
         private readonly DataManager dataManager;
         private readonly IWebHostEnvironment hostingEnviroment;
-        public ServiceItemsController(DataManager dataManager, IWebHostEnvironment hostingEnviroment)
+        public BooksController(DataManager dataManager, IWebHostEnvironment hostingEnviroment)
         {
             this.dataManager = dataManager;
             this.hostingEnviroment = hostingEnviroment;
@@ -22,11 +22,11 @@ namespace ElLIb.Areas.Admin.Controllers
 
         public IActionResult Edit(Guid id)
         {
-            var entity = id == default ? new ServiceItem() : dataManager.ServiceItems.GetServiceItemById(id);
+            var entity = id == default ? new Book() : dataManager.Books.GetBookById(id);
             return View(entity);
         }
         [HttpPost]
-        public IActionResult Edit(ServiceItem model, IFormFile titleImageFile)
+        public IActionResult Edit(Book model, IFormFile titleImageFile)
         {
             if (ModelState.IsValid)
             {
@@ -38,7 +38,7 @@ namespace ElLIb.Areas.Admin.Controllers
                         titleImageFile.CopyTo(stream);
                     }
                 }
-                dataManager.ServiceItems.SaveServiceItem(model);
+                dataManager.Books.SaveBook(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(model);
@@ -46,7 +46,7 @@ namespace ElLIb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
-            dataManager.ServiceItems.DeleteServiceItem(id);
+            dataManager.Books.DeleteBook(id);
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
     }

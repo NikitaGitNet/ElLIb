@@ -27,14 +27,14 @@ namespace ElLIb.Areas.Admin.Controllers
             {
                 return View("Show", dataManager.Comment.GetCommentById(id));
             }
-            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageServices");
-            return View(dataManager.ServiceItems.GetServiceItems());
+            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
+            return View(dataManager.Books.GetBooks());
         }
         // сделать эту хуйню асинхронной
         [HttpPost]
         public IActionResult Write(Comment comment)
         {
-            comment.ServiceItemId = comment.Id;
+            comment.BookId = comment.Id;
             comment.Id = default;
             comment.UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
             comment.UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;

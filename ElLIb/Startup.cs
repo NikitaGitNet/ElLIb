@@ -30,7 +30,7 @@ namespace ElLIb
 
             services.AddHttpContextAccessor();
             services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>();
-            services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
+            services.AddTransient<IBooksRepository, EFBooksRepository>();
             services.AddTransient<ICommentRepository, EFCommentsRepository>();
             services.AddTransient<DataManager>();
 

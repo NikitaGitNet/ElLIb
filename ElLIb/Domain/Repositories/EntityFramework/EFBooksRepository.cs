@@ -6,22 +6,22 @@ using System.Linq;
 
 namespace ElLIb.Domain.Repositories.EntityFramework
 {
-    public class EFServiceItemsRepository : IServiceItemsRepository
+    public class EFBooksRepository : IBooksRepository
     {
         private readonly AppDbContext context;
-        public EFServiceItemsRepository(AppDbContext context)
+        public EFBooksRepository(AppDbContext context)
         {
             this.context = context;
         }
-        public IQueryable<ServiceItem> GetServiceItems()
+        public IQueryable<Book> GetBooks()
         {
-            return context.ServiceItems;
+            return context.Books;
         }
-        public ServiceItem GetServiceItemById(Guid id)
+        public Book GetBookById(Guid id)
         { 
-            return context.ServiceItems.FirstOrDefault(x => x.Id == id);
+            return context.Books.FirstOrDefault(x => x.Id == id);
         }
-        public void SaveServiceItem(ServiceItem entity)
+        public void SaveBook(Book entity)
         {
             if (entity.Id == default)
             {
@@ -33,9 +33,9 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteServiceItem(Guid id)
+        public void DeleteBook(Guid id)
         {
-            context.ServiceItems.Remove(new ServiceItem() { Id = id });
+            context.Books.Remove(new Book() { Id = id });
             context.SaveChanges();
         }
     }

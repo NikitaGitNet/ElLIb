@@ -1,4 +1,4 @@
-﻿@model IQueryable<ServiceItem>
+﻿@model IQueryable<Book>
 @{
     string strTitle = "Панель администратора";
     ViewBag.Title = strTitle;
@@ -8,20 +8,21 @@
     <div>
         <h3>Наши услуги</h3>
         <div class="div-box">
-            <a asp-area="Admin" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="">Добавить книгу</a>
+            <a asp-area="Admin" asp-controller="Books" asp-action="Edit" asp-route-id="">Добавить книгу</a>
         </div>
         @if (Model.Any())
         {
             <div>
-                @foreach (ServiceItem entity in Model)
+                @foreach (Book entity in Model)
                 {
                     <div>
-                        <a asp-area="Admin" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
-                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Admin" asp-controller="ServiceItems" asp-action="Delete" method="post">
+                        <a asp-area="Admin" asp-controller="Books" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
+                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Admin" asp-controller="Books" asp-action="Delete" method="post">
                             <input type="hidden" name="id" value="@entity.Id">
                             <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">Удалить</a>
                         </form>
-                        <a asp-area="" asp-controller="Services" asp-action="Index" asp-route-id="@entity.Id">
+                        @*Need find controller*@
+                        <a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="@entity.Id">
                             @($"{entity.Title}")
                         </a>
                     </div>

@@ -1,4 +1,4 @@
-﻿@model IQueryable<ServiceItem>
+﻿@model IQueryable<Book>
 @{
     TextField textField = ViewBag.TextField;
 
@@ -10,10 +10,10 @@
     @if (Model.Any())
     {
         <ul class="big-image-list">
-            @foreach (ServiceItem entity in Model)
+            @foreach (Book entity in Model)
             {
                 <li>
-                    <a asp-area="" asp-controller="Services" asp-action="Index" asp-route-id="@entity.Id">
+                    <a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="@entity.Id">
                         <img src="~/images/@entity.TitleImagePath" alt="" class="left">
                     </a>
                     <h4>@entity.Title</h4>

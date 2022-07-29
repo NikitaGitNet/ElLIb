@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ElLIb.Domain.Entities
 {
-    public class ServiceItem : EntityBase
+    public class Book : EntityBase
     {
         [Required(ErrorMessage = "Заполните название книги")]
         [Display(Name = "Название книги")]

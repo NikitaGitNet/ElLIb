@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElLIb.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220723142237_InitialCreate")]
+    [Migration("20220729182251_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,13 +90,13 @@ namespace ElLIb.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d3df8577-fd71-4c7b-8a3a-f5d57fe2e497",
+                            ConcurrencyStamp = "9e62e1c2-1d26-49f0-ae4b-c875f2f461a1",
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIk4X/XMTAcA/wmaK6j08EoBz83D3hjH8OEwOw0autpkPrrljo14CzvYbIBRlBJzcQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMnVUkut4eWwkSl9I9lmX+YMnnPGk9jfngn02u+F4kz10eRcyc6ZV3YNhkQz2LjEdQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -104,38 +104,7 @@ namespace ElLIb.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ElLIb.Domain.Entities.Comment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreateOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ServiceItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ServiceItemId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("ElLIb.Domain.Entities.ServiceItem", b =>
+            modelBuilder.Entity("ElLIb.Domain.Entities.Book", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,7 +137,38 @@ namespace ElLIb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceItems");
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("ElLIb.Domain.Entities.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("ElLIb.Domain.Entities.TextField", b =>
@@ -214,15 +214,15 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2022, 7, 23, 14, 22, 36, 764, DateTimeKind.Utc).AddTicks(510),
+                            DateAdded = new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(7136),
                             Text = "Содержание заполняется администратором",
                             Title = "Главная"
                         },
                         new
                         {
                             Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
-                            CodeWord = "PageServices",
-                            DateAdded = new DateTime(2022, 7, 23, 14, 22, 36, 764, DateTimeKind.Utc).AddTicks(2133),
+                            CodeWord = "PageBooks",
+                            DateAdded = new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(9664),
                             Text = "Содержание заполняется администратором",
                             Title = "Книги"
                         },
@@ -230,7 +230,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2022, 7, 23, 14, 22, 36, 764, DateTimeKind.Utc).AddTicks(2166),
+                            DateAdded = new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(9696),
                             Text = "Содержание заполняется администратором",
                             Title = "Контакты"
                         });
@@ -266,7 +266,7 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
-                            ConcurrencyStamp = "2ccc99a9-e242-4cdb-8a31-05aad478f903",
+                            ConcurrencyStamp = "896b26ca-73f5-442c-a8a1-7224d289fd9e",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -385,9 +385,9 @@ namespace ElLIb.Migrations
 
             modelBuilder.Entity("ElLIb.Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("ElLIb.Domain.Entities.ServiceItem", "ServiceItem")
+                    b.HasOne("ElLIb.Domain.Entities.Book", "Book")
                         .WithMany("Comments")
-                        .HasForeignKey("ServiceItemId")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -395,7 +395,7 @@ namespace ElLIb.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("ServiceItem");
+                    b.Navigation("Book");
 
                     b.Navigation("User");
                 });
@@ -456,7 +456,7 @@ namespace ElLIb.Migrations
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("ElLIb.Domain.Entities.ServiceItem", b =>
+            modelBuilder.Entity("ElLIb.Domain.Entities.Book", b =>
                 {
                     b.Navigation("Comments");
                 });

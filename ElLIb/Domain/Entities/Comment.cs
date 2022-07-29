@@ -18,8 +18,8 @@ namespace ElLIb.Domain.Entities
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
-        public Guid ServiceItemId { get; set; }
-        [ForeignKey("ServiceItemId")]
-        public ServiceItem ServiceItem { get; set; }
+        public Guid BookId { get; set; }
+        [ForeignKey("BookId")]
+        public Book Book { get; set; }
     }
 }
