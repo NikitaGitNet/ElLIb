@@ -1,5 +1,6 @@
 ﻿using System;
 using ElLIb.Domain;
+using ElLIb.Models.Book;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElLIb.Controllers
@@ -15,7 +16,8 @@ namespace ElLIb.Controllers
         {
             if (id != default)
             {
-                return View("Show", dataManager.Books.GetBookById(id));
+                var entity = dataManager.Books.GetBookById(id);
+                return View("Show", new BookViewModel { BooksCount = entity.BooksCount, Text = entity.Text, SubTitle = entity.SubTitle, Title = entity.Title, BookId = entity.Id, TitleImagePath = entity.TitleImagePath });
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             return View(dataManager.Books.GetBooks());

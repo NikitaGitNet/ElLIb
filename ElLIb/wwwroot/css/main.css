@@ -1638,3 +1638,27 @@ ul.link-list li:first-child {
   max-width: 100%;
   margin: 0 auto;
 }
+.glo {
+    color: #00c6ff;
+    padding: 10px 20px;
+    width: auto;
+    text-decoration: none;
+    text-align: center;
+    margin: 20px auto;
+    display: block;
+    background-image: linear-gradient(to left,transparent,transparent 50%,#00c6ff 50%,#00c6ff);
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: all .25s ease-in;
+    font: 400 18px tahoma;
+    border: 1px solid #00C6FF;
+}
+
+.glo:hover {
+    background-position: 0 0;
+    color: #fff;
+}
+.indent {
+    padding: 5px;
+    margin-bottom: 5px;
+}

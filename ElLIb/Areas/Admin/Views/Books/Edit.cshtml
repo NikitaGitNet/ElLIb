@@ -53,7 +53,12 @@
                 <input asp-for="MetaKeywords">
                 <span asp-validation-for="MetaKeywords"></span>
             </div>
-            <input type="submit" value="Сохранить">
+            <div class="div-box">
+                <h3>Количество книг в наличии</h3>
+                <input asp-for="BooksCount">
+                <span asp-validation-for="BooksCount"></span>
+            </div>
+            <input type="submit" class="glo" value="Сохранить">
         </form>
     </div>
 </div>

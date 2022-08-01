@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElLIb.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220729182251_InitialCreate")]
+    [Migration("20220801033233_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,13 +90,13 @@ namespace ElLIb.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9e62e1c2-1d26-49f0-ae4b-c875f2f461a1",
+                            ConcurrencyStamp = "813312dc-18c5-4685-975e-ca013c68bd18",
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMnVUkut4eWwkSl9I9lmX+YMnnPGk9jfngn02u+F4kz10eRcyc6ZV3YNhkQz2LjEdQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI2p1mU4fQE/1tHeGVrRcZpUwC53CfnnGlf8rs5jqIOloZkVzvuZu3VthjXOLmyHOA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -109,6 +109,9 @@ namespace ElLIb.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BooksCount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
@@ -138,6 +141,37 @@ namespace ElLIb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("ElLIb.Domain.Entities.Booking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BooksCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FinishedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("ElLIb.Domain.Entities.Comment", b =>
@@ -214,7 +248,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(7136),
+                            DateAdded = new DateTime(2022, 8, 1, 3, 32, 33, 371, DateTimeKind.Utc).AddTicks(940),
                             Text = "Содержание заполняется администратором",
                             Title = "Главная"
                         },
@@ -222,7 +256,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
                             CodeWord = "PageBooks",
-                            DateAdded = new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(9664),
+                            DateAdded = new DateTime(2022, 8, 1, 3, 32, 33, 371, DateTimeKind.Utc).AddTicks(2627),
                             Text = "Содержание заполняется администратором",
                             Title = "Книги"
                         },
@@ -230,7 +264,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2022, 7, 29, 18, 22, 51, 319, DateTimeKind.Utc).AddTicks(9696),
+                            DateAdded = new DateTime(2022, 8, 1, 3, 32, 33, 371, DateTimeKind.Utc).AddTicks(2658),
                             Text = "Содержание заполняется администратором",
                             Title = "Контакты"
                         });
@@ -266,7 +300,7 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
-                            ConcurrencyStamp = "896b26ca-73f5-442c-a8a1-7224d289fd9e",
+                            ConcurrencyStamp = "a6b3857c-ca30-4039-b7db-345437afd5d6",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -383,6 +417,17 @@ namespace ElLIb.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ElLIb.Domain.Entities.Booking", b =>
+                {
+                    b.HasOne("ElLIb.Domain.Entities.Book", "Book")
+                        .WithMany("Bookings")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("ElLIb.Domain.Entities.Comment", b =>
                 {
                     b.HasOne("ElLIb.Domain.Entities.Book", "Book")
@@ -458,6 +503,8 @@ namespace ElLIb.Migrations
 
             modelBuilder.Entity("ElLIb.Domain.Entities.Book", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618

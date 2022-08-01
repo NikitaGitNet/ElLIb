@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using ElLIb.Domain.Entities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ElLIb.Domain.Entities
+namespace ElLIb.Models.Book
 {
-    public class Book : EntityBase
+    public class BookViewModel
     {
+        public Guid BookId { get; set; }
         [Required(ErrorMessage = "Заполните название книги")]
         [Display(Name = "Название книги")]
-        public override string Title { get; set; }
+        public string Title { get; set; }
         [Display(Name = "Краткое описание книги")]
-        public override string SubTitle { get; set; }
+        public string SubTitle { get; set; }
         [Display(Name = "Полное описание книги")]
-        public override string Text { get; set; }
+        public string TitleImagePath { get; set; }
+        public string Text { get; set; }
         public int BooksCount { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Booking> Bookings { get; set; }
     }
 }
