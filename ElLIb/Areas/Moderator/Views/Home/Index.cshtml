@@ -23,10 +23,10 @@
                         </form>
                         <a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="@entity.Id">
                             @($"{entity.Title}")
-                        </a>
-                        <a asp-area="Moderator" asp-controller="Home" asp-action="BookingShow">Показать брони</a>
+                        </a>  
                     </div>
                 }
+                <a asp-area="Moderator" asp-controller="Home" asp-action="BookingShow">Показать брони</a>
             </div>
         }
     </div>

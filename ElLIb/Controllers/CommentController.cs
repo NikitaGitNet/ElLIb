@@ -35,20 +35,18 @@ namespace ElLIb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Write(AddCommentModel model)
         {
-            var entity = new Comment
-            {
-                BookId = model.BookId,
-                Text = model.Text,
-                UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
-                UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                CreateOn = DateTime.Now
-            };
+            var comment = new Comment();
             if (ModelState.IsValid)
             {
-                dataManager.Comment.SaveComment(entity);
+                comment.BookId = model.BookId;
+                comment.Text = model.Text;
+                comment.UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                comment.UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                comment.CreateOn = DateTime.Now;
+                dataManager.Comment.SaveComment(comment);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
-            return View(entity);
+            return View(comment);
         }
     }
 }
