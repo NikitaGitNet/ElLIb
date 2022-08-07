@@ -14,6 +14,7 @@ namespace ElLIb.Domain.Entities
         public Guid BookId { get; set; }
         [ForeignKey("BookId")]
         public int BooksCount { get; set; }
+        public string BooksTitle { get; set; }
         public Book Book { get; set; }
         
     }

@@ -21,6 +21,12 @@ namespace ElLIb.Domain
                 Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
                 Name = "admin",
                 NormalizedName = "ADMIN"
+            },
+            new IdentityRole
+            {
+                Id = "5e84bf2c-585f-42dc-a868-73157016ec70",
+                Name = "moderator",
+                NormalizedName = "MODERATOR"
             });
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser
             {
@@ -32,12 +38,29 @@ namespace ElLIb.Domain
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "superpassword"),
                 SecurityStamp = string.Empty
+            },
+            new ApplicationUser
+            {
+                Id = "86d55f40-9544-4d92-aa24-cc5693a5fd96",
+                UserName = "moderator",
+                NormalizedUserName = "MODERATOR",
+                Email = "moderator@email.com",
+                NormalizedEmail = "MODERATOR@EMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "moderatorpassword"),
+                SecurityStamp = string.Empty
             });
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
                 RoleId = "8af10569-b018-4fe7-a380-7d6a14c70b74",
                 UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8"
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "5e84bf2c-585f-42dc-a868-73157016ec70",
+                UserId = "86d55f40-9544-4d92-aa24-cc5693a5fd96"
             });
+            
             builder.Entity<TextField>().HasData(new TextField
             {
                 Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),

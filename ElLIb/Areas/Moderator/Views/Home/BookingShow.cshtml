@@ -1,0 +1,22 @@
+﻿@model IQueryable<Booking>
+@{
+    TextField textField = ViewBag.TextField;
+}
+<div>
+    @if (Model.Any())
+    {
+        <ul>
+            @foreach (Booking entity in Model)
+            {
+                <li>
+                    <p>Название книги @entity.BooksTitle</p>
+                    <p>ID книги: @entity.BookId</p>
+                    <p>Дата создания брони: @entity.CreateOn</p>
+                    <p>Дата окончания брони: @entity.FinishedOn</p>
+                    <p>Email пользователя @entity.UserEmail</p>
+                </li>
+                <hr>
+            }
+        </ul>
+    }
+</div>

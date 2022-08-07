@@ -59,11 +59,13 @@ namespace ElLIb
             services.AddAuthorization(x =>
                 {
                     x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
+                    x.AddPolicy("ModeratorArea", policy => { policy.RequireRole("moderator"); });
                 });
 
             services.AddControllersWithViews(x =>
                 {
                     x.Conventions.Add(new AdminAreaAuthorization("Admin", "AdminArea"));
+                    x.Conventions.Add(new ModeratorAreaAuthorization("Moderator", "ModeratorArea"));
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
         }
@@ -87,6 +89,7 @@ namespace ElLIb
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("moderator", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }

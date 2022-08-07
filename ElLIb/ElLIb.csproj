@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Areas\Moderator\Views\Booking\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\sass\" />
     <Folder Include="wwwroot\js\" />
