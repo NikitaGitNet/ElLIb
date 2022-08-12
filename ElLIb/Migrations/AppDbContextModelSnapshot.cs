@@ -88,13 +88,13 @@ namespace ElLIb.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc225281-6cac-4fe3-9416-e41494323916",
+                            ConcurrencyStamp = "0fe39d6c-974d-4ef1-b7e9-a59be4aa23b7",
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIYjQguxpsn0+R5yyia2Mx+0lvVZkXTt80sSGjs7gEc6rI+OkfVSZ8akBC45oBHnnw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF6fVqy2KiMJe5lv/e4zUG73sNwWkE146LlAInKlX7eHxU64RLkH5goKKjRs8IVhEQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -104,13 +104,13 @@ namespace ElLIb.Migrations
                         {
                             Id = "86d55f40-9544-4d92-aa24-cc5693a5fd96",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1f273bf2-3ed7-437d-97a8-bba487211b71",
+                            ConcurrencyStamp = "1a7a60a9-7e44-4206-8762-07b87bb3b3b8",
                             Email = "moderator@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MODERATOR@EMAIL.COM",
                             NormalizedUserName = "MODERATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIcOQnjUg6EI/95eFJ9uLj1qwwRntL/FFW1Iy8Ucqx3Yai5PkXin4K/kxf2ZfChilA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEkbbic7FpTf2QOFT/d/Ag75ABUID98AaD8v9yw9cHV6l7jRx+wzyZ6iU4rxxcJHVQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -265,7 +265,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2022, 8, 6, 7, 0, 47, 192, DateTimeKind.Utc).AddTicks(6246),
+                            DateAdded = new DateTime(2022, 8, 12, 15, 21, 47, 275, DateTimeKind.Utc).AddTicks(962),
                             Text = "Содержание заполняется администратором",
                             Title = "Главная"
                         },
@@ -273,7 +273,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
                             CodeWord = "PageBooks",
-                            DateAdded = new DateTime(2022, 8, 6, 7, 0, 47, 192, DateTimeKind.Utc).AddTicks(7799),
+                            DateAdded = new DateTime(2022, 8, 12, 15, 21, 47, 275, DateTimeKind.Utc).AddTicks(2682),
                             Text = "Содержание заполняется администратором",
                             Title = "Книги"
                         },
@@ -281,7 +281,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2022, 8, 6, 7, 0, 47, 192, DateTimeKind.Utc).AddTicks(7829),
+                            DateAdded = new DateTime(2022, 8, 12, 15, 21, 47, 275, DateTimeKind.Utc).AddTicks(2713),
                             Text = "Содержание заполняется администратором",
                             Title = "Контакты"
                         });
@@ -317,14 +317,14 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
-                            ConcurrencyStamp = "b05536c2-f892-43a4-aab7-e9f7169a3f18",
+                            ConcurrencyStamp = "5eb693ca-953d-47b5-a362-a9b6b52e8a01",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5e84bf2c-585f-42dc-a868-73157016ec70",
-                            ConcurrencyStamp = "f56a98a7-39cd-4df1-a30a-e94360be1119",
+                            ConcurrencyStamp = "c6cb294d-dfb0-4654-9d83-034ae7922bf9",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });

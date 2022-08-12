@@ -18,8 +18,11 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             return context.Books;
         }
         public Book GetBookById(Guid id)
-        { 
-            return context.Books.FirstOrDefault(x => x.Id == id);
+        {
+            return context.Books
+                .Include(x => x.Comments)
+                .FirstOrDefault(x => x.Id == id);
+
         }
         public void SaveBook(Book entity)
         {

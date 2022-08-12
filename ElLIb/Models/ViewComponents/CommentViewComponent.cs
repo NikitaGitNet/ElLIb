@@ -1,5 +1,8 @@
 ﻿using ElLIb.Domain;
+using ElLIb.Models.Comment;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ElLIb.Models.ViewComponents
@@ -11,9 +14,9 @@ namespace ElLIb.Models.ViewComponents
         {
             this.dataManager = dataManager;
         }
-        public Task<IViewComponentResult> InvokeAsync()
+        public Task<IViewComponentResult> InvokeAsync(ICollection<AddCommentModel> comments)
         {
-            return Task.FromResult((IViewComponentResult)View("Default", dataManager.Comment.GetComments()));
+            return Task.FromResult((IViewComponentResult)View("Default", comments));
         }
     }
 }

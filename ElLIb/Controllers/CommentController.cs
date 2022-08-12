@@ -1,5 +1,6 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Models.Book;
 using ElLIb.Models.Comment;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Hosting;
@@ -31,10 +32,10 @@ namespace ElLIb.Areas.Admin.Controllers
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             return View(dataManager.Books.GetBooks());
         }
-        // сделать эту хуйню асинхронной
+
         [HttpPost]
         public IActionResult Write(AddCommentModel model)
-        {
+        {   
             var comment = new Comment();
             if (ModelState.IsValid)
             {

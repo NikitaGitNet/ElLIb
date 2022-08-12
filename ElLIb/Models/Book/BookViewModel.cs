@@ -1,7 +1,9 @@
 ﻿using ElLIb.Domain.Entities;
+using ElLIb.Models.Comment;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace ElLIb.Models.Book
 {
@@ -17,5 +19,6 @@ namespace ElLIb.Models.Book
         public string TitleImagePath { get; set; }
         public string Text { get; set; }
         public int BooksCount { get; set; }
+        public IQueryable<AddCommentModel> Comments { get; set; }
     }
 }

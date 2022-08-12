@@ -1662,3 +1662,11 @@ ul.link-list li:first-child {
     padding: 5px;
     margin-bottom: 5px;
 }
+.H2Title {
+    font-size: 30px;
+    color: #357999;
+}
+.BookingAlert {
+    font-size: 30px;
+    color: #357999;
+}

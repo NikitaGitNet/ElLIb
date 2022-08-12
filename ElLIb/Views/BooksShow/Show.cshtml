@@ -1,14 +1,9 @@
 ﻿@model BookViewModel
 
-@*@{
-    ViewBag.Title = Model.MetaTitle;
-    ViewBag.Description = Model.MetaDescription;
-    ViewBag.KeyWords = Model.MetaKeywords;
-}*@
 <script src="~/js/ckeditor/ckeditor.js"></script>
 
 <div>
-    <h2>@Model.Title</h2>
+    <h4 class="H2Title">@Model.Title</h4>
     <h3>@Model.SubTitle</h3>
     <div>
         <img class="img-block" src="~/images/@Model.TitleImagePath">
@@ -17,10 +12,23 @@
     <h3>Колличество в наличии: @Model.BooksCount</h3>
 </div>
 <div>
+    <h3>Описание книги:</h3>
     @Html.Raw(Model.Text)
 </div>
-<hr>
-@await Html.PartialAsync("CommentPartial")
+
+@*разобраться с оформлением чтоб комменты выделялись*@
+
+<div>
+    <h3 class="H2Title">Комментарии пользователей:</h3>
+    <hr>
+    @foreach (var item in Model.Comments)
+    {
+        <h3>@item.UserEmail</h3>
+        @Html.Raw(item.Text)
+        <hr>
+    }
+</div>
+@*@await Html.PartialAsync("CommentPartial", Model.Comments)*@
 <div>
     <form asp-controller="Comment" asp-action="Write" method="post" enctype="multipart/form-data">
     <div class="div-box">

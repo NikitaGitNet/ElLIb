@@ -28,6 +28,7 @@ namespace ElLIb.Controllers
             // исправить дрочь с айди
             var entity = new Booking
             {
+                BooksTitle = model.BookTitle,
                 BookId = model.BookId,
                 UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
                 CreateOn = DateTime.Now,
@@ -42,6 +43,12 @@ namespace ElLIb.Controllers
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(dataManager.Books.GetBooks());
+        }
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            dataManager.Booking.DeleteBooking(id);
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
     }
 }
