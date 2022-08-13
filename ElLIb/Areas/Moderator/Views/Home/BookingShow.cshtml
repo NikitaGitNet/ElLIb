@@ -18,10 +18,14 @@
                     {
                         @*Доработать хуйню*@
                         <h3>Бронь устарела</h3>
-                        <a class="BookingAlert" asp-area="" asp-controller="Booking" asp-action="Delete">Удалить бронь</a>
+                        <form class="BookingAlert" style="display: inline-block;" id="form-@entity.Id" asp-area="" asp-controller="Booking" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@entity.Id">
+                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">Удалить</a>
+                        </form>
                     }
+                    <hr>
                 </li>
-                <hr>
+                
             }
         </ul>
     }
