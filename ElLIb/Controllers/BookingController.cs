@@ -25,30 +25,53 @@ namespace ElLIb.Controllers
         [HttpPost]
         public IActionResult Booking(AddBookingModel model)
         {
-            // исправить дрочь с айди
+            var book = new Book();
+            book = dataManager.Books.GetBookById(model.BookId);
+            book.BookingsCount++;
             var entity = new Booking
             {
-                BooksTitle = model.BookTitle,
+                BooksTitle = book.Title,
                 BookId = model.BookId,
                 UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
                 CreateOn = DateTime.Now,
                 FinishedOn = DateTime.Now.AddDays(3),
                 UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value,
             };
-            entity.BooksCount++;
-            // Сделать вывод ошибки, если книгу нельзя забронировать
-            if (ModelState.IsValid)
+            
+            if (book.BookingsCount > book.BooksCount)
             {
-                dataManager.Booking.SaveBooking(entity);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                return View("AllertPartial");
             }
-            return View(dataManager.Books.GetBooks());
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    dataManager.Booking.SaveBooking(entity);
+                    dataManager.Books.SaveBook(book);
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                }
+                return View(dataManager.Books.GetBooks());
+            }
+            // Сделать вывод ошибки, если книгу нельзя забронировать
         }
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
+            // разобраться почему когда эти 4 строки не закомментированы у меня нихуя не удаляются брони
+            //var booking = dataManager.Booking.GetBookingById(id);
+            //var book = dataManager.Books.GetBookById(booking.BookId);
+            //book.BookingsCount--;
+            //dataManager.Books.SaveBook(book);
             dataManager.Booking.DeleteBooking(id);
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
+        //public IActionResult IssueBooking(Guid id)
+        //{
+        //    var booking = dataManager.Booking.GetBookingById(id);
+        //    booking.IssueBooking = true;
+        //    booking.FinishedOn = DateTime.Now.AddDays(7);
+        //    dataManager.Booking.SaveBooking(booking);
+        //    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+        //}
     }
 }

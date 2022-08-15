@@ -13,6 +13,7 @@ namespace ElLIb.Domain.Entities
         [Display(Name = "Полное описание книги")]
         public override string Text { get; set; }
         public int BooksCount { get; set; }
+        public int BookingsCount { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Booking> Bookings { get; set; }
     }

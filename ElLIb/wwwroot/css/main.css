@@ -1670,3 +1670,6 @@ ul.link-list li:first-child {
     font-size: 30px;
     color: #357999;
 }
+.Alert {
+    color: red;
+}
