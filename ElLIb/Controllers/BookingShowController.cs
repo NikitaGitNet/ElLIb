@@ -17,7 +17,7 @@ namespace ElLIb.Controllers
             if (id != default)
             {
                 var entity = dataManager.Booking.GetBookingById(id);
-                return View("Show", new AddBookingModel { BookId = entity.BookId, BooksCount = entity.BooksCount, CreateOn = entity.CreateOn, FinishedOn = entity.FinishedOn, Id = entity.Id, UserEmail = entity.UserEmail, UserId = entity.UserId, BooksTitle = entity.BooksTitle });
+                return View("Show", new AddBookingModel { BookId = entity.BookId, CreateOn = entity.CreateOn, FinishedOn = entity.FinishedOn, Id = entity.Id, UserEmail = entity.UserEmail, UserId = entity.UserId, BooksTitle = entity.BooksTitle });
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             return View(dataManager.Books.GetBooks());

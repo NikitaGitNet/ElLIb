@@ -9,7 +9,6 @@
         <img class="img-block" src="~/images/@Model.TitleImagePath">
     </div>
     <div class="indent"></div>
-    <h3>Колличество в наличии: @Model.BooksCount</h3>
 </div>
 <div>
     <h3>Описание книги:</h3>
@@ -46,12 +45,8 @@
         <textarea asp-for="BookId"></textarea>
         <span asp-validation-for="BookId"></span>
         </div>
-        <div hidden class="div-box">
-        <textarea asp-for="BooksCount"></textarea>
-        <span asp-validation-for="BooksCount"></span>
-        </div>
         <div class="div-box">
-            @if (Model.BooksCount <= 0)
+            @if (Model.IsBooking)
             {
                 <h2>Книги нет в наличии, бронь не возможна</h2>
             }

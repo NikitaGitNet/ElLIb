@@ -31,7 +31,7 @@ namespace ElLIb.Controllers
                     comments.Add(comment);
                 }
                 IQueryable<AddCommentModel> qComments = comments.AsQueryable();
-                return View("Show", new BookViewModel { BooksCount = entity.BooksCount, Text = entity.Text, SubTitle = entity.SubTitle, Title = entity.Title, BookId = entity.Id, TitleImagePath = entity.TitleImagePath, Comments = qComments });
+                return View("Show", new BookViewModel { Text = entity.Text, SubTitle = entity.SubTitle, Title = entity.Title, BookId = entity.Id, TitleImagePath = entity.TitleImagePath, Comments = qComments, IsBooking = entity.IsBooking });
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             return View(dataManager.Books.GetBooks());

@@ -28,7 +28,7 @@ namespace ElLIb.Controllers
         {
             var book = new Book();
             book = dataManager.Books.GetBookById(model.BookId);
-            book.BookingsCount++;
+            book.IsBooking = true;
             var entity = new Booking
             {
                 BooksTitle = book.Title,
@@ -36,33 +36,24 @@ namespace ElLIb.Controllers
                 UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
                 CreateOn = DateTime.Now,
                 FinishedOn = DateTime.Now.AddDays(3),
-                UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
             };
-            
-            if (book.BookingsCount > book.BooksCount)
+            if (ModelState.IsValid)
             {
-                return View("AllertPartial");
+                dataManager.Booking.SaveBooking(entity);
+                dataManager.Books.SaveBook(book);
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
-            else
-            {
-                if (ModelState.IsValid)
-                {
-                    dataManager.Booking.SaveBooking(entity);
-                    dataManager.Books.SaveBook(book);
-                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-                }
-                return View(dataManager.Books.GetBooks());
-            }
+            return View(dataManager.Books.GetBooks());
             // Сделать вывод ошибки, если книгу нельзя забронировать
         }
         [HttpPost]
         public IActionResult Delete(Booking booking)
         {
-            // разобраться почему когда эти 4 строки не закомментированы у меня нихуя не удаляются брони
             var book = dataManager.Books.GetBookById(booking.BookId);
-            book.BookingsCount--;
-            dataManager.Books.SaveBook(book);
             dataManager.Booking.DeleteBooking(booking.Id);
+            book.IsBooking = false;
+            dataManager.Books.SaveBook(book);
 
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }

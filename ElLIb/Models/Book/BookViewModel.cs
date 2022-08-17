@@ -18,7 +18,7 @@ namespace ElLIb.Models.Book
         [Display(Name = "Полное описание книги")]
         public string TitleImagePath { get; set; }
         public string Text { get; set; }
-        public int BooksCount { get; set; }
+        public bool IsBooking { get; set; }
         public IQueryable<AddCommentModel> Comments { get; set; }
     }
 }

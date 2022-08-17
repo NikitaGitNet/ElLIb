@@ -53,9 +53,8 @@ namespace ElLIb.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SubTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsBooking = table.Column<bool>(type: "bit", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BooksCount = table.Column<int>(type: "int", nullable: false),
-                    BookingsCount = table.Column<int>(type: "int", nullable: false),
                     TitleImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MetaTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -204,7 +203,6 @@ namespace ElLIb.Migrations
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BooksCount = table.Column<int>(type: "int", nullable: false),
                     BooksTitle = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -251,8 +249,8 @@ namespace ElLIb.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "8af10569-b018-4fe7-a380-7d6a14c70b74", "4009b03b-e7c4-47a9-a317-04cc2ff1d872", "admin", "ADMIN" },
-                    { "5e84bf2c-585f-42dc-a868-73157016ec70", "b7db318e-0f2c-4706-a2f4-47834f697d91", "moderator", "MODERATOR" }
+                    { "8af10569-b018-4fe7-a380-7d6a14c70b74", "8e44adf3-d930-456d-82dc-eb0a9f8db93b", "admin", "ADMIN" },
+                    { "5e84bf2c-585f-42dc-a868-73157016ec70", "3027392b-31b5-4792-af12-ab56c8dabf38", "moderator", "MODERATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -260,8 +258,8 @@ namespace ElLIb.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "08ab7a4e-aefa-4541-9c7c-f050d51e658b", "my@email.com", true, false, null, "MY@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEFezwLfH04+nf2wWAmW4apzmM7ULX8iHKMfnHs2GQzrbLP98XrwPDFCYcFokbg38nw==", null, false, "", false, "admin" },
-                    { "86d55f40-9544-4d92-aa24-cc5693a5fd96", 0, "a183d9ea-64f8-483c-86ce-f71a74044d88", "moderator@email.com", true, false, null, "MODERATOR@EMAIL.COM", "MODERATOR", "AQAAAAEAACcQAAAAEKVYbgBYvyCV9vp++Ori46eSehPyWfHJmh8MZHk1l4je1I5QaToYZFkqFctVUyJCuw==", null, false, "", false, "moderator" }
+                    { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "9a20e8ba-d641-4a2b-a2f5-0d3474b894ac", "my@email.com", true, false, null, "MY@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEHRkosMdUezo7qBLmEEe9uyMMZoeVYST0UTl68HmuI5F/ycJdvVafmmCwxX+WjEKrQ==", null, false, "", false, "admin" },
+                    { "86d55f40-9544-4d92-aa24-cc5693a5fd96", 0, "b7eec0c4-4a93-41e8-864b-8ceafbf7fc6c", "moderator@email.com", true, false, null, "MODERATOR@EMAIL.COM", "MODERATOR", "AQAAAAEAACcQAAAAEO6cLRRqPyL5dW7OfvEQ2htRoM16++D71aSwC7nREwBQV7sCTLwlg3Fe0PJx1n8iZA==", null, false, "", false, "moderator" }
                 });
 
             migrationBuilder.InsertData(
@@ -269,9 +267,9 @@ namespace ElLIb.Migrations
                 columns: new[] { "Id", "CodeWord", "DateAdded", "MetaDescription", "MetaKeywords", "MetaTitle", "SubTitle", "Text", "Title", "TitleImagePath" },
                 values: new object[,]
                 {
-                    { new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"), "PageIndex", new DateTime(2022, 8, 15, 18, 41, 14, 308, DateTimeKind.Utc).AddTicks(6569), null, null, null, null, "Содержание заполняется администратором", "Главная", null },
-                    { new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"), "PageBooks", new DateTime(2022, 8, 15, 18, 41, 14, 308, DateTimeKind.Utc).AddTicks(8275), null, null, null, null, "Содержание заполняется администратором", "Книги", null },
-                    { new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"), "PageContacts", new DateTime(2022, 8, 15, 18, 41, 14, 308, DateTimeKind.Utc).AddTicks(8386), null, null, null, null, "Содержание заполняется администратором", "Контакты", null }
+                    { new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"), "PageIndex", new DateTime(2022, 8, 17, 18, 35, 3, 326, DateTimeKind.Utc).AddTicks(3780), null, null, null, null, "Содержание заполняется администратором", "Главная", null },
+                    { new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"), "PageBooks", new DateTime(2022, 8, 17, 18, 35, 3, 326, DateTimeKind.Utc).AddTicks(5431), null, null, null, null, "Содержание заполняется администратором", "Книги", null },
+                    { new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"), "PageContacts", new DateTime(2022, 8, 17, 18, 35, 3, 326, DateTimeKind.Utc).AddTicks(5463), null, null, null, null, "Содержание заполняется администратором", "Контакты", null }
                 });
 
             migrationBuilder.InsertData(
