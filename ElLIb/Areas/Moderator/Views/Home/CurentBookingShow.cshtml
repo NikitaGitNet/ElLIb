@@ -1,0 +1,38 @@
+﻿@model Booking
+@{
+    TextField textField = ViewBag.TextField;
+}
+@if (Model.IssueBooking)
+{
+    <h2 class="Alert">Книга выдана</h2>
+    <h2 class="BookingAlert">Дата окончания брони: @Model.FinishedOn</h2>
+}
+<p>Название книги: @Model.BooksTitle</p>
+<p>ID книги: @Model.BookId</p>
+<p>Дата создания брони: @Model.CreateOn</p>
+@if (!Model.IssueBooking)
+{
+    <p>Дата окончания брони: @Model.FinishedOn</p>
+}
+<p>Email пользователя: @Model.UserEmail</p>
+@if (!Model.IssueBooking)
+{
+    <form style="display: inline-block;" id="form-@Model.Id" asp-area="" asp-controller="Booking" asp-action="IssueBooking" method="post">
+        <input type="hidden" name="id" value="@Model.Id">
+        <a class="glo" href="#" onclick="document.getElementById('form-@Model.Id').submit();">Выдать</a>
+    </form>
+}
+<div>
+    <form asp-controller="Booking" asp-action="Delete" method="post" enctype="multipart/form-data">
+        <div hidden class="div-box">
+            <textarea asp-for="BookId"></textarea>
+            <span asp-validation-for="BookId"></span>
+        </div>
+        <div hidden class="div-box">
+            <textarea asp-for="Id"></textarea>
+            <span asp-validation-for="Id"></span>
+        </div>
+        <input type="submit" value="Удалить" class="glo">
+    </form>
+</div>
+

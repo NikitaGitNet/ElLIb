@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ElLIb.Controllers
 {
@@ -55,23 +56,23 @@ namespace ElLIb.Controllers
             // Сделать вывод ошибки, если книгу нельзя забронировать
         }
         [HttpPost]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete(Booking booking)
         {
             // разобраться почему когда эти 4 строки не закомментированы у меня нихуя не удаляются брони
-            //var booking = dataManager.Booking.GetBookingById(id);
-            //var book = dataManager.Books.GetBookById(booking.BookId);
-            //book.BookingsCount--;
-            //dataManager.Books.SaveBook(book);
-            dataManager.Booking.DeleteBooking(id);
+            var book = dataManager.Books.GetBookById(booking.BookId);
+            book.BookingsCount--;
+            dataManager.Books.SaveBook(book);
+            dataManager.Booking.DeleteBooking(booking.Id);
+
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
-        //public IActionResult IssueBooking(Guid id)
-        //{
-        //    var booking = dataManager.Booking.GetBookingById(id);
-        //    booking.IssueBooking = true;
-        //    booking.FinishedOn = DateTime.Now.AddDays(7);
-        //    dataManager.Booking.SaveBooking(booking);
-        //    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-        //}
+        public IActionResult IssueBooking(Guid id)
+        {
+            var booking = dataManager.Booking.GetBookingById(id);
+            booking.IssueBooking = true;
+            booking.FinishedOn = DateTime.Now.AddDays(7);
+            dataManager.Booking.SaveBooking(booking);
+            return View("~/Areas/Moderator/Views/Home/CurentBookingShow.cshtml", dataManager.Booking.GetBookingById(id));
+        }
     }
 }

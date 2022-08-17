@@ -22,5 +22,14 @@ namespace ElLIb.Controllers
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             return View(dataManager.Books.GetBooks());
         }
+        public IActionResult BookingShow(Guid id)
+        {
+            if (id != default)
+            {
+                return View("~/Areas/Moderator/Views/Home/CurentBookingShow.cshtml", dataManager.Booking.GetBookingById(id));
+            }
+            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
+            return View(dataManager.Books.GetBooks());
+        }
     }
 }

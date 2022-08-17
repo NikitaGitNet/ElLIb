@@ -9,36 +9,13 @@
             @foreach (Booking entity in Model)
             {
                 <li>
-                    @if (entity.IssueBooking)
-                    {
-                        <h3>Книга выдана, дата окончания брони обновлена</h3>
-                        <p>Дата окончания брони: @entity.FinishedOn</p>
-                    }
                     <p>Название книги: @entity.BooksTitle</p>
                     <p>ID книги: @entity.BookId</p>
                     <p>Дата создания брони: @entity.CreateOn</p>
-                    @if (!entity.IssueBooking)
-                    {
-                        <p>Дата окончания брони: @entity.FinishedOn</p>
-                    }
                     <p>Email пользователя: @entity.UserEmail</p>
-                    @if (DateTime.Now >= entity.FinishedOn)
-                    {
-                        @*Доработать хуйню*@
-                        <h3 class="Alert">Бронь устарела</h3>
-                    }
-                    @*@if (!entity.IssueBooking)
-                    {
-                        <form asp-area="" asp-controller="Booking" asp-action="IssueBooking">
-                            
-                            <input type="hidden" name="id" value="@entity.Id">
-                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">Выдать книгу</a>
-                        </form>
-                    }*@
-                    <form class="BookingAlert" style="display: inline-block;" id="form-@entity.Id" asp-area="" asp-controller="Booking" asp-action="Delete" method="post">
-                            <input type="hidden" name="id" value="@entity.Id">
-                            <a href="#" onclick="document.getElementById('form-@entity.Id').submit();">Удалить</a>
-                        </form>
+                    <a asp-area="" asp-controller="BookingShow" asp-action="BookingShow" asp-route-id="@entity.Id">
+                        <h2 class="H2Title">Перейти к брони</h2>
+                    </a>
                     <hr>
                 </li>  
             }
