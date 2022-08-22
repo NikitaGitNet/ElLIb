@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Moderator\Views\Booking\" />
     <Folder Include="Views\Messange\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\sass\" />

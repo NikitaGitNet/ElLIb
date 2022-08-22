@@ -4,6 +4,8 @@ using ElLIb.Models.Booking;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -13,23 +15,25 @@ namespace ElLIb.Controllers
 {
     public class BookingController : Controller
     {
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly DataManager dataManager;
         private readonly IWebHostEnvironment hostingEnviroment;
         private readonly IHttpContextAccessor httpContextAccessor;
-        public BookingController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor)
+        public BookingController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
         {
             this.dataManager = dataManager;
             this.hostingEnviroment = hostingEnviroment;
             this.httpContextAccessor = httpContextAccessor;
+            this.userManager = userManager;
         }
 
         [HttpPost]
-        public IActionResult Booking(AddBookingModel model)
+        public async Task<IActionResult> Booking(AddBookingModel model)
         {
             var book = new Book();
             book = dataManager.Books.GetBookById(model.BookId);
             book.IsBooking = true;
-            var entity = new Booking
+            var booking = new Booking
             {
                 BooksTitle = book.Title,
                 BookId = model.BookId,
@@ -38,15 +42,21 @@ namespace ElLIb.Controllers
                 FinishedOn = DateTime.Now.AddDays(3),
                 UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
             };
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = await userManager.FindByIdAsync(userId);
+            // нал референс эксепшен выдает строчка ниже
+            user.Bookings.Add(booking);
+            var result = await userManager.UpdateAsync(user);
+
             if (ModelState.IsValid)
             {
-                dataManager.Booking.SaveBooking(entity);
+                dataManager.Booking.SaveBooking(booking);
                 dataManager.Books.SaveBook(book);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(dataManager.Books.GetBooks());
-            // Сделать вывод ошибки, если книгу нельзя забронировать
         }
+        
         [HttpPost]
         public IActionResult Delete(Booking booking)
         {
@@ -57,13 +67,6 @@ namespace ElLIb.Controllers
 
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
-        public IActionResult IssueBooking(Guid id)
-        {
-            var booking = dataManager.Booking.GetBookingById(id);
-            booking.IssueBooking = true;
-            booking.FinishedOn = DateTime.Now.AddDays(7);
-            dataManager.Booking.SaveBooking(booking);
-            return View("~/Areas/Moderator/Views/Home/CurentBookingShow.cshtml", dataManager.Booking.GetBookingById(id));
-        }
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using ElLIb.Domain;
+﻿using ElLIb.Controllers;
+using ElLIb.Domain;
 using ElLIb.Domain.Entities;
 using ElLIb.Models.Book;
 using ElLIb.Models.Comment;
@@ -45,9 +46,15 @@ namespace ElLIb.Areas.Admin.Controllers
                 comment.UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 comment.CreateOn = DateTime.Now;
                 dataManager.Comment.SaveComment(comment);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                return RedirectToAction(nameof(BooksShowController.Index), nameof(HomeController).CutController());
             }
             return View(comment);
+        }
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            dataManager.Comment.DeleteComment(id);
+            return RedirectToAction(nameof(BooksShowController.Index), nameof(HomeController).CutController());
         }
     }
 }

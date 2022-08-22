@@ -17,13 +17,13 @@
 <p>Email пользователя: @Model.UserEmail</p>
 @if (!Model.IssueBooking)
 {
-    <form style="display: inline-block;" id="form-@Model.Id" asp-area="" asp-controller="Booking" asp-action="IssueBooking" method="post">
+    <form style="display: inline-block;" id="form-@Model.Id" asp-area="Moderator" asp-controller="BookingModerator" asp-action="IssueBooking" method="post">
         <input type="hidden" name="id" value="@Model.Id">
         <a class="glo" href="#" onclick="document.getElementById('form-@Model.Id').submit();">Выдать</a>
     </form>
 }
 <div>
-    <form asp-controller="Booking" asp-action="Delete" method="post" enctype="multipart/form-data">
+    <form asp-area="" asp-controller="Booking" asp-action="Delete" method="post" enctype="multipart/form-data">
         <div hidden class="div-box">
             <textarea asp-for="BookId"></textarea>
             <span asp-validation-for="BookId"></span>

@@ -88,13 +88,13 @@ namespace ElLIb.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9a20e8ba-d641-4a2b-a2f5-0d3474b894ac",
+                            ConcurrencyStamp = "e8d75daf-c27f-476a-85f1-785e3ad8ee3a",
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHRkosMdUezo7qBLmEEe9uyMMZoeVYST0UTl68HmuI5F/ycJdvVafmmCwxX+WjEKrQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGRgL/Bf8/G34+GGNZ0nIftrIZTLGhUtdZ7e/d1sduRcRtnKYUXqIMa0F6VpOyoUTA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -104,13 +104,13 @@ namespace ElLIb.Migrations
                         {
                             Id = "86d55f40-9544-4d92-aa24-cc5693a5fd96",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b7eec0c4-4a93-41e8-864b-8ceafbf7fc6c",
+                            ConcurrencyStamp = "db156ae6-a01b-4d26-b841-b4f07cc42ca6",
                             Email = "moderator@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MODERATOR@EMAIL.COM",
                             NormalizedUserName = "MODERATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEO6cLRRqPyL5dW7OfvEQ2htRoM16++D71aSwC7nREwBQV7sCTLwlg3Fe0PJx1n8iZA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELXSd7D+vawT9YzLadhZhCkC/jd+J7rkA7bBbLMx5Fj+mgp/ZncNaH4QNYxTd6gbHw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -163,6 +163,9 @@ namespace ElLIb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<Guid>("BookId")
                         .HasColumnType("uniqueidentifier");
 
@@ -185,6 +188,8 @@ namespace ElLIb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("BookId");
 
@@ -265,7 +270,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2022, 8, 17, 18, 35, 3, 326, DateTimeKind.Utc).AddTicks(3780),
+                            DateAdded = new DateTime(2022, 8, 22, 17, 7, 3, 97, DateTimeKind.Utc).AddTicks(591),
                             Text = "Содержание заполняется администратором",
                             Title = "Главная"
                         },
@@ -273,7 +278,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
                             CodeWord = "PageBooks",
-                            DateAdded = new DateTime(2022, 8, 17, 18, 35, 3, 326, DateTimeKind.Utc).AddTicks(5431),
+                            DateAdded = new DateTime(2022, 8, 22, 17, 7, 3, 97, DateTimeKind.Utc).AddTicks(2223),
                             Text = "Содержание заполняется администратором",
                             Title = "Книги"
                         },
@@ -281,7 +286,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2022, 8, 17, 18, 35, 3, 326, DateTimeKind.Utc).AddTicks(5463),
+                            DateAdded = new DateTime(2022, 8, 22, 17, 7, 3, 97, DateTimeKind.Utc).AddTicks(2255),
                             Text = "Содержание заполняется администратором",
                             Title = "Контакты"
                         });
@@ -317,14 +322,14 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
-                            ConcurrencyStamp = "8e44adf3-d930-456d-82dc-eb0a9f8db93b",
+                            ConcurrencyStamp = "c6b0d804-d473-49c2-88e0-dbf04e4dfee9",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5e84bf2c-585f-42dc-a868-73157016ec70",
-                            ConcurrencyStamp = "3027392b-31b5-4792-af12-ab56c8dabf38",
+                            ConcurrencyStamp = "7fcc2ade-5dfd-45ce-b898-93bafa006558",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });
@@ -448,6 +453,10 @@ namespace ElLIb.Migrations
 
             modelBuilder.Entity("ElLIb.Domain.Entities.Booking", b =>
                 {
+                    b.HasOne("ElLIb.Domain.Entities.ApplicationUser", null)
+                        .WithMany("Bookings")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ElLIb.Domain.Entities.Book", "Book")
                         .WithMany("Bookings")
                         .HasForeignKey("BookId")
@@ -527,6 +536,8 @@ namespace ElLIb.Migrations
 
             modelBuilder.Entity("ElLIb.Domain.Entities.ApplicationUser", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("Comments");
                 });
 

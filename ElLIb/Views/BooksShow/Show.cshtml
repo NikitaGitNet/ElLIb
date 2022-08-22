@@ -20,10 +20,17 @@
 <div>
     <h3 class="H2Title">Комментарии пользователей:</h3>
     <hr>
-    @foreach (var item in Model.Comments)
+    @foreach (var comment in Model.Comments)
     {
-        <h3>@item.UserEmail</h3>
-        @Html.Raw(item.Text)
+        <h3>@comment.UserEmail</h3>
+        @Html.Raw(comment.Text)
+        @if (User.IsInRole("moderator") || User.IsInRole("admin"))
+        {
+            <form style="display: inline-block;" id="form-@comment.Id" asp-area="" asp-controller="Comment" asp-action="Delete" method="post">
+                <input type="hidden" name="id" value="@comment.Id">
+                <a href="#" onclick="document.getElementById('form-@comment.Id').submit();">Удалить</a>
+            </form>
+        }
         <hr>
     }
 </div>
