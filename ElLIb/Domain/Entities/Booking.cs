@@ -12,10 +12,12 @@ namespace ElLIb.Domain.Entities
         public string UserEmail { get; set; }
         public string UserId { get; set; }
         [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
         public Guid BookId { get; set; }
         [ForeignKey("BookId")]
         public string BooksTitle { get; set; }
         public Book Book { get; set; }
         
+
     }
 }

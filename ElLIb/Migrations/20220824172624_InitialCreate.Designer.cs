@@ -4,14 +4,16 @@ using ElLIb.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ElLIb.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220824172624_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,13 +90,13 @@ namespace ElLIb.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c8fd2bd9-0a51-4a50-97e3-ac4f09b03b26",
+                            ConcurrencyStamp = "5cc0812b-c44d-44f3-bc78-704b222c95e7",
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHpvKFuRfayldhQDZ7dTfkV0TrwoTLrs98+evQ+b4B5xrpnVxtoq3RTqykvHOEDjaA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA07qNNq52woLVj/Ft8IoOk1P6N9lFZDWbV9Om6P0HV63pPyPH7kHKZdw5jXY+4ABQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -104,13 +106,13 @@ namespace ElLIb.Migrations
                         {
                             Id = "86d55f40-9544-4d92-aa24-cc5693a5fd96",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e1b64195-0fe2-4e67-84fc-fb48ef07fd6b",
+                            ConcurrencyStamp = "fdfc93fd-2bff-4d9f-9ec5-3687ad879d7b",
                             Email = "moderator@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MODERATOR@EMAIL.COM",
                             NormalizedUserName = "MODERATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMAPtRzMyDB7/Y3l15HNnhu79fWv1nPCHygbE2VOPdQrBQg0UZ2bHi5ZytxDBo5gbQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHk4cEyH7p0T7/E7E37RdDzVUGVdUlWLTz3U1L0FeBGf9kiZ66OZeu24HnyiVGf79g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -160,7 +162,7 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"),
-                            DateAdded = new DateTime(2022, 8, 24, 19, 25, 30, 53, DateTimeKind.Utc).AddTicks(8237),
+                            DateAdded = new DateTime(2022, 8, 24, 17, 26, 23, 542, DateTimeKind.Utc).AddTicks(6222),
                             IsBooking = false,
                             SubTitle = "Там ересь была",
                             Text = "Ваха 40к",
@@ -170,7 +172,7 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"),
-                            DateAdded = new DateTime(2022, 8, 24, 19, 25, 30, 53, DateTimeKind.Utc).AddTicks(9905),
+                            DateAdded = new DateTime(2022, 8, 24, 17, 26, 23, 542, DateTimeKind.Utc).AddTicks(8654),
                             IsBooking = false,
                             SubTitle = "Там тоже была ересь",
                             Text = "Ваха 40к",
@@ -184,6 +186,9 @@ namespace ElLIb.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("BookId")
                         .HasColumnType("uniqueidentifier");
@@ -204,13 +209,13 @@ namespace ElLIb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("BookId");
 
                     b.ToTable("Bookings");
                 });
@@ -289,7 +294,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2022, 8, 24, 19, 25, 30, 53, DateTimeKind.Utc).AddTicks(6064),
+                            DateAdded = new DateTime(2022, 8, 24, 17, 26, 23, 542, DateTimeKind.Utc).AddTicks(2943),
                             Text = "Содержание заполняется администратором",
                             Title = "Главная"
                         },
@@ -297,7 +302,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
                             CodeWord = "PageBooks",
-                            DateAdded = new DateTime(2022, 8, 24, 19, 25, 30, 53, DateTimeKind.Utc).AddTicks(7778),
+                            DateAdded = new DateTime(2022, 8, 24, 17, 26, 23, 542, DateTimeKind.Utc).AddTicks(5392),
                             Text = "Содержание заполняется администратором",
                             Title = "Книги"
                         },
@@ -305,7 +310,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2022, 8, 24, 19, 25, 30, 53, DateTimeKind.Utc).AddTicks(7808),
+                            DateAdded = new DateTime(2022, 8, 24, 17, 26, 23, 542, DateTimeKind.Utc).AddTicks(5442),
                             Text = "Содержание заполняется администратором",
                             Title = "Контакты"
                         });
@@ -341,14 +346,14 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
-                            ConcurrencyStamp = "3941211d-c5fe-40a8-9c72-6eaf5b5b4da4",
+                            ConcurrencyStamp = "aa0e1072-cd3f-4fa7-a042-8b4c00873fff",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5e84bf2c-585f-42dc-a868-73157016ec70",
-                            ConcurrencyStamp = "f8496749-6a07-4782-8543-39fa702e973c",
+                            ConcurrencyStamp = "ed03e305-bc07-44c6-9ac9-4c1a8afd32c2",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });
@@ -472,19 +477,17 @@ namespace ElLIb.Migrations
 
             modelBuilder.Entity("ElLIb.Domain.Entities.Booking", b =>
                 {
+                    b.HasOne("ElLIb.Domain.Entities.ApplicationUser", null)
+                        .WithMany("Bookings")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ElLIb.Domain.Entities.Book", "Book")
                         .WithMany("Bookings")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ElLIb.Domain.Entities.ApplicationUser", "User")
-                        .WithMany("Bookings")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Book");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ElLIb.Domain.Entities.Comment", b =>

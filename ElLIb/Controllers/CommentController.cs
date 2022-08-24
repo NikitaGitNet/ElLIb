@@ -36,8 +36,8 @@ namespace ElLIb.Areas.Admin.Controllers
 
         [HttpPost]
         public IActionResult Write(AddCommentModel model)
-        {   
-            var comment = new Comment();
+        {
+            Comment comment = new Comment();
             if (ModelState.IsValid)
             {
                 comment.BookId = model.BookId;

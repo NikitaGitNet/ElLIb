@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -30,10 +31,9 @@ namespace ElLIb.Controllers
         [HttpPost]
         public async Task<IActionResult> Booking(AddBookingModel model)
         {
-            var book = new Book();
-            book = dataManager.Books.GetBookById(model.BookId);
+            Book book = dataManager.Books.GetBookById(model.BookId);
             book.IsBooking = true;
-            var booking = new Booking
+            Booking booking = new Booking
             {
                 BooksTitle = book.Title,
                 BookId = model.BookId,
@@ -42,15 +42,15 @@ namespace ElLIb.Controllers
                 FinishedOn = DateTime.Now.AddDays(3),
                 UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
             };
-            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await userManager.FindByIdAsync(userId);
-            // нал референс эксепшен выдает строчка ниже
+            dataManager.Booking.SaveBooking(booking);
+            ApplicationUser user = await userManager.GetUserAsync(HttpContext.User);
+            //user.Bookings = new List<Booking>();
             user.Bookings.Add(booking);
-            var result = await userManager.UpdateAsync(user);
+            
+            await userManager.UpdateAsync(user);
 
             if (ModelState.IsValid)
             {
-                dataManager.Booking.SaveBooking(booking);
                 dataManager.Books.SaveBook(book);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }

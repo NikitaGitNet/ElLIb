@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace ElLIb.Domain
 {
@@ -78,6 +79,24 @@ namespace ElLIb.Domain
                 Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                 CodeWord = "PageContacts",
                 Title = "Контакты"
+            });
+            builder.Entity<Book>().HasData(new Book
+            {
+                Id = new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"),
+                Title = "Ересь Хоруса",
+                SubTitle = "Там ересь была",
+                IsBooking = false,
+                Text = "Ваха 40к",
+                TitleImagePath = "1655641005121914702.jpg"
+            });
+            builder.Entity<Book>().HasData(new Book
+            {
+                Id = new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"),
+                Title = "Ересь Ангрона",
+                SubTitle = "Там тоже была ересь",
+                IsBooking = false,
+                Text = "Ваха 40к",
+                TitleImagePath = "1655641009118970804.jpg"
             });
         }
     }
