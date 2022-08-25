@@ -8,12 +8,14 @@ namespace ElLIb.Domain
         public IBooksRepository Books { get; set; }
         public ICommentRepository Comment { get; set; }
         public IBookingRepository Booking { get; set; }
-        public DataManager(ITextFieldsRepository textFields, IBooksRepository books, ICommentRepository comment, IBookingRepository booking)
+        public IApplicationUserRepository ApplicationUserRepository { get; set; }
+        public DataManager(ITextFieldsRepository textFields, IBooksRepository books, ICommentRepository comment, IBookingRepository booking, IApplicationUserRepository applicationUserRepository)
         {
             TextFields = textFields;
             Books = books;
             Comment = comment;
             Booking = booking;
+            ApplicationUserRepository = applicationUserRepository;
         }
     }
 }

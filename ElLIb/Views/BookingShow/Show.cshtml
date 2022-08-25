@@ -1,0 +1,26 @@
+﻿@model UserModel
+@{
+    TextField textField = ViewBag.TextField;
+}   
+    <h2>Ваши брони:</h2>
+    @foreach (var booking in Model.Bookings)
+    {
+        <p>Название книги: @booking.BooksTitle</p>
+        @if (!booking.IssueBooking)
+        {
+            <p>Окончание брони: @booking.FinishedOn</p>
+        }
+        else
+        {   
+            <p class="Alert">Книга выдана необходимо вернуть до: @booking.FinishedOn</p>
+        }
+        @if (!booking.IssueBooking)
+        {
+            <form style="display: inline-block;" id="form-@booking.Id" asp-area="" asp-controller="Booking" asp-action="Delete" method="post">
+                <input type="hidden" name="id" value="@booking.Id">
+                <input type="hidden" name="BookId" value="@booking.BookId">
+                <a class="glo" href="#" onclick="document.getElementById('form-@booking.Id').submit();">Отказаться от брони</a>
+            </form>
+        }
+        <hr>
+    }

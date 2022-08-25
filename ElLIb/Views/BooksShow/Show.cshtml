@@ -15,8 +15,6 @@
     @Html.Raw(Model.Text)
 </div>
 
-@*разобраться с оформлением чтоб комменты выделялись*@
-
 <div>
     <h3 class="H2Title">Комментарии пользователей:</h3>
     <hr>
@@ -34,7 +32,7 @@
         <hr>
     }
 </div>
-@*@await Html.PartialAsync("CommentPartial", Model.Comments)*@
+
 <div>
     <form asp-controller="Comment" asp-action="Write" method="post" enctype="multipart/form-data">
     <div class="div-box">

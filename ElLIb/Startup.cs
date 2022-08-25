@@ -33,6 +33,7 @@ namespace ElLIb
             services.AddTransient<IBooksRepository, EFBooksRepository>();
             services.AddTransient<ICommentRepository, EFCommentsRepository>();
             services.AddTransient<IBookingRepository, EFBookingsRepository>();
+            services.AddTransient<IApplicationUserRepository, EFApplicationUserRepository>();
             services.AddTransient<DataManager>();
 
             services.AddDbContext<AppDbContext>(x=>x.UseSqlServer(Config.ConnectionString));

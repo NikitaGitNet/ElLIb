@@ -18,7 +18,6 @@ namespace ElLIb.Controllers
         }
         public IActionResult Index(Guid id)
         {
-            
             if (id != default)
             {
                 Book book = dataManager.Books.GetBookById(id);

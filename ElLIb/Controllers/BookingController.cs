@@ -29,28 +29,22 @@ namespace ElLIb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Booking(AddBookingModel model)
+        public IActionResult Booking(AddBookingModel model)
         {
-            Book book = dataManager.Books.GetBookById(model.BookId);
-            book.IsBooking = true;
-            Booking booking = new Booking
-            {
-                BooksTitle = book.Title,
-                BookId = model.BookId,
-                UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
-                CreateOn = DateTime.Now,
-                FinishedOn = DateTime.Now.AddDays(3),
-                UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
-            };
-            dataManager.Booking.SaveBooking(booking);
-            ApplicationUser user = await userManager.GetUserAsync(HttpContext.User);
-            //user.Bookings = new List<Booking>();
-            user.Bookings.Add(booking);
-            
-            await userManager.UpdateAsync(user);
-
             if (ModelState.IsValid)
             {
+                Book book = dataManager.Books.GetBookById(model.BookId);
+                book.IsBooking = true;
+                Booking booking = new()
+                {
+                    BooksTitle = book.Title,
+                    BookId = model.BookId,
+                    UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
+                    CreateOn = DateTime.Now,
+                    FinishedOn = DateTime.Now.AddDays(3),
+                    UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                };
+                dataManager.Booking.SaveBooking(booking);
                 dataManager.Books.SaveBook(book);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }

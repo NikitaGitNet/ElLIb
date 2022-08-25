@@ -28,28 +28,30 @@ namespace ElLIb.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var bookings = new List<AddBookingModel>();
-            foreach (var i in user.Bookings)
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = dataManager.ApplicationUserRepository.GetApplicationUserById(userId);
+            if (user.Bookings.Count != 0)
             {
-                AddBookingModel booking = new AddBookingModel();
-                booking.IssueBooking = i.IssueBooking;
-                booking.UserEmail = i.UserEmail;
-                booking.UserId = user.Id;
-                booking.CreateOn = i.CreateOn;
-                booking.FinishedOn = i.FinishedOn;
-                booking.BookId = i.BookId;
-                booking.BooksTitle = i.BooksTitle;
-                booking.Id = i.Id;
-                bookings.Add(booking);
+                List<AddBookingModel> bookings = new List<AddBookingModel>();
+                foreach (var i in user.Bookings)
+                {
+                    AddBookingModel booking = new AddBookingModel();
+                    booking.IssueBooking = i.IssueBooking;
+                    booking.UserEmail = i.UserEmail;
+                    booking.UserId = user.Id;
+                    booking.CreateOn = i.CreateOn;
+                    booking.FinishedOn = i.FinishedOn;
+                    booking.BookId = i.BookId;
+                    booking.BooksTitle = i.BooksTitle;
+                    booking.Id = i.Id;
+                    bookings.Add(booking);
+                }
+                IQueryable<AddBookingModel> qBookings = bookings.AsQueryable();
+                return View("~/Views/BookingShow/Show.cshtml", new UserModel { Id = user.Id, UserName = user.UserName, Bookings = qBookings, UserEmail = user.Email });
             }
-            IQueryable<AddBookingModel> qBookings = bookings.AsQueryable();
-            return View("Show", new UserModel { Id = user.Id, UserName = user.UserName, Bookings = qBookings });
-
-            //ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            //return View(dataManager.Books.GetBooks());
+            return View("~/Views/BookingShow/NullPage.cshtml");
         }
     }
 }
