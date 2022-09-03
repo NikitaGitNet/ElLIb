@@ -14,7 +14,7 @@ namespace ElLIb.Domain.Entities
         public string Text { get; set; }
         public DateTime? CreateOn { get; set; }
         public string UserEmail { get; set; }
-        [ForeignKey("UserEmail")]
+        public string UserName { get; set; }
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }

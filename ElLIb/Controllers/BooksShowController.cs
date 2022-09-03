@@ -29,6 +29,7 @@ namespace ElLIb.Controllers
                     comment.Text = i.Text;
                     comment.UserEmail = i.UserEmail;
                     comment.Id = i.Id;
+                    comment.UserName = i.UserName;
                     comments.Add(comment);
                 }
                 IQueryable<AddCommentModel> qComments = comments.AsQueryable();

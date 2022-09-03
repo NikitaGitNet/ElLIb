@@ -3,6 +3,7 @@ using System.Linq;
 using ElLIb.Domain.Entities;
 using ElLIb.Models.Booking;
 using System;
+using ElLIb.Models.Comment;
 
 namespace ElLIb.Models.User
 {
@@ -13,5 +14,6 @@ namespace ElLIb.Models.User
         public string UserName { get; set; }
         public DateTime CreateOn { get; set; }
         public IQueryable<AddBookingModel> Bookings { get; set; }
+        public IQueryable<AddCommentModel> Comments { get; set; }
     }
 }

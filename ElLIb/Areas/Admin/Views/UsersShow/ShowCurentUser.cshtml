@@ -6,24 +6,39 @@
 <h2>Имя пользователя: @Model.UserName</h2>
 <h2>Дата регистрации: @Model.CreateOn</h2>
 <h2>Брони пользователя:</h2>
-
-    @if (Model.Bookings != null)
+<hr>
+    @if (Model.Bookings != null || Model.Comments != null)
     {
-    
-        @foreach (var item in Model.Bookings)
+        @if (Model.Bookings != null)
         {
-            <p>Название книги: @item.BooksTitle</p>
-            <p>Дата создания брони: @item.CreateOn</p>
-            <p>Дата окончания брони: @item.FinishedOn</p>
-            @if (@item.IssueBooking)
+            @foreach (var item in Model.Bookings)
             {
-                <p class="Alert">Книга выдана</p>
+                <p>Название книги: @item.BooksTitle</p>
+                <p>Дата создания брони: @item.CreateOn</p>
+                <p>Дата окончания брони: @item.FinishedOn</p>
+                @if (@item.IssueBooking)
+                {
+                    <p class="Alert">Книга выдана</p>
+                }
+                else
+                {
+                    <p>Книга ожидает выдачи</p>
+                }
+                <hr>
             }
-            else
+        }
+        @if (Model.Comments != null)
+        {
+            @foreach (var item in Model.Comments)
             {
-                <p>Книга ожидает выдачи</p>
+                <p>Имя пользователя: @item.UserName</p>
+                <p>Комментарий: @Html.Raw(@item.Text)</p>
+                @*Допилить хуйню ниже*@
+                <form style="display: inline-block;" id="form-@item.Id" asp-area="" asp-controller="Comment" asp-action="Delete" method="post">
+                    <input type="hidden" name="id" value="@item.Id">
+                    <a class="glo" href="#" onclick="document.getElementById('form-@item.Id').submit();">Удалить комментарий</a>
+                </form>
             }
-            <hr>
         }
         <form style="display: inline-block;" id="form-@Model.Id" asp-area="Admin" asp-controller="UsersShow" asp-action="CancelUser" method="post">
             <input type="hidden" name="id" value="@Model.Id">

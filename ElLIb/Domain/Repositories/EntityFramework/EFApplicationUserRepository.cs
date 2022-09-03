@@ -21,6 +21,7 @@ namespace ElLIb.Domain.Repositories.EntityFramework
         public ApplicationUser GetApplicationUserById(string id)
         {
             return context.ApplicationUsers
+                .Include(x=>x.Comments)
                 .Include(x => x.Bookings)
                 .FirstOrDefault(x => x.Id == id);
 
@@ -40,6 +41,8 @@ namespace ElLIb.Domain.Repositories.EntityFramework
         //Удаление юзера сделать как с айдентити юзером
         public void DeleteApplicationUser(string id)
         {
+            //var user = GetApplicationUserById(id);
+            //context.Entry(user).State = EntityState.Deleted;
             context.ApplicationUsers.Remove(new ApplicationUser() { Id = id });
             context.SaveChanges();
         }
