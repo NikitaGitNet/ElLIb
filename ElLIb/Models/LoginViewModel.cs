@@ -5,11 +5,11 @@ namespace ElLIb.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name ="Логин")]
-        public string UserName { get; set; }
+        [Display(Name = "Адрес электронной почты")]
+        public string Email { get; set; }
         [Required]
         [UIHint("password")]
-        [Display(Name = "Логин")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
         [Display(Name = "Запомнить меня?")]
         public bool RememberMe { get; set; }

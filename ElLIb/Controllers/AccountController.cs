@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using System;
 
 namespace ElLIb.Controllers
 {
@@ -29,7 +30,7 @@ namespace ElLIb.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = await userManager.FindByNameAsync(model.UserName);
+                ApplicationUser user = await userManager.FindByEmailAsync(model.Email);
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
@@ -39,7 +40,7 @@ namespace ElLIb.Controllers
                         return Redirect(returnUrl ?? "/");
                     }
                 }
-                ModelState.AddModelError(nameof(LoginViewModel.UserName),"Неверный логин или пароль");
+                ModelState.AddModelError(nameof(LoginViewModel.Email),"Неверный email или пароль");
             }
             return View(model);
         }
@@ -60,7 +61,7 @@ namespace ElLIb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName};
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CreateOn = DateTime.Now};
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

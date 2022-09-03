@@ -26,6 +26,7 @@ namespace ElLIb.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreateOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -255,17 +256,17 @@ namespace ElLIb.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "8af10569-b018-4fe7-a380-7d6a14c70b74", "f7be6bac-8c74-4d11-aab3-9b790e1a3ad4", "admin", "ADMIN" },
-                    { "5e84bf2c-585f-42dc-a868-73157016ec70", "4b03962c-3d96-45ba-ad05-6fc21ad7a13e", "moderator", "MODERATOR" }
+                    { "8af10569-b018-4fe7-a380-7d6a14c70b74", "d06a2d1f-70c2-4d4b-9722-701a5fbf1a4c", "admin", "ADMIN" },
+                    { "5e84bf2c-585f-42dc-a868-73157016ec70", "a0d1eaf4-414a-4710-a8f0-9a2750b0d952", "moderator", "MODERATOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreateOn", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "e376c57a-cabf-4174-b4c3-f975e811ae69", "my@email.com", true, false, null, "MY@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEJrVLvTdWEn0cifvZDoB8abqkGFrW/tpoBODvWr9QJlGMCM4PPN6X+2rTCw7QkuDZA==", null, false, "", false, "admin" },
-                    { "86d55f40-9544-4d92-aa24-cc5693a5fd96", 0, "405353fc-07fa-4699-94ba-8a45b85b7469", "moderator@email.com", true, false, null, "MODERATOR@EMAIL.COM", "MODERATOR", "AQAAAAEAACcQAAAAEJakxtTmCHhpjY0n99seaFUlsy5DBGvMoQJaQM/sfKxxC/ZdrH9r10fMivVX5aabqQ==", null, false, "", false, "moderator" }
+                    { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "7cf2b4f9-9073-45bb-8158-58786da8e711", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "my@email.com", true, false, null, "MY@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEE8J/02C+scNfJ9S/v164aATswblKBZLMddXI4+ZbT8UyLvop5OR+dX/WbZH+V6XBA==", null, false, "", false, "admin" },
+                    { "86d55f40-9544-4d92-aa24-cc5693a5fd96", 0, "db6b4600-7195-4845-b317-9ac5ec8f2ac3", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "moderator@email.com", true, false, null, "MODERATOR@EMAIL.COM", "MODERATOR", "AQAAAAEAACcQAAAAEDFNwNHi7emPQ1ZIWhoQHgmnTnZvhq5cWlXb6Ot2xhxQAkLkFNAZmxpU4u1vzWAh6Q==", null, false, "", false, "moderator" }
                 });
 
             migrationBuilder.InsertData(
@@ -273,8 +274,8 @@ namespace ElLIb.Migrations
                 columns: new[] { "Id", "DateAdded", "IsBooking", "MetaDescription", "MetaKeywords", "MetaTitle", "SubTitle", "Text", "Title", "TitleImagePath" },
                 values: new object[,]
                 {
-                    { new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"), new DateTime(2022, 8, 25, 18, 3, 9, 322, DateTimeKind.Utc).AddTicks(3643), false, null, null, null, "Там ересь была", "Ваха 40к", "Ересь Хоруса", "1655641005121914702.jpg" },
-                    { new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"), new DateTime(2022, 8, 25, 18, 3, 9, 322, DateTimeKind.Utc).AddTicks(5294), false, null, null, null, "Там тоже была ересь", "Ваха 40к", "Ересь Ангрона", "1655641009118970804.jpg" }
+                    { new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"), new DateTime(2022, 9, 2, 17, 49, 23, 505, DateTimeKind.Utc).AddTicks(7191), false, null, null, null, "Там ересь была", "Ваха 40к", "Ересь Хоруса", "1655641005121914702.jpg" },
+                    { new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"), new DateTime(2022, 9, 2, 17, 49, 23, 505, DateTimeKind.Utc).AddTicks(9172), false, null, null, null, "Там тоже была ересь", "Ваха 40к", "Ересь Ангрона", "1655641009118970804.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -282,9 +283,9 @@ namespace ElLIb.Migrations
                 columns: new[] { "Id", "CodeWord", "DateAdded", "MetaDescription", "MetaKeywords", "MetaTitle", "SubTitle", "Text", "Title", "TitleImagePath" },
                 values: new object[,]
                 {
-                    { new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"), "PageIndex", new DateTime(2022, 8, 25, 18, 3, 9, 322, DateTimeKind.Utc).AddTicks(1452), null, null, null, null, "Содержание заполняется администратором", "Главная", null },
-                    { new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"), "PageBooks", new DateTime(2022, 8, 25, 18, 3, 9, 322, DateTimeKind.Utc).AddTicks(3185), null, null, null, null, "Содержание заполняется администратором", "Книги", null },
-                    { new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"), "PageContacts", new DateTime(2022, 8, 25, 18, 3, 9, 322, DateTimeKind.Utc).AddTicks(3215), null, null, null, null, "Содержание заполняется администратором", "Контакты", null }
+                    { new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"), "PageIndex", new DateTime(2022, 9, 2, 17, 49, 23, 505, DateTimeKind.Utc).AddTicks(5001), null, null, null, null, "Содержание заполняется администратором", "Главная", null },
+                    { new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"), "PageBooks", new DateTime(2022, 9, 2, 17, 49, 23, 505, DateTimeKind.Utc).AddTicks(6719), null, null, null, null, "Содержание заполняется администратором", "Книги", null },
+                    { new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"), "PageContacts", new DateTime(2022, 9, 2, 17, 49, 23, 505, DateTimeKind.Utc).AddTicks(6752), null, null, null, null, "Содержание заполняется администратором", "Контакты", null }
                 });
 
             migrationBuilder.InsertData(

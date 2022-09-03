@@ -5,8 +5,11 @@ namespace ElLIb.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Логин")]
+        [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
+        [Required]
+        [Display(Name = "Адрес электронной почты")]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

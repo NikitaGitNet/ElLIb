@@ -6,6 +6,7 @@ namespace ElLIb.Domain.Entities
 {
     public class ApplicationUser : IdentityUser
     {
+        public DateTime CreateOn { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Booking> Bookings { get; set; }
     }

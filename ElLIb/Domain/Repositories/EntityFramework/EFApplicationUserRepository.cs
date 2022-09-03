@@ -37,6 +37,7 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
+        //Удаление юзера сделать как с айдентити юзером
         public void DeleteApplicationUser(string id)
         {
             context.ApplicationUsers.Remove(new ApplicationUser() { Id = id });
