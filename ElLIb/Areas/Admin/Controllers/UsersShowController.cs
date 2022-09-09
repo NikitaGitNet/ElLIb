@@ -30,11 +30,11 @@ namespace ElLIb.Areas.Admin.Controllers
             {
 
             }
-            return View(dataManager.ApplicationUserRepository.GetApplicationUsers());
+            return View(dataManager.ApplicationUser.GetApplicationUsers());
         }
         public IActionResult ShowCurentUser(string id)
         {
-            ApplicationUser user = dataManager.ApplicationUserRepository.GetApplicationUserById(id);
+            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(id);
             if (user.Bookings.Count != 0 || user.Comments.Count != 0)
             {
                 List<AddCommentModel> comments = new();
@@ -81,7 +81,7 @@ namespace ElLIb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult CancelUser(string id)
         {
-            ApplicationUser user = dataManager.ApplicationUserRepository.GetApplicationUserById(id);
+            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(id);
             if (user.Bookings != null)
             {
                 foreach (var booking in user.Bookings)
@@ -100,16 +100,15 @@ namespace ElLIb.Areas.Admin.Controllers
             }
             user.Comments = null;
             user.Bookings = null;
-            dataManager.ApplicationUserRepository.SaveApplicationUser(user);
+            dataManager.ApplicationUser.SaveApplicationUser(user);
             return View();
         }
         // сделать удаление как с айдентити юзером
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            ApplicationUser user = dataManager.ApplicationUserRepository.GetApplicationUserById(id);
+            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(id);
             await userManager.DeleteAsync(user);
-            //dataManager.ApplicationUserRepository.DeleteApplicationUser(id);
             return View();
         }
     }

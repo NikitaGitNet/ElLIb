@@ -12,7 +12,5 @@ namespace ElLIb.Models.Booking
         public string UserId { get; set; }
         public Guid BookId { get; set; }
         public string BooksTitle { get; set; }
-        // удалить поле ниже
-        public int BooksCount { get; set; }
     }
 }

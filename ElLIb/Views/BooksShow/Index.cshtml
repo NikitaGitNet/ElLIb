@@ -1,4 +1,4 @@
-﻿@model IQueryable<Book>
+﻿@model BooksListViewModel
 @{
     TextField textField = ViewBag.TextField;
 
@@ -7,19 +7,36 @@
     ViewBag.Keywords = textField.MetaKeywords;
 }
 <div>
-    @if (Model.Any())
-    {
-        <ul class="big-image-list">
-            @foreach (Book entity in Model)
+@*<form asp-controller="BookShow" asp-action="Show" method="get">
+    <div class="form-inline form-group">
+        <label class="control-label">Автор: </label>
+        <select>
+             @foreach (var item in Model.Genres)
             {
-                <li>
-                    <a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="@entity.Id">
-                        <img src="~/images/@entity.TitleImagePath" alt="" class="left">
-                    </a>
-                    <h4>@entity.Title</h4>
-                    <p>@entity.SubTitle</p>
-                </li>
+                <option value="@item.GenreName">@item.GenreName</option>
             }
-        </ul>
+        </select>
+       
+        <label class="control-label">Жанр: </label>
+        <select>
+             @foreach (var item in Model.Authors)
+            {
+                <option value="@item.AuthorName">@item.AuthorName</option>
+            }
+        </select>
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>*@
+<ul class="big-image-list">
+    @foreach (BookViewModel entity in Model.Books)
+    {
+        <li>
+        <a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="@entity.Id">
+            <img src="~/images/@entity.TitleImagePath" alt="" class="left">
+        </a>
+        <h4>@entity.Title</h4>
+        <p>@entity.SubTitle</p>
+        </li>
     }
+</ul>
 </div>

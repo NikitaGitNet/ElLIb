@@ -1,4 +1,4 @@
-﻿@model Book
+﻿@model BookViewModel
 @{
     string strTitle = "Редактировать запись";
     ViewBag.Title = strTitle;
@@ -10,7 +10,7 @@
 <div>
     <h2>@strTitle</h2>
     <div>
-        <form asp-area="Moderator" asp-controller="Books" asp-action="Edit" method="post" enctype="multipart/form-data">
+        <form asp-area="Admin" asp-controller="Books" asp-action="AddBook" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id">
             <input type="hidden" asp-for="DateAdded">
             <input type="hidden" asp-for="TitleImagePath">
@@ -31,16 +31,26 @@
                 <textarea asp-for="Text"></textarea>
                 <span asp-validation-for="Text"></span>
             </div>
-            @*<div class="div-box">
-                <label asp-for="Author"></label>
-                <textarea asp-for="Author"></textarea>
-                <span asp-validation-for="Author"></span>
-            </div>
-            <div class="div-box">
-                <label asp-for="Genre"></label>
-                <textarea asp-for="Genre"></textarea>
-                <span asp-validation-for="Genre"></span>
-            </div>*@
+            <form asp-controller="BookShow" asp-action="Show" method="get">
+                <div class="form-inline form-group">
+                    <label class="control-label">Автор: </label>
+                    <select>
+                        @foreach (var item in Model.Genres)
+                        {
+                            <option value="@item.Name">@item.Name</option>
+                        }
+                    </select>
+       
+                    <label class="control-label">Жанр: </label>
+                    <select>
+                        @foreach (var item in Model.Authors)
+                        {
+                            <option value="@item.Name">@item.Name</option>
+                        }
+                    </select>
+                    <input type="submit" value="Фильтр" class="btn btn-default" />
+                </div>
+            </form>
             <div class="div-box">
                 <label asp-for="TitleImagePath"></label>
                 <input type="file" name="titleImageFile" id="titleImageFile">

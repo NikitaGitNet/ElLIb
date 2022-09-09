@@ -9,7 +9,9 @@
         <a asp-area="Admin" asp-controller="UsersShow" asp-action="UsersShow"><h3 class="H2Title">Управление пользователями</h3></a>
         <h3>Наши книги</h3>
         <div class="div-box">
-            <a asp-area="Admin" asp-controller="Books" asp-action="Edit" asp-route-id="">Добавить книгу</a>
+            <a asp-area="Admin" asp-controller="Books" asp-action="AddAuthor" asp-route-id="">Добавить автора</a>
+            <a asp-area="Admin" asp-controller="Books" asp-action="AddGenre" asp-route-id="">Добавить жанр</a>
+            <a asp-area="Admin" asp-controller="Books" asp-action="AddBook" asp-route-id="">Добавить книгу</a>
         </div>
         @if (Model.Any())
         {

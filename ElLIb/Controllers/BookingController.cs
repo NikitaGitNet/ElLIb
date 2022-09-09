@@ -46,7 +46,7 @@ namespace ElLIb.Controllers
                 };
                 dataManager.Booking.SaveBooking(booking);
                 dataManager.Books.SaveBook(book);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                return View("~/Views/BookingShow/Booking.cshtml", new AddBookingModel { BookId = booking.BookId, CreateOn = booking.CreateOn, FinishedOn = booking.FinishedOn, Id = booking.Id, UserEmail = booking.UserEmail, UserId = booking.UserId, BooksTitle = booking.BooksTitle });
             }
             return View(dataManager.Books.GetBooks());
         }

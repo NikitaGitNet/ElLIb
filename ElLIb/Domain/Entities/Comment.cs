@@ -19,7 +19,7 @@ namespace ElLIb.Domain.Entities
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
         public Guid BookId { get; set; }
-        [ForeignKey("BookId")]
+        [ForeignKey("Id")]
         public Book Book { get; set; }
     }
 }

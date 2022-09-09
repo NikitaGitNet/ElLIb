@@ -14,6 +14,8 @@ namespace ElLIb.Domain
         public DbSet<Book> Books { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Author> Authors { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -81,24 +83,69 @@ namespace ElLIb.Domain
                 CodeWord = "PageContacts",
                 Title = "Контакты"
             });
-            builder.Entity<Book>().HasData(new Book
-            {
-                Id = new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"),
-                Title = "Ересь Хоруса",
-                SubTitle = "Там ересь была",
-                IsBooking = false,
-                Text = "Ваха 40к",
-                TitleImagePath = "1655641005121914702.jpg"
-            });
-            builder.Entity<Book>().HasData(new Book
-            {
-                Id = new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"),
-                Title = "Ересь Ангрона",
-                SubTitle = "Там тоже была ересь",
-                IsBooking = false,
-                Text = "Ваха 40к",
-                TitleImagePath = "1655641009118970804.jpg"
-            });
+            //builder.Entity<Book>().HasData(new Book
+            //{
+            //    Id = new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"),
+            //    Title = "Ересь Хоруса",
+            //    SubTitle = "Там ересь была",
+            //    IsBooking = false,
+            //    Text = "Ваха 40к",
+            //    TitleImagePath = "1655641005121914702.jpg"
+            //});
+            //builder.Entity<Book>().HasData(new Book
+            //{
+            //    Id = new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"),
+            //    Title = "Ересь Ангрона",
+            //    SubTitle = "Там тоже была ересь",
+            //    IsBooking = false,
+            //    Text = "Ваха 40к",
+            //    TitleImagePath = "1655641009118970804.jpg"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{ 
+            //    Id = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
+            //    Name = "Фэнтези"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{
+            //    Id = new Guid("e4ac715f-a600-4d01-8a09-5439c7b689b3"),
+            //    Name = "Хоррор"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{
+            //    Id = new Guid("9d0ecde8-9021-463d-a254-9ba7ce69f185"),
+            //    Name = "Фантастика"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{
+            //    Id = new Guid("61fd92c6-d6d9-41ed-a6eb-78afdffb85b7"),
+            //    Name = "Учебник"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{
+            //    Id = new Guid("42ecbaab-e685-4b3a-a82b-cd2960ceb903"),
+            //    Name = "Русская классика"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{
+            //    Id = new Guid("819dc305-79e5-4f60-82c1-b91ebfba98cd"),
+            //    Name = "Зарубежная классика"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{
+            //    Id = new Guid("ea16a380-f6f3-466f-af74-59e67a94174f"),
+            //    Name = "Детективы"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{
+            //    Id = new Guid("5666ece9-8655-4f9b-aeee-dc24679dc0d3"),
+            //    Name = "Приключения"
+            //});
+            //builder.Entity<Genre>().HasData(new Genre
+            //{
+            //    Id = new Guid("784c6187-e8cc-441a-bc8d-a484fe5b5afc"),
+            //    Name = "Научная литература"
+            //});
         }
     }
 }

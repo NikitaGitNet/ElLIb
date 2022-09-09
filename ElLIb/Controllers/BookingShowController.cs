@@ -31,21 +31,23 @@ namespace ElLIb.Controllers
         public IActionResult Index()
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ApplicationUser user = dataManager.ApplicationUserRepository.GetApplicationUserById(userId);
+            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
             if (user.Bookings.Count != 0)
             {
-                List<AddBookingModel> bookings = new List<AddBookingModel>();
+                List<AddBookingModel> bookings = new();
                 foreach (var i in user.Bookings)
                 {
-                    AddBookingModel booking = new AddBookingModel();
-                    booking.IssueBooking = i.IssueBooking;
-                    booking.UserEmail = i.UserEmail;
-                    booking.UserId = user.Id;
-                    booking.CreateOn = i.CreateOn;
-                    booking.FinishedOn = i.FinishedOn;
-                    booking.BookId = i.BookId;
-                    booking.BooksTitle = i.BooksTitle;
-                    booking.Id = i.Id;
+                    AddBookingModel booking = new()
+                    {
+                        IssueBooking = i.IssueBooking,
+                        UserEmail = i.UserEmail,
+                        UserId = user.Id,
+                        CreateOn = i.CreateOn,
+                        FinishedOn = i.FinishedOn,
+                        BookId = i.BookId,
+                        BooksTitle = i.BooksTitle,
+                        Id = i.Id
+                    };
                     bookings.Add(booking);
                 }
                 IQueryable<AddBookingModel> qBookings = bookings.AsQueryable();
