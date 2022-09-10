@@ -1,0 +1,8 @@
+﻿@using ElLIb.Models.Genre
+@model GenresListViewModel
+<ul>
+@foreach (var item in Model.Genres)
+{
+    <li><a class="glo" asp-controller="BooksShow" asp-action="SearchByGenre" asp-route-id="@item.Id">@item.Name</a></li>
+}
+</ul>

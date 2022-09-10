@@ -5,6 +5,7 @@ using ElLIb.Domain;
 using ElLIb.Domain.Entities;
 using ElLIb.Models.Book;
 using ElLIb.Models.Comment;
+using ElLIb.Models.Genre;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElLIb.Controllers
@@ -39,33 +40,15 @@ namespace ElLIb.Controllers
                 return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking });
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            var genres = dataManager.Genres.GetGenres();
-            var autors = dataManager.Author.GetAuthors();
-            var books = dataManager.Books.GetBooks();
-            List<BookViewModel> booksViewModel = new();
-            foreach (var b in books)
-            {
-                BookViewModel book = new()
-                {
-                    IsBooking = b.IsBooking,
-                    Id = b.Id,
-                    Title = b.Title,
-                    TitleImagePath = b.TitleImagePath,
-                    Text = b.Text,
-                    SubTitle = b.SubTitle,
-                };
-                booksViewModel.Add(book);
-            }
-            IQueryable<BookViewModel> qBooksViewModels = booksViewModel.AsQueryable();
-            return View(new BooksListViewModel {Authors = autors, Books = qBooksViewModels, Genres = genres });
+            return View(dataManager.Books.GetBooks());
         }
-        public IActionResult Show(Guid genreId, Guid authorId)
+        public IActionResult Show(Guid authorId)
         {
-            Genre genre = dataManager.Genres.GetGenreById(genreId);
+            //Genre genre = dataManager.Genres.GetGenreById(genreId);
             Author author = dataManager.Author.GetAuthorById(authorId);
             IQueryable<Book> books = dataManager.Books.GetBooks();
             List<BookViewModel> booksViewModels = new();
-            var sortBooks = from b in books where b.Genres == genre && b.Author == author orderby b.Title select b;
+            var sortBooks = from b in books where b.Author == author.Name orderby b.Title select b;
             foreach (var item in sortBooks)
             {
                 BookViewModel book = new()
@@ -79,7 +62,82 @@ namespace ElLIb.Controllers
                 booksViewModels.Add(book);
             }
             IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-            return View("~/Views/BooksShow/Show.cshtml", new BooksListViewModel {Books = qBooks});
+            return View("~/Views/BooksShow/ShowBooksSort.cshtml", new BooksListViewModel {Books = qBooks});
+        }
+        public IActionResult SearchByAuthor(Guid id)
+        {
+            if (id != default)
+            {
+                Author author = dataManager.Author.GetAuthorById(id);
+                var books = dataManager.Books.GetBooks();
+                var booksByAuthor = from b in books where b.Author == author.Name orderby b.Title select b;
+                List<BookViewModel> booksViewModels = new();
+                foreach (var book in booksByAuthor)
+                {
+                    BookViewModel bookViewModel = new()
+                    { 
+                        IsBooking = book.IsBooking,
+                        Author = book.Author,
+                        Genre = book.Genre,
+                        Id = book.Id,
+                        Title = book.Title,
+                        Text = book.Text,
+                        TitleImagePath = book.TitleImagePath,
+                        SubTitle = book.SubTitle
+                    };
+                    booksViewModels.Add(bookViewModel);
+                }
+                IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
+                return View("ShowBooksSort",new BooksListViewModel {Books = qBooks});
+            }
+            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
+            return View(dataManager.Author.GetAuthors());
+        }
+        public IActionResult SearchByGenre(Guid id)
+        {
+            if (id != default)
+            {
+                Genre genre = dataManager.Genres.GetGenreById(id);
+                var books = dataManager.Books.GetBooks();
+                var booksByGenre = from b in books where b.Genre == genre.Name orderby b.Title select b;
+                List<BookViewModel> booksViewModels = new();
+                foreach (var book in booksByGenre)
+                {
+                    BookViewModel bookViewModel = new()
+                    {
+                        IsBooking = book.IsBooking,
+                        Author = book.Author,
+                        Genre = book.Genre,
+                        Id = book.Id,
+                        Title = book.Title,
+                        Text = book.Text,
+                        TitleImagePath = book.TitleImagePath,
+                        SubTitle = book.SubTitle
+                    };
+                    booksViewModels.Add(bookViewModel);
+                }
+                IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
+                if (qBooks.Count() > 0)
+                {
+                    return View("ShowBooksSort", new BooksListViewModel { Books = qBooks });
+                }
+                return View("NullPage");
+            }
+            var genres = dataManager.Genres.GetGenres();
+            var sortGenresByName = from genre in genres orderby genre.Name select genre;
+            List<GenreViewModel> genresViewModels = new();
+            foreach (var item in sortGenresByName)
+            {
+                GenreViewModel genre = new()
+                { 
+                    Id = item.Id,
+                    Name = item.Name
+                };
+                genresViewModels.Add(genre);
+            }
+            IQueryable<GenreViewModel> qGenre = genresViewModels.AsQueryable();
+            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
+            return View(new GenresListViewModel { Genres = qGenre });
         }
     }
 }

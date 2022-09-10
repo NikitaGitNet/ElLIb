@@ -15,12 +15,9 @@ namespace ElLIb.Domain.Entities
         [Display(Name = "Полное описание книги")]
         public bool IsBooking { get; set; }
         public override string Text { get; set; }
-        public Guid AuthorId { get; set; }
-        [ForeignKey("AuthorId")]
-        public Author Author { get; set; }
-        public Guid GenreId { get; set; }
-        [ForeignKey("Id")]
-        public Genre Genres { get; set; }
+        [Display(Name = "Заполнить в формате - Фамилия Имя Отчество")]
+        public string Author { get; set; }
+        public string Genre { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Booking> Bookings { get; set; }
     }

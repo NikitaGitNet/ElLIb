@@ -1,4 +1,4 @@
-﻿@model BooksListViewModel
+﻿@model IQueryable<Book>
 @{
     TextField textField = ViewBag.TextField;
 
@@ -7,28 +7,10 @@
     ViewBag.Keywords = textField.MetaKeywords;
 }
 <div>
-@*<form asp-controller="BookShow" asp-action="Show" method="get">
-    <div class="form-inline form-group">
-        <label class="control-label">Автор: </label>
-        <select>
-             @foreach (var item in Model.Genres)
-            {
-                <option value="@item.GenreName">@item.GenreName</option>
-            }
-        </select>
-       
-        <label class="control-label">Жанр: </label>
-        <select>
-             @foreach (var item in Model.Authors)
-            {
-                <option value="@item.AuthorName">@item.AuthorName</option>
-            }
-        </select>
-        <input type="submit" value="Фильтр" class="btn btn-default" />
-    </div>
-</form>*@
+    <a asp-controller="BooksShow" asp-action="SearchByAuthor">Поиск по автору</a>
+    <a asp-controller="BooksShow" asp-action="SearchByGenre">Поиск по жанру</a>
 <ul class="big-image-list">
-    @foreach (BookViewModel entity in Model.Books)
+    @foreach (Book entity in Model)
     {
         <li>
         <a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="@entity.Id">

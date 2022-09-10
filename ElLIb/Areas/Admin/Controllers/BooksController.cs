@@ -44,57 +44,6 @@ namespace ElLIb.Areas.Admin.Controllers
             }
             return View(model);
         }
-        public IActionResult AddBook(Guid id)
-        {
-            var entity = id == default ? new Book() : dataManager.Books.GetBookById(id);
-            return View(entity);
-        }
-        [HttpPost]
-        public IActionResult AddBook(BookViewModel model, IFormFile titleImageFile, Book book)
-        {
-            if (ModelState.IsValid)
-            {
-                if (titleImageFile != null)
-                {
-                    model.TitleImagePath = titleImageFile.FileName;
-                    using (var stream = new FileStream(Path.Combine(hostingEnviroment.WebRootPath, "images/", titleImageFile.FileName), FileMode.Create))
-                    {
-                        titleImageFile.CopyTo(stream);
-                    }
-                }
-                Guid id = new Guid(); 
-                foreach (var item in model.Authors)
-                {
-                    id = item.Id;
-                }
-                Author author = dataManager.Author.GetAuthorById(id);
-                foreach (var item in model.Genres)
-                {
-                    id = item.Id;
-                }
-                Genre genre = dataManager.Genres.GetGenreById(id);
-                book = new()
-                {
-                    DateAdded = DateTime.Now,
-                    TitleImagePath = model.TitleImagePath,
-                    Id = model.Id,
-                    IsBooking = model.IsBooking,
-                    MetaDescription = model.MetaDescription,
-                    MetaKeywords = model.MetaKeywords,
-                    MetaTitle = model.MetaTitle,
-                    SubTitle = model.SubTitle,
-                    Title = model.Title,
-                    Text = model.Text,
-                    Author = author,
-                    AuthorId = author.Id,
-                    Genres = genre,
-                    GenreId = genre.Id,
-                };
-                dataManager.Books.SaveBook(book);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-            }
-            return View(model);
-        }
         public IActionResult AddGenre(Guid id)
         {
             var entity = id == default ? new Genre() : dataManager.Genres.GetGenreById(id);
