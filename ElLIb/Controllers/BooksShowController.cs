@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Models.Author;
 using ElLIb.Models.Book;
 using ElLIb.Models.Comment;
 using ElLIb.Models.Genre;
@@ -37,7 +38,7 @@ namespace ElLIb.Controllers
                     comments.Add(comment);
                 }
                 IQueryable<AddCommentModel> qComments = comments.AsQueryable();
-                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking });
+                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking, Author = book.Author, Genre = book.Genre });
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             return View(dataManager.Books.GetBooks());
@@ -88,10 +89,27 @@ namespace ElLIb.Controllers
                     booksViewModels.Add(bookViewModel);
                 }
                 IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-                return View("ShowBooksSort",new BooksListViewModel {Books = qBooks});
+                if (qBooks.Any())
+                {
+                    return View("ShowBooksSort", new BooksListViewModel { Books = qBooks });
+                }
+                return View("NullPage");
             }
+            var authors = dataManager.Author.GetAuthors();
+            var sortAuthorsByName = from author in authors orderby author.Name select author;
+            List<AuthorViewModel> authorsViewModels = new();
+            foreach (var item in sortAuthorsByName)
+            {
+                AuthorViewModel author = new()
+                { 
+                    Id = item.Id,
+                    Name = item.Name
+                };
+                authorsViewModels.Add(author);
+            }
+            IQueryable<AuthorViewModel> qAuthors = authorsViewModels.AsQueryable();
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            return View(dataManager.Author.GetAuthors());
+            return View(new AuthorListViewModel{Authors = qAuthors });
         }
         public IActionResult SearchByGenre(Guid id)
         {
@@ -117,7 +135,7 @@ namespace ElLIb.Controllers
                     booksViewModels.Add(bookViewModel);
                 }
                 IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-                if (qBooks.Count() > 0)
+                if (qBooks.Any())
                 {
                     return View("ShowBooksSort", new BooksListViewModel { Books = qBooks });
                 }

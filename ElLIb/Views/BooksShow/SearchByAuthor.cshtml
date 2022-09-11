@@ -1,6 +1,6 @@
-﻿@model IQueryable<Author>
+﻿@model AuthorListViewModel
 <ul>
-@foreach (var item in Model)
+@foreach (var item in Model.Authors)
 {
     <li><a class="glo" asp-controller="BooksShow" asp-action="SearchByAuthor" asp-route-id="@item.Id">@item.Name</a></li>
 }

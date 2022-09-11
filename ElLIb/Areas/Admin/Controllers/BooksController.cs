@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
-using ElLIb.Areas.Admin.Models;
 using ElLIb.Domain;
 using ElLIb.Domain.Entities;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace ElLIb.Areas.Admin.Controllers
 {
@@ -38,6 +38,20 @@ namespace ElLIb.Areas.Admin.Controllers
                     {
                         titleImageFile.CopyTo(stream);
                     }
+                }
+                var authors = dataManager.Author.GetAuthors();
+                var sortAuthors = from a in authors where model.Author == a.Name select a;
+                if (sortAuthors.Count() <= 0)
+                {
+                    Author author = new() {Name = model.Author, Id = new Guid() };
+                    dataManager.Author.SaveAuthor(author);
+                }
+                var genres = dataManager.Genres.GetGenres();
+                var sortGenres = from g in genres where model.Genre == g.Name select g;
+                if (sortGenres.Count() <= 0)
+                {
+                    Genre genre = new() {Name = model.Genre, Id = new Guid() };
+                    dataManager.Genres.SaveGenre(genre);
                 }
                 dataManager.Books.SaveBook(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());

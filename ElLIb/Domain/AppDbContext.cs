@@ -41,7 +41,8 @@ namespace ElLIb.Domain
                 NormalizedEmail = "MY@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "superpassword"),
-                SecurityStamp = string.Empty
+                SecurityStamp = string.Empty,
+                CreateOn = DateTime.Now
             },
             new ApplicationUser
             {
@@ -52,7 +53,8 @@ namespace ElLIb.Domain
                 NormalizedEmail = "MODERATOR@EMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "moderatorpassword"),
-                SecurityStamp = string.Empty
+                SecurityStamp = string.Empty,
+                CreateOn = DateTime.Now
             });
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
@@ -92,7 +94,8 @@ namespace ElLIb.Domain
                 Text = "Ваха 40к",
                 TitleImagePath = "1655641005121914702.jpg",
                 Genre = "Фэнтези",
-                Author = "Жафаров Ильнур Наильевич"
+                Author = "Жафаров Ильнур Наильевич",
+                DateAdded = DateTime.Now
             });
             builder.Entity<Book>().HasData(new Book
             {
@@ -103,7 +106,8 @@ namespace ElLIb.Domain
                 Text = "Ваха 40к",
                 TitleImagePath = "1655641009118970804.jpg",
                 Genre = "Фэнтези",
-                Author = "Букин Генадий Валентинович"
+                Author = "Букин Генадий Валентинович",
+                DateAdded = DateTime.Now
             });
             builder.Entity<Genre>().HasData(new Genre
             {
