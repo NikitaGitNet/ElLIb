@@ -1,4 +1,5 @@
-﻿using ElLIb.Domain;
+﻿using ElLIb.Areas.Admin.Models;
+using ElLIb.Domain;
 using ElLIb.Domain.Entities;
 using ElLIb.Models.Booking;
 using ElLIb.Models.Comment;
@@ -25,12 +26,24 @@ namespace ElLIb.Areas.Admin.Controllers
 
         public IActionResult UsersShow(string id)
         {
-            //??? а че это снизу
-            if (id != default)
+            var users = dataManager.ApplicationUser.GetApplicationUsers();
+            var sortUsers = from u in users orderby u.UserName select u;
+            List<UserViewModel> usersViewModel = new();
+            foreach (var user in sortUsers)
             {
-
+                UserViewModel userViewModel = new() 
+                {
+                    Email = user.Email,
+                    CreateOn = user.CreateOn,
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Bookings = user.Bookings,
+                    Comments = user.Comments
+                };
+                usersViewModel.Add(userViewModel);
             }
-            return View(dataManager.ApplicationUser.GetApplicationUsers());
+            IQueryable<UserViewModel> qUsers = usersViewModel.AsQueryable();
+            return View(new UsersListViewModel {Users = qUsers });
         }
         public IActionResult ShowCurentUser(string id)
         {
@@ -103,7 +116,6 @@ namespace ElLIb.Areas.Admin.Controllers
             dataManager.ApplicationUser.SaveApplicationUser(user);
             return View();
         }
-        // сделать удаление как с айдентити юзером
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {

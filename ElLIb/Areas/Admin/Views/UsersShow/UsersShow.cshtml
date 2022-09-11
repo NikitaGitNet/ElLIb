@@ -1,23 +1,20 @@
-﻿@model IQueryable<ApplicationUser>
+﻿@model UsersListViewModel
 @{
     TextField textField = ViewBag.TextField;
 }
 <div>
-    @if (Model.Any())
-    {
-        <h2>Список пользователей:</h2>
-        <ul>
-            @foreach (ApplicationUser user in Model)
-            {
-                <li>
-                    <p>Электронная почта: @user.Email</p>
-                    <p>Имя пользователя: @user.UserName</p>
-                    <a asp-area="Admin" asp-controller="UsersShow" asp-action="ShowCurentUser" asp-route-id="@user.Id">
-                        <h2 class="H2Title">Перейти к пользователю</h2>
-                    </a>
-                    <hr>
-                </li>  
-            }
-        </ul>
-    }
+    <h2>Список пользователей:</h2>
+    <ul>
+        @foreach (var user in Model.Users)
+        {
+            <li>
+                <p>Электронная почта: @user.Email</p>
+                <p>Имя пользователя: @user.UserName</p>
+                <a asp-area="Admin" asp-controller="UsersShow" asp-action="ShowCurentUser" asp-route-id="@user.Id">
+                <h2 class="H2Title">Перейти к пользователю</h2>
+                </a>
+                <hr>
+            </li>  
+        }
+    </ul>
 </div>

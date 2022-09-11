@@ -1673,3 +1673,58 @@ ul.link-list li:first-child {
 .Alert {
     color: red;
 }
+.BooksShow {
+    overflow: scroll;
+    min-width: 300px;
+    max-height: 500px;
+    padding: 5px;
+    font-size: 25px;
+    overflow-x: hidden;
+}
+.BooksShow a {
+    text-decoration: none;
+    width: 33%;
+    
+}
+.OnceBookElement {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 20px 0;
+    align-items: center;
+}
+.BooksShow a:hover {
+    color: purple;
+    text-decoration: underline;
+}
+.Div-box-custom {
+    font-size: 25px;
+    width: 500px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+    .Div-box-custom a {
+        margin: 0 0 10px 0;
+        text-decoration: none;
+        border: solid 2px;
+        border-radius: 5px;
+        padding: 2px;
+    }
+        .Div-box-custom a:hover {
+            color: purple;
+        }
+.UserManager {
+    width: 300px;
+    font-size: 25px;
+}
+    .UserManager a {
+        text-decoration: none;
+        border: solid 2px;
+        border-radius: 5px;
+        margin: 0 0 10px 0;
+        padding: 2px;
+    }
+        .UserManager a:hover {
+            color: purple;
+            
+        }

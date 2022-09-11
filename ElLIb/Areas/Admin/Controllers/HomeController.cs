@@ -1,5 +1,9 @@
 ﻿using ElLIb.Domain;
+using ElLIb.Models.Book;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Collections.Generic;
+using System;
 
 namespace ElLIb.Areas.Admin.Controllers
 {
@@ -14,7 +18,26 @@ namespace ElLIb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View(dataManager.Books.GetBooks());
+            var books = dataManager.Books.GetBooks();
+            var sortBooks = from b in books orderby b.Title select b;
+            List <BookViewModel> booksViewModels = new ();
+            foreach (var book in sortBooks)
+            {
+                BookViewModel bookViewModel = new() 
+                { 
+                    Author = book.Author,
+                    Genre = book.Genre,
+                    Id = book.Id,
+                    IsBooking = book.IsBooking,
+                    SubTitle = book.SubTitle,
+                    Title = book.Title,
+                    Text = book.Text,
+                    TitleImagePath = book.TitleImagePath,
+                };
+                booksViewModels.Add(bookViewModel);
+            }
+            IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
+            return View(new BooksListViewModel {Books = qBooks});
         }
     }
 }

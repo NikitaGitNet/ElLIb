@@ -10,13 +10,13 @@
         <h3>Наши книги</h3>
         <div class="div-box">
             <a asp-area="Moderator" asp-controller="Books" asp-action="Edit" asp-route-id="">Добавить книгу</a>
-        </div>
+        </div class="BooksShow">
         @if (Model.Any())
         {
             <div>
                 @foreach (Book entity in Model)
                 {
-                    <div>
+                    <div class="OnceBookElement">
                         <a asp-area="Moderator" asp-controller="Books" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
                         <form style="display: inline-block;" id="form-@entity.Id" asp-area="Moderator" asp-controller="Books" asp-action="Delete" method="post">
                             <input type="hidden" name="id" value="@entity.Id">
