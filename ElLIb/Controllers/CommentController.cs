@@ -37,13 +37,15 @@ namespace ElLIb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Write(AddCommentModel model)
         {
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
             Comment comment = new();
             if (ModelState.IsValid)
             {
                 comment.BookId = model.Id;
                 comment.Text = model.CommentText;
-                comment.UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
-                comment.UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                comment.UserName = user.UserName;
+                comment.UserId = user.Id;
                 comment.CreateOn = DateTime.Now;
                 dataManager.Comment.SaveComment(comment);
                 return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController());

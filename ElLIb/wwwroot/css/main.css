@@ -1687,6 +1687,9 @@ ul.link-list li:first-child {
     width: 33%;
     
 }
+    .BooksShow h3 {
+        color: purple;
+    }
 .OnceBookElement {
     display: flex;
     justify-content: space-between;

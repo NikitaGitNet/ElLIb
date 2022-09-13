@@ -33,7 +33,8 @@ namespace ElLIb.Controllers
                         CommentText = i.Text,
                         UserEmail = i.UserEmail,
                         Id = i.Id,
-                        UserName = i.UserName
+                        UserName = i.UserName,
+                        CreatedDate = i.CreateOn
                     };
                     comments.Add(comment);
                 }

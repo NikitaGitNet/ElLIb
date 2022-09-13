@@ -20,12 +20,13 @@
 </div>
 
 
-<div>
+<div class="BooksShow">
     <h3 class="H2Title">Комментарии пользователей:</h3>
     <hr>
     @foreach (var comment in Model.Comments)
     {
-        <h3>@comment.UserEmail</h3>
+        <h3>@comment.UserName</h3>
+        <h3>@comment.CreatedDate</h3>
         @Html.Raw(comment.CommentText)
         @if (User.IsInRole("moderator") || User.IsInRole("admin"))
         {
@@ -38,7 +39,9 @@
     }
 </div>
 
-<div>
+@if (User.Identity.IsAuthenticated)
+{
+     <div>
     <form asp-controller="Comment" asp-action="Write" method="post" enctype="multipart/form-data">
     <div class="div-box">
         <textarea asp-for="CommentText"></textarea>
@@ -66,7 +69,9 @@
             }
         </div>
     </form>
-</div>
+</div>   
+}
+
 <script>
     window.onload = function() { 
         var newCKEdit = CKEDITOR.replace('@Html.IdFor(x=>x.CommentText)');

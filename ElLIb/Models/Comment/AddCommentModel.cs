@@ -10,5 +10,6 @@ namespace ElLIb.Models.Comment
         public Guid BookId { get; set; }
         public string UserEmail { get; set; }
         public string UserName { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

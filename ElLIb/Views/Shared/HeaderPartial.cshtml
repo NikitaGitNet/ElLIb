@@ -8,7 +8,7 @@
 							<a asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
 							<a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="">Книги</a>
 							<a asp-area="" asp-controller="Home" asp-action="Contacts">Контакты</a>
-							<a asp-area="" asp-controller="BookingShow" asp-action="Index">Брони</a>
+							
 							@if (User.IsInRole("admin"))
 							{
 								<a asp-area="Admin" asp-controller="Home" asp-action="Index">Панель администратора</a>
@@ -19,7 +19,8 @@
 							}
 							@if (User.Identity.IsAuthenticated)
 							{
-								<a asp-area="" asp-controller="Account" asp-action="Logout">Выйти из учетной записи</a>
+								<a asp-area="" asp-controller="BookingShow" asp-action="Index">Брони</a>
+								<a asp-area="" asp-controller="Account" asp-action="Logout">Выйти</a>
 							}
 							else
 							{
