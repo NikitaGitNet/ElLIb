@@ -1651,7 +1651,8 @@ ul.link-list li:first-child {
     background-size: 200% 100%;
     transition: all .25s ease-in;
     font: 400 18px tahoma;
-    border: 1px solid #00C6FF;
+    border: 2px solid #00C6FF;
+    border-radius: 10px;
 }
 
 .glo:hover {
@@ -1728,3 +1729,8 @@ ul.link-list li:first-child {
             color: purple;
             
         }
+.UlImage {
+    border: solid 2px;
+    border-block-color: purple;
+    border-radius: 10px;
+}

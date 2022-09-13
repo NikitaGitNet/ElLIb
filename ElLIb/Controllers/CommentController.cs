@@ -40,13 +40,13 @@ namespace ElLIb.Areas.Admin.Controllers
             Comment comment = new();
             if (ModelState.IsValid)
             {
-                comment.BookId = model.BookId;
-                comment.Text = model.Text;
+                comment.BookId = model.Id;
+                comment.Text = model.CommentText;
                 comment.UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
                 comment.UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 comment.CreateOn = DateTime.Now;
                 dataManager.Comment.SaveComment(comment);
-                return RedirectToAction(nameof(BooksShowController.Index), nameof(HomeController).CutController());
+                return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController());
             }
             return View(comment);
         }

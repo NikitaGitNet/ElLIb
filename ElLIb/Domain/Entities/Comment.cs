@@ -8,9 +8,7 @@ namespace ElLIb.Domain.Entities
 {
     public class Comment
     {
-        [Required]
         public Guid Id { get; set; }
-        [Required]
         public string Text { get; set; }
         public DateTime? CreateOn { get; set; }
         public string UserEmail { get; set; }
@@ -19,7 +17,7 @@ namespace ElLIb.Domain.Entities
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
         public Guid BookId { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("BookId")]
         public Book Book { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Models.Book;
 using ElLIb.Models.Booking;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Hosting;
@@ -29,26 +30,22 @@ namespace ElLIb.Controllers
         }
 
         [HttpPost]
-        public IActionResult Booking(AddBookingModel model)
+        public IActionResult Booking(BookViewModel model)
         {
-            if (ModelState.IsValid)
+            Book book = dataManager.Books.GetBookById(model.Id);
+            book.IsBooking = true;
+            Booking booking = new()
             {
-                Book book = dataManager.Books.GetBookById(model.BookId);
-                book.IsBooking = true;
-                Booking booking = new()
-                {
-                    BooksTitle = book.Title,
-                    BookId = model.BookId,
-                    UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
-                    CreateOn = DateTime.Now,
-                    FinishedOn = DateTime.Now.AddDays(3),
-                    UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
-                };
-                dataManager.Booking.SaveBooking(booking);
-                dataManager.Books.SaveBook(book);
-                return View("~/Views/BookingShow/Booking.cshtml", new AddBookingModel { BookId = booking.BookId, CreateOn = booking.CreateOn, FinishedOn = booking.FinishedOn, Id = booking.Id, UserEmail = booking.UserEmail, UserId = booking.UserId, BooksTitle = booking.BooksTitle });
-            }
-            return View(dataManager.Books.GetBooks());
+                 BooksTitle = book.Title,
+                 BookId = model.Id,
+                 UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
+                 CreateOn = DateTime.Now,
+                 FinishedOn = DateTime.Now.AddDays(3),
+                 UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+            };
+            dataManager.Booking.SaveBooking(booking);
+            dataManager.Books.SaveBook(book);
+            return View("~/Views/BookingShow/Booking.cshtml", new AddBookingModel { BookId = booking.BookId, CreateOn = booking.CreateOn, FinishedOn = booking.FinishedOn, Id = booking.Id, UserEmail = booking.UserEmail, UserId = booking.UserId, BooksTitle = booking.BooksTitle });
         }
         
         [HttpPost]
@@ -59,7 +56,7 @@ namespace ElLIb.Controllers
             book.IsBooking = false;
             dataManager.Books.SaveBook(book);
 
-            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+            return RedirectToAction(nameof(BookingShowController.Index), nameof(BookingShowController).CutController());
         }
         
     }

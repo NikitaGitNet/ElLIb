@@ -1,4 +1,4 @@
-﻿@model IQueryable<Book>
+﻿@model BooksListViewModel
 @{
     TextField textField = ViewBag.TextField;
 
@@ -7,14 +7,16 @@
     ViewBag.Keywords = textField.MetaKeywords;
 }
 <div>
-    <a asp-controller="BooksShow" asp-action="SearchByAuthor">Поиск по автору</a>
-    <a asp-controller="BooksShow" asp-action="SearchByGenre">Поиск по жанру</a>
+    <div class="div-box">
+        <a class="glo" asp-controller="BooksShow" asp-action="SearchByAuthor">Поиск по автору</a>
+        <a class="glo" asp-controller="BooksShow" asp-action="SearchByGenre">Поиск по жанру</a>
+    </div>
 <ul class="big-image-list">
-    @foreach (Book entity in Model)
+    @foreach (var entity in Model.Books)
     {
         <li>
         <a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="@entity.Id">
-            <img src="~/images/@entity.TitleImagePath" alt="" class="left">
+            <img src="~/images/@entity.TitleImagePath" alt="" class="left UlImage">
         </a>
         <h4>@entity.Title</h4>
         <p>@entity.SubTitle</p>

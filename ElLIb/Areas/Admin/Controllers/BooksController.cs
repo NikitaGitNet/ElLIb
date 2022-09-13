@@ -53,6 +53,7 @@ namespace ElLIb.Areas.Admin.Controllers
                     Genre genre = new() {Name = model.Genre, Id = new Guid() };
                     dataManager.Genres.SaveGenre(genre);
                 }
+                model.DateAdded = DateTime.Now;
                 dataManager.Books.SaveBook(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }

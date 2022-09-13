@@ -23,6 +23,8 @@ namespace ElLIb.Models.Book
         public string TitleImagePath { get; set; }
         public string Text { get; set; }
         public bool IsBooking { get; set; }
+        public string CommentText { get;set; }
+        public DateTime DateAdded { get; set; }
         public IQueryable<AddCommentModel> Comments { get; set; }
     }
 }

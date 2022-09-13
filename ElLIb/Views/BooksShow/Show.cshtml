@@ -6,12 +6,13 @@
     <h4 class="H2Title">@Model.Title</h4>
     <h3>@Model.SubTitle</h3>
     <div>
-        <img class="img-block" src="~/images/@Model.TitleImagePath">
+        <img class="img-block UlImage" src="~/images/@Model.TitleImagePath">
     </div>
     <div class="indent"></div>
     <div>
         <h3>Автор: @Model.Author</h3>
         <h3>Жанр: @Model.Genre</h3>
+        <h3> @Model.DateAdded</h3>
     </div>
 </div>
 <div>
@@ -25,7 +26,7 @@
     @foreach (var comment in Model.Comments)
     {
         <h3>@comment.UserEmail</h3>
-        @Html.Raw(comment.Text)
+        @Html.Raw(comment.CommentText)
         @if (User.IsInRole("moderator") || User.IsInRole("admin"))
         {
             <form style="display: inline-block;" id="form-@comment.Id" asp-area="" asp-controller="Comment" asp-action="Delete" method="post">
@@ -40,8 +41,8 @@
 <div>
     <form asp-controller="Comment" asp-action="Write" method="post" enctype="multipart/form-data">
     <div class="div-box">
-        <textarea asp-for="Text"></textarea>
-        <span asp-validation-for="Text"></span>
+        <textarea asp-for="CommentText"></textarea>
+        <span asp-validation-for="CommentText"></span>
     </div>
     <div hidden class="div-box">
         <textarea asp-for="Id"></textarea>
@@ -68,7 +69,7 @@
 </div>
 <script>
     window.onload = function() { 
-        var newCKEdit = CKEDITOR.replace('@Html.IdFor(x=>x.Text)');
+        var newCKEdit = CKEDITOR.replace('@Html.IdFor(x=>x.CommentText)');
         newCKEdit.updateElement();
     }
 </script>

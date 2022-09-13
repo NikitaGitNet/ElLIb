@@ -95,7 +95,6 @@ namespace ElLIb.Domain
                 TitleImagePath = "1655641005121914702.jpg",
                 Genre = "Фэнтези",
                 Author = "Жафаров Ильнур Наильевич",
-                DateAdded = DateTime.Now
             });
             builder.Entity<Book>().HasData(new Book
             {
@@ -107,7 +106,6 @@ namespace ElLIb.Domain
                 TitleImagePath = "1655641009118970804.jpg",
                 Genre = "Фэнтези",
                 Author = "Букин Генадий Валентинович",
-                DateAdded = DateTime.Now
             });
             builder.Entity<Genre>().HasData(new Genre
             {

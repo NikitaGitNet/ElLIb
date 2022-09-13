@@ -32,7 +32,7 @@
             @foreach (var item in Model.Comments)
             {
                 <p>Имя пользователя: @item.UserName</p>
-                <p>Комментарий: @Html.Raw(@item.Text)</p>
+                <p>Комментарий: @Html.Raw(@item.CommentText)</p>
                 @*Допилить хуйню ниже и сделать такую же для броней*@
                 <form style="display: inline-block;" id="form-@item.Id" asp-area="" asp-controller="Comment" asp-action="Delete" method="post">
                     <input type="hidden" name="id" value="@item.Id">

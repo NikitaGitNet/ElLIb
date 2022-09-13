@@ -30,7 +30,7 @@ namespace ElLIb.Controllers
                     AddCommentModel comment = new()
                     {
                         BookId = book.Id,
-                        Text = i.Text,
+                        CommentText = i.Text,
                         UserEmail = i.UserEmail,
                         Id = i.Id,
                         UserName = i.UserName
@@ -38,32 +38,30 @@ namespace ElLIb.Controllers
                     comments.Add(comment);
                 }
                 IQueryable<AddCommentModel> qComments = comments.AsQueryable();
-                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking, Author = book.Author, Genre = book.Genre });
+                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking, Author = book.Author, Genre = book.Genre, DateAdded = book.DateAdded });
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            return View(dataManager.Books.GetBooks());
-        }
-        public IActionResult Show(Guid authorId)
-        {
-            //Genre genre = dataManager.Genres.GetGenreById(genreId);
-            Author author = dataManager.Author.GetAuthorById(authorId);
-            IQueryable<Book> books = dataManager.Books.GetBooks();
-            List<BookViewModel> booksViewModels = new();
-            var sortBooks = from b in books where b.Author == author.Name orderby b.Title select b;
+            var books = dataManager.Books.GetBooks();
+            var sortBooks = from b in books orderby b.DateAdded select b;
+            List<BookViewModel> booksViewModel = new();
             foreach (var item in sortBooks)
             {
-                BookViewModel book = new()
-                {
-                    TitleImagePath = item.TitleImagePath,
-                    Text = item.Text,
+                BookViewModel book = new() 
+                { 
+                    Author = item.Author,
+                    Genre = item.Genre,
+                    Id = item.Id,
+                    IsBooking = item.IsBooking,
                     SubTitle = item.SubTitle,
+                    Text = item.Text,
                     Title = item.Title,
-                    Id = item.Id
+                    TitleImagePath = item.TitleImagePath,
+                    DateAdded = item.DateAdded
                 };
-                booksViewModels.Add(book);
+                booksViewModel.Add(book);
             }
-            IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-            return View("~/Views/BooksShow/ShowBooksSort.cshtml", new BooksListViewModel {Books = qBooks});
+            IQueryable<BookViewModel> qBooks = booksViewModel.AsQueryable();
+            return View(new BooksListViewModel {Books = qBooks});
         }
         public IActionResult SearchByAuthor(Guid id)
         {

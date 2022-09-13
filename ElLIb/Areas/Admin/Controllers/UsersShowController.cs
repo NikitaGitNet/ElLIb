@@ -76,7 +76,7 @@ namespace ElLIb.Areas.Admin.Controllers
                     {
                         AddCommentModel comment = new()
                         {
-                            Text = i.Text,
+                            CommentText = i.Text,
                             UserEmail = i.UserEmail,
                             Id = i.Id,
                             BookId = i.BookId
