@@ -32,20 +32,26 @@ namespace ElLIb.Controllers
         [HttpPost]
         public IActionResult Booking(BookViewModel model)
         {
-            Book book = dataManager.Books.GetBookById(model.Id);
-            book.IsBooking = true;
-            Booking booking = new()
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
+            if (user.Bookings.Count < 5)
             {
-                 BooksTitle = book.Title,
-                 BookId = model.Id,
-                 UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
-                 CreateOn = DateTime.Now,
-                 FinishedOn = DateTime.Now.AddDays(3),
-                 UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
-            };
-            dataManager.Booking.SaveBooking(booking);
-            dataManager.Books.SaveBook(book);
-            return View("~/Views/BookingShow/Booking.cshtml", new AddBookingModel { BookId = booking.BookId, CreateOn = booking.CreateOn, FinishedOn = booking.FinishedOn, Id = booking.Id, UserEmail = booking.UserEmail, UserId = booking.UserId, BooksTitle = booking.BooksTitle });
+                Book book = dataManager.Books.GetBookById(model.Id);
+                book.IsBooking = true;
+                Booking booking = new()
+                {
+                    BooksTitle = book.Title,
+                    BookId = model.Id,
+                    UserEmail = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value,
+                    CreateOn = DateTime.Now,
+                    FinishedOn = DateTime.Now.AddDays(3),
+                    UserId = userId,
+                };
+                dataManager.Booking.SaveBooking(booking);
+                dataManager.Books.SaveBook(book);
+                return View("~/Views/BookingShow/Booking.cshtml", new BookingViewModel { BookId = booking.BookId, CreateOn = booking.CreateOn, FinishedOn = booking.FinishedOn, Id = booking.Id, UserEmail = booking.UserEmail, UserId = booking.UserId, BooksTitle = booking.BooksTitle });
+            }
+            return View("~/Views/BookingShow/LimitBooking.cshtml");
         }
         
         [HttpPost]

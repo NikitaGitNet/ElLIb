@@ -1737,3 +1737,69 @@ ul.link-list li:first-child {
     border-block-color: purple;
     border-radius: 10px;
 }
+.Div-box-customModer {
+    font-size: 25px;
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+    .Div-box-customModer a {
+        margin: 0 0 10px 0;
+        text-decoration: none;
+        border: solid 2px;
+        border-radius: 5px;
+        padding: 2px;
+    }
+
+        .Div-box-customModer a:hover {
+            color: purple;
+        }
+.inputBox {
+    
+}
+    .inputBox input {
+        border: solid 2px;
+        border-block-color: purple;
+        border-radius: 10px;
+        width: 300px;
+        height: 40px;
+    }
+    .inputBox label {
+        font-size: 24px;
+        color: purple;
+        border-block-color: purple;
+        border-radius: 10px
+    }
+    .liBooking {
+    }
+.liBooking p {
+    font-size: 20px;
+    color: black;
+}
+.gloAdmin {
+    color: #00c6ff;
+    padding: 10px 20px;
+    width: 200px;
+    text-decoration: none;
+    text-align: center;
+    margin: 20px auto;
+    display: block;
+    background-image: linear-gradient(to left,transparent,transparent 50%,#00c6ff 50%,#00c6ff);
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: all .25s ease-in;
+    font: 400 18px tahoma;
+    border: 2px solid #00C6FF;
+    border-radius: 10px;
+}
+
+.gloAdmin:hover {
+    background-position: 0 0;
+    color: #fff;
+}
+.EditModer {
+    flex-direction: row;
+    font-size: 25px;
+    display: flex;
+}

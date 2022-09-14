@@ -13,7 +13,7 @@ namespace ElLIb.Models.User
         public string UserEmail { get; set; }
         public string UserName { get; set; }
         public DateTime CreateOn { get; set; }
-        public IQueryable<AddBookingModel> Bookings { get; set; }
+        public IQueryable<BookingViewModel> Bookings { get; set; }
         public IQueryable<AddCommentModel> Comments { get; set; }
     }
 }

@@ -51,12 +51,12 @@ namespace ElLIb.Areas.Admin.Controllers
             if (user.Bookings.Count != 0 || user.Comments.Count != 0)
             {
                 List<AddCommentModel> comments = new();
-                List<AddBookingModel> bookings = new();
+                List<BookingViewModel> bookings = new();
                 if (user.Bookings.Count != 0)
                 {
                     foreach (var i in user.Bookings)
                     {
-                        AddBookingModel booking = new()
+                        BookingViewModel booking = new()
                         {
                             IssueBooking = i.IssueBooking,
                             UserEmail = i.UserEmail,
@@ -84,7 +84,7 @@ namespace ElLIb.Areas.Admin.Controllers
                         comments.Add(comment);
                     }
                 }
-                IQueryable<AddBookingModel> qBookings = bookings.AsQueryable();
+                IQueryable<BookingViewModel> qBookings = bookings.AsQueryable();
                 IQueryable<AddCommentModel> qComments = comments.AsQueryable();
                 return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = qBookings, CreateOn = user.CreateOn, Comments = qComments });
             }

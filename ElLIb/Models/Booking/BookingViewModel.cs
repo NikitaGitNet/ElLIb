@@ -2,7 +2,7 @@
 
 namespace ElLIb.Models.Booking
 {
-    public class AddBookingModel
+    public class BookingViewModel
     {
         public Guid Id { get; set; }
         public DateTime CreateOn { get; set; }

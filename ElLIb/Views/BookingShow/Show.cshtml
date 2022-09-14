@@ -2,17 +2,17 @@
 @{
     TextField textField = ViewBag.TextField;
 }   
-    <h2>Ваши брони:</h2>
+    <h2>Ваши брони, @Model.Bookings.Count()/5:</h2>
     @foreach (var booking in Model.Bookings)
     {
-        <p>Название книги: @booking.BooksTitle</p>
+        <h3>Название книги: @booking.BooksTitle</h3>
         @if (!booking.IssueBooking)
         {
-            <p>Окончание брони: @booking.FinishedOn</p>
+            <h3>Окончание брони: @booking.FinishedOn</h3>
         }
         else
         {   
-            <p class="Alert">Книга выдана необходимо вернуть до: @booking.FinishedOn</p>
+            <h3 class="Alert">Книга выдана необходимо вернуть до: @booking.FinishedOn</h3>
         }
         @if (!booking.IssueBooking)
         {

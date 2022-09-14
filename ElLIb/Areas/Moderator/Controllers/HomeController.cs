@@ -38,9 +38,5 @@ namespace ElLIb.Areas.Moderator.Controllers
             IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
             return View(new BooksListViewModel { Books = qBooks });
         }
-        public IActionResult BookingShow()
-        {
-            return View(dataManager.Booking.GetBookings());
-        }
     }
 }

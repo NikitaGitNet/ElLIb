@@ -34,10 +34,10 @@ namespace ElLIb.Controllers
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
             if (user.Bookings.Count != 0)
             {
-                List<AddBookingModel> bookings = new();
+                List<BookingViewModel> bookings = new();
                 foreach (var i in user.Bookings)
                 {
-                    AddBookingModel booking = new()
+                    BookingViewModel booking = new()
                     {
                         IssueBooking = i.IssueBooking,
                         UserEmail = i.UserEmail,
@@ -50,7 +50,7 @@ namespace ElLIb.Controllers
                     };
                     bookings.Add(booking);
                 }
-                IQueryable<AddBookingModel> qBookings = bookings.AsQueryable();
+                IQueryable<BookingViewModel> qBookings = bookings.AsQueryable();
                 return View("~/Views/BookingShow/Show.cshtml", new UserModel { Id = user.Id, UserName = user.UserName, Bookings = qBookings, UserEmail = user.Email });
             }
             return View("~/Views/BookingShow/NullPage.cshtml");
