@@ -5,12 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Messange\**" />
+    <Content Remove="Views\Messange\**" />
+    <EmbeddedResource Remove="Views\Messange\**" />
+    <None Remove="Views\Messange\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="compilerconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Messange\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\sass\" />
     <Folder Include="wwwroot\js\" />

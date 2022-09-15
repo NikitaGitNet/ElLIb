@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElLIb.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220913011538_initialCreate")]
-    partial class initialCreate
+    [Migration("20220915165307_inicialCreate")]
+    partial class inicialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,14 +93,14 @@ namespace ElLIb.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "364292b7-2d52-4cd4-89c5-0edd2e0129d0",
-                            CreateOn = new DateTime(2022, 9, 13, 4, 15, 37, 852, DateTimeKind.Local).AddTicks(6695),
+                            ConcurrencyStamp = "66b425f3-ae00-4841-9f21-4e1aa0aa6dce",
+                            CreateOn = new DateTime(2022, 9, 15, 19, 53, 6, 527, DateTimeKind.Local).AddTicks(6309),
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC3Eoa3zbLYgpAe7U87hJt1hamw9BCiKQGbn57TBhA49g6GSDofupBmBlz0VILFSYA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJoNBAov0n0NDfBhw9NZVlb4wrXeYds5AqwOyg1PhB7SXFz3MPwPLUjFPnhWn+AYWg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -110,14 +110,14 @@ namespace ElLIb.Migrations
                         {
                             Id = "86d55f40-9544-4d92-aa24-cc5693a5fd96",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "808cacf4-fdcc-4941-802a-9bd40a93e288",
-                            CreateOn = new DateTime(2022, 9, 13, 4, 15, 37, 854, DateTimeKind.Local).AddTicks(9711),
+                            ConcurrencyStamp = "20a71233-dabd-4055-8266-884f4242bfc4",
+                            CreateOn = new DateTime(2022, 9, 15, 19, 53, 6, 529, DateTimeKind.Local).AddTicks(9445),
                             Email = "moderator@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MODERATOR@EMAIL.COM",
                             NormalizedUserName = "MODERATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHMWU1nwi/fURXN6eyKvwnexO0I8ZYCubJCwcPIrTqUotO5EoCeTaeINDqtaJeNrUQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJwvFA0pbGf5bRqRyeH77urClOGea8V/ozigls9fxW3uaUf4lutn9v7YsCCfxM2WMg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -200,7 +200,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"),
                             Author = "Жафаров Ильнур Наильевич",
-                            DateAdded = new DateTime(2022, 9, 13, 1, 15, 37, 855, DateTimeKind.Utc).AddTicks(4115),
+                            DateAdded = new DateTime(2022, 9, 15, 16, 53, 6, 530, DateTimeKind.Utc).AddTicks(3749),
                             Genre = "Фэнтези",
                             IsBooking = false,
                             SubTitle = "Там ересь была",
@@ -212,7 +212,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"),
                             Author = "Букин Генадий Валентинович",
-                            DateAdded = new DateTime(2022, 9, 13, 1, 15, 37, 855, DateTimeKind.Utc).AddTicks(6303),
+                            DateAdded = new DateTime(2022, 9, 15, 16, 53, 6, 530, DateTimeKind.Utc).AddTicks(5949),
                             Genre = "Фэнтези",
                             IsBooking = false,
                             SubTitle = "Там тоже была ересь",
@@ -352,6 +352,30 @@ namespace ElLIb.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ElLIb.Domain.Entities.Rating", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("RatingValue")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("ElLIb.Domain.Entities.TextField", b =>
                 {
                     b.Property<Guid>("Id")
@@ -395,24 +419,24 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2022, 9, 13, 1, 15, 37, 855, DateTimeKind.Utc).AddTicks(1963),
-                            Text = "Содержание заполняется администратором",
+                            DateAdded = new DateTime(2022, 9, 15, 16, 53, 6, 530, DateTimeKind.Utc).AddTicks(1570),
+                            Text = "Сейчас здесь пусто, содержание заполняется администратором",
                             Title = "Главная"
                         },
                         new
                         {
                             Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
                             CodeWord = "PageBooks",
-                            DateAdded = new DateTime(2022, 9, 13, 1, 15, 37, 855, DateTimeKind.Utc).AddTicks(3660),
-                            Text = "Содержание заполняется администратором",
+                            DateAdded = new DateTime(2022, 9, 15, 16, 53, 6, 530, DateTimeKind.Utc).AddTicks(3279),
+                            Text = "Сейчас здесь пусто, содержание заполняется администратором",
                             Title = "Книги"
                         },
                         new
                         {
                             Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2022, 9, 13, 1, 15, 37, 855, DateTimeKind.Utc).AddTicks(3688),
-                            Text = "Содержание заполняется администратором",
+                            DateAdded = new DateTime(2022, 9, 15, 16, 53, 6, 530, DateTimeKind.Utc).AddTicks(3308),
+                            Text = "Сейчас здесь пусто, содержание заполняется администратором",
                             Title = "Контакты"
                         });
                 });
@@ -447,14 +471,14 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
-                            ConcurrencyStamp = "0a1b819c-abbc-470f-ae9c-97fbfbd13417",
+                            ConcurrencyStamp = "277e61a0-b5e7-46e3-b1b7-0a7e7f875183",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5e84bf2c-585f-42dc-a868-73157016ec70",
-                            ConcurrencyStamp = "6d0cb9db-a1ee-4aa6-8d04-a6a0a1ba3826",
+                            ConcurrencyStamp = "b66b86ac-9dba-4dec-801c-b11f48d0cd7d",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });
@@ -610,6 +634,23 @@ namespace ElLIb.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ElLIb.Domain.Entities.Rating", b =>
+                {
+                    b.HasOne("ElLIb.Domain.Entities.Book", "Book")
+                        .WithMany("Ratings")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElLIb.Domain.Entities.ApplicationUser", "User")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -666,6 +707,8 @@ namespace ElLIb.Migrations
                     b.Navigation("Bookings");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("ElLIb.Domain.Entities.Book", b =>
@@ -673,6 +716,8 @@ namespace ElLIb.Migrations
                     b.Navigation("Bookings");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

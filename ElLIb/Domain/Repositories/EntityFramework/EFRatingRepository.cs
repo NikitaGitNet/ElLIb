@@ -6,25 +6,22 @@ using System.Linq;
 
 namespace ElLIb.Domain.Repositories.EntityFramework
 {
-    public class EFBooksRepository : IBooksRepository
+    public class EFRatingRepository : IRatingRepository
     {
         private readonly AppDbContext context;
-        public EFBooksRepository(AppDbContext context)
+        public EFRatingRepository(AppDbContext context)
         {
             this.context = context;
         }
-        public IQueryable<Book> GetBooks()
+        public IQueryable<Rating> GetRatings()
         {
-            return context.Books;
+            return context.Ratings;
         }
-        public Book GetBookById(Guid id)
+        public Rating GetRatingById(Guid id)
         {
-            return context.Books
-                .Include(x => x.Ratings)
-                .Include(x => x.Comments)
-                .FirstOrDefault(x => x.Id == id);
+            return context.Ratings.FirstOrDefault(x => x.Id == id);
         }
-        public void SaveBook(Book entity)
+        public void SaveRating(Rating entity)
         {
             if (entity.Id == default)
             {
@@ -36,9 +33,9 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteBook(Guid id)
+        public void DeleteRating(Guid id)
         {
-            context.Books.Remove(new Book() { Id = id });
+            context.Ratings.Remove(new Rating() { Id = id });
             context.SaveChanges();
         }
     }

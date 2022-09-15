@@ -21,5 +21,6 @@ namespace ElLIb.Domain.Entities
         public string Genre { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Booking> Bookings { get; set; }
+        public ICollection<Rating> Ratings { get; set; }
     }
 }

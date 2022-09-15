@@ -11,7 +11,8 @@ namespace ElLIb.Domain
         public IApplicationUserRepository ApplicationUser { get; set; }
         public IGenresRepository Genres { get; set; }
         public IAuthorRepository Author { get; set; }
-        public DataManager(ITextFieldsRepository textFields, IBooksRepository books, ICommentRepository comment, IBookingRepository booking, IApplicationUserRepository applicationUser, IGenresRepository genres, IAuthorRepository author)
+        public IRatingRepository Rating { get; set; }
+        public DataManager(ITextFieldsRepository textFields, IBooksRepository books, ICommentRepository comment, IBookingRepository booking, IApplicationUserRepository applicationUser, IGenresRepository genres, IAuthorRepository author, IRatingRepository rating)
         {
             TextFields = textFields;
             Books = books;
@@ -20,6 +21,7 @@ namespace ElLIb.Domain
             ApplicationUser = applicationUser;
             Genres = genres;
             Author = author;
+            Rating = rating;
         }
     }
 }

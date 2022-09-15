@@ -21,8 +21,16 @@ namespace ElLIb.Areas.Moderator.Controllers
         {
             if (id != default)
             {
-                Booking booking = dataManager.Booking.GetBookingById(id);
-                return View("~/Areas/Moderator/Views/Booking/CurentBookingShow.cshtml", new BookingViewModel {BookId = booking.BookId, BooksTitle = booking.BooksTitle, FinishedOn = booking.FinishedOn, CreateOn = booking.CreateOn, Id = booking.Id, IssueBooking = booking.IssueBooking, UserEmail = booking.UserEmail, UserId = booking.UserId });
+                try
+                {
+                    Booking booking = dataManager.Booking.GetBookingById(id);
+                    return View("~/Areas/Moderator/Views/Booking/CurentBookingShow.cshtml", new BookingViewModel { BookId = booking.BookId, BooksTitle = booking.BooksTitle, FinishedOn = booking.FinishedOn, CreateOn = booking.CreateOn, Id = booking.Id, IssueBooking = booking.IssueBooking, UserEmail = booking.UserEmail, UserId = booking.UserId });
+                }
+                catch
+                {
+                    return View("ErrorPage");
+                }
+                
             }
             var bookings = dataManager.Booking.GetBookings();
             var sortBooks = from b in bookings orderby b.CreateOn select b;
@@ -53,7 +61,7 @@ namespace ElLIb.Areas.Moderator.Controllers
             booking.IssueBooking = true;
             booking.FinishedOn = DateTime.Now.AddDays(7);
             dataManager.Booking.SaveBooking(booking);
-            return View("~/Areas/Moderator/Views/Booking/CurentBookingShow.cshtml", dataManager.Booking.GetBookingById(id));
+            return View();
         }
     }
 }

@@ -38,8 +38,13 @@ namespace ElLIb.Controllers
                     };
                     comments.Add(comment);
                 }
+                double overallRating = 0;
+                foreach (var item in book.Ratings)
+                {
+                    overallRating += item.RatingValue;
+                }
                 IQueryable<AddCommentModel> qComments = comments.AsQueryable();
-                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking, Author = book.Author, Genre = book.Genre, DateAdded = book.DateAdded });
+                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking, Author = book.Author, Genre = book.Genre, DateAdded = book.DateAdded, Rating = overallRating / book.Ratings.Count });
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             var books = dataManager.Books.GetBooks();
