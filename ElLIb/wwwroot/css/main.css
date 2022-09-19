@@ -1771,8 +1771,8 @@ ul.link-list li:first-child {
         border-block-color: purple;
         border-radius: 10px
     }
-    .liBooking {
-    }
+.liBooking {
+}
 .liBooking p {
     font-size: 20px;
     color: black;

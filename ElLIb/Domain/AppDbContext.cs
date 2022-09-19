@@ -153,6 +153,11 @@ namespace ElLIb.Domain
                 Id = new Guid("784c6187-e8cc-441a-bc8d-a484fe5b5afc"),
                 Name = "Научная литература"
             });
+            builder.Entity<Genre>().HasData(new Genre
+            {
+                Id = new Guid("a24f8429-67e3-418a-a479-4059e19ca643"),
+                Name = "Неизвестный жанр"
+            });
             builder.Entity<Author>().HasData(new Author
             {
                 Id = new Guid("c07ada61-d847-43eb-b2eb-8e32adcd64f4"),
@@ -162,6 +167,11 @@ namespace ElLIb.Domain
             {
                 Id = new Guid("ff9b30ce-ad2e-48ce-b811-e45481b55043"),
                 Name = "Жафаров Ильнур Наильевич"
+            });
+            builder.Entity<Author>().HasData(new Author
+            {
+                Id = new Guid("0bf3eaaa-107f-434e-85bc-49653b07515a"),
+                Name = "Неизвестный автор"
             });
         }
     }

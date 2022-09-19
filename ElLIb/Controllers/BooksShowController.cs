@@ -18,11 +18,11 @@ namespace ElLIb.Controllers
         {
             this.dataManager = dataManager;
         }
-        public IActionResult Index(Guid id)
+        public IActionResult Index(BookViewModel model)
         {
-            if (id != default)
+            if (model.Id != default)
             {
-                Book book = dataManager.Books.GetBookById(id);
+                Book book = dataManager.Books.GetBookById(model.Id);
 
                 List<AddCommentModel> comments = new();
                 foreach (var i in book.Comments)

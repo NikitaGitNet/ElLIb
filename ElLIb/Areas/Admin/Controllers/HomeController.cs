@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using ElLIb.Models.Genre;
+using ElLIb.Models.Author;
 
 namespace ElLIb.Areas.Admin.Controllers
 {
@@ -36,6 +38,7 @@ namespace ElLIb.Areas.Admin.Controllers
                 };
                 booksViewModels.Add(bookViewModel);
             }
+            
             IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
             return View(new BooksListViewModel {Books = qBooks});
         }

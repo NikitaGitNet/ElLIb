@@ -31,7 +31,7 @@ namespace ElLIb.Areas.Admin.Controllers
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
             Comment comment = new();
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.CommentText != null)
             {
                 comment.BookId = model.Id;
                 comment.Text = model.CommentText;
@@ -39,10 +39,10 @@ namespace ElLIb.Areas.Admin.Controllers
                 comment.UserId = user.Id;
                 comment.CreateOn = DateTime.Now;
                 dataManager.Comment.SaveComment(comment);
-                return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), model.Id);
+                return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel {Id = model.Id });
             }
-            return View(comment);
-       }
+            return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel { Id = model.Id, CommentText = model.CommentText });
+        }
         [HttpPost]
         public IActionResult Estimate(AddCommentModel model)
         {
@@ -58,10 +58,10 @@ namespace ElLIb.Areas.Admin.Controllers
             return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController());
         }
         [HttpPost]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete(AddCommentModel model)
         {
-            dataManager.Comment.DeleteComment(id);
-            return RedirectToAction(nameof(BooksShowController.Index), nameof(HomeController).CutController());
+            dataManager.Comment.DeleteComment(model.Id);
+            return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel { Id = model.BookId });
         }
     }
 }

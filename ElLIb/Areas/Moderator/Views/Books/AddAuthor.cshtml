@@ -1,6 +1,6 @@
 ﻿@model Author
 <div>
-    <form asp-area="Admin" asp-controller="Books" asp-action="AddAuthor" method="post" enctype="multipart/form-data">
+    <form asp-area="Moderator" asp-controller="Books" asp-action="AddAuthor" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id">
         <div asp-validation-summary="All"></div>
     <div class="inputBox">
@@ -11,3 +11,4 @@
     <input type="submit" class="glo" value="Сохранить">
     </form>
 </div>
+

@@ -39,19 +39,33 @@ namespace ElLIb.Areas.Admin.Controllers
                         titleImageFile.CopyTo(stream);
                     }
                 }
-                var authors = dataManager.Author.GetAuthors();
-                var sortAuthors = from a in authors where model.Author == a.Name select a;
-                if (sortAuthors.Count() <= 0)
+                if (model.Author != null)
                 {
-                    Author author = new() {Name = model.Author, Id = new Guid() };
-                    dataManager.Author.SaveAuthor(author);
+                    var authors = dataManager.Author.GetAuthors();
+                    var sortAuthors = from a in authors where model.Author == a.Name select a;
+                    if (sortAuthors.Count() <= 0)
+                    {
+                        Author author = new() { Name = model.Author, Id = new Guid() };
+                        dataManager.Author.SaveAuthor(author);
+                    }
                 }
-                var genres = dataManager.Genres.GetGenres();
-                var sortGenres = from g in genres where model.Genre == g.Name select g;
-                if (sortGenres.Count() <= 0)
+                else
                 {
-                    Genre genre = new() {Name = model.Genre, Id = new Guid() };
-                    dataManager.Genres.SaveGenre(genre);
+                    model.Author = "Неизвестный автор";
+                }
+                if (model.Genre != null)
+                {
+                    var genres = dataManager.Genres.GetGenres();
+                    var sortGenres = from g in genres where model.Genre == g.Name select g;
+                    if (sortGenres.Count() <= 0)
+                    {
+                        Genre genre = new() { Name = model.Genre, Id = new Guid() };
+                        dataManager.Genres.SaveGenre(genre);
+                    }
+                }
+                else
+                {
+                    model.Genre = "Неизвестный жанр";
                 }
                 model.DateAdded = DateTime.Now;
                 dataManager.Books.SaveBook(model);
@@ -69,11 +83,20 @@ namespace ElLIb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                IQueryable<Genre> genres = dataManager.Genres.GetGenres();
+                foreach (var genre in genres)
+                {
+                    if (model.Name == genre.Name)
+                    {
+                        return View("ErrorGenre");
+                    }
+                }
                 dataManager.Genres.SaveGenre(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(model);
         }
+        
         public IActionResult AddAuthor(Guid id)
         {
             var entity = id == default ? new Author() : dataManager.Author.GetAuthorById(id);
@@ -84,6 +107,14 @@ namespace ElLIb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                IQueryable<Author> authors = dataManager.Author.GetAuthors();
+                foreach (var author in authors)
+                {
+                    if (model.Name == author.Name)
+                    {
+                        return View("ErrorAuthor");
+                    }
+                }
                 dataManager.Author.SaveAuthor(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }

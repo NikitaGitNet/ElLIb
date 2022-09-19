@@ -1,5 +1,7 @@
 ﻿using ElLIb.Domain;
+using ElLIb.Models.Author;
 using ElLIb.Models.Book;
+using ElLIb.Models.Genre;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +37,34 @@ namespace ElLIb.Areas.Moderator.Controllers
                 };
                 booksViewModels.Add(bookViewModel);
             }
+            var genres = dataManager.Genres.GetGenres();
+            var sortGenres = from g in genres orderby g.Name select g;
+            List<GenreViewModel> genreViewModels = new();
+            foreach (var genre in sortGenres)
+            {
+                GenreViewModel model = new()
+                {
+                    Id = genre.Id,
+                    Name = genre.Name
+                };
+                genreViewModels.Add(model);
+            }
+            var authors = dataManager.Author.GetAuthors();
+            var sortAuthors = from a in authors orderby a.Name select a;
+            List<AuthorViewModel> authorVeiwModels = new();
+            foreach (var author in sortAuthors)
+            {
+                AuthorViewModel model = new()
+                {
+                    Id = author.Id,
+                    Name = author.Name
+                };
+                authorVeiwModels.Add(model);
+            }
+            IQueryable<AuthorViewModel> qAuthors = authorVeiwModels.AsQueryable();
+            IQueryable<GenreViewModel> qGenres = genreViewModels.AsQueryable();
             IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-            return View(new BooksListViewModel { Books = qBooks });
+            return View(new BooksListViewModel { Books = qBooks, Authors = qAuthors, Genres = qGenres });
         }
     }
 }

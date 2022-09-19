@@ -61,7 +61,7 @@ namespace ElLIb.Areas.Moderator.Controllers
             booking.IssueBooking = true;
             booking.FinishedOn = DateTime.Now.AddDays(7);
             dataManager.Booking.SaveBooking(booking);
-            return View();
+            return View(new BookingViewModel {FinishedOn=booking.FinishedOn, Id = booking.Id,  BooksTitle = booking.BooksTitle, CreateOn = booking.CreateOn, BookId = booking.BookId, IssueBooking = booking.IssueBooking, UserEmail = booking.UserEmail, UserId = booking.UserId });
         }
     }
 }

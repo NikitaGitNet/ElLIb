@@ -4,6 +4,7 @@ using ElLIb.Domain.Entities;
 using ElLIb.Models.Booking;
 using ElLIb.Models.Comment;
 using ElLIb.Models.User;
+using ElLIb.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,7 +25,7 @@ namespace ElLIb.Areas.Admin.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult UsersShow(string id)
+        public IActionResult UsersShow()
         {
             var users = dataManager.ApplicationUser.GetApplicationUsers();
             var sortUsers = from u in users orderby u.UserName select u;
@@ -45,9 +46,9 @@ namespace ElLIb.Areas.Admin.Controllers
             IQueryable<UserViewModel> qUsers = usersViewModel.AsQueryable();
             return View(new UsersListViewModel {Users = qUsers });
         }
-        public IActionResult ShowCurentUser(string id)
+        public IActionResult ShowCurentUser(UserModel model)
         {
-            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(id);
+            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
             if (user.Bookings.Count != 0 || user.Comments.Count != 0)
             {
                 List<AddCommentModel> comments = new();
@@ -92,9 +93,9 @@ namespace ElLIb.Areas.Admin.Controllers
 
         }
         [HttpPost]
-        public IActionResult CancelUser(string id)
+        public IActionResult CancelUser(UserModel model)
         {
-            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(id);
+            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
             if (user.Bookings != null)
             {
                 foreach (var booking in user.Bookings)
@@ -114,7 +115,7 @@ namespace ElLIb.Areas.Admin.Controllers
             user.Comments = null;
             user.Bookings = null;
             dataManager.ApplicationUser.SaveApplicationUser(user);
-            return View();
+            return RedirectToAction(nameof(UsersShowController.ShowCurentUser), nameof(UsersShowController).CutController(), new UserModel { Id = model.Id });
         }
         [HttpPost]
         public async Task<IActionResult> Delete(string id)

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
+using ElLIb.Domain;
 
 namespace ElLIb.Controllers
 {
@@ -13,8 +15,10 @@ namespace ElLIb.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly DataManager dataManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, DataManager dataManager)
         {
+            this.dataManager = dataManager;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
