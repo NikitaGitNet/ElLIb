@@ -1,5 +1,7 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Models.Author;
+using ElLIb.Models.Genre;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,33 +41,54 @@ namespace ElLIb.Areas.Moderator.Controllers
                         titleImageFile.CopyTo(stream);
                     }
                 }
-                if (model.Author != null)
+                if (model.AuthorName != null)
                 {
                     var authors = dataManager.Author.GetAuthors();
-                    var sortAuthors = from a in authors where model.Author == a.Name select a;
+                    var sortAuthors = from a in authors where model.AuthorName == a.Name select a;
                     if (sortAuthors.Count() <= 0)
                     {
-                        Author author = new() { Name = model.Author, Id = new Guid() };
+                        Author author = new() { Name = model.AuthorName, Id = new Guid() };
                         dataManager.Author.SaveAuthor(author);
+                        model.AuthorName = author.Name;
+                        model.AuthorId = author.Id;
                     }
+                    else
+                    {
+                        foreach (var author in sortAuthors)
+                        {
+                            model.AuthorName = author.Name;
+                            model.AuthorId = author.Id;
+                        }
+                    }
+
                 }
                 else
                 {
-                    model.Author = "Неизвестный автор";
+                    model.AuthorName = "Неизвестный автор";
                 }
-                if (model.Genre != null)
+                if (model.GenreName != null)
                 {
                     var genres = dataManager.Genres.GetGenres();
-                    var sortGenres = from g in genres where model.Genre == g.Name select g;
+                    var sortGenres = from g in genres where model.GenreName == g.Name select g;
                     if (sortGenres.Count() <= 0)
                     {
-                        Genre genre = new() { Name = model.Genre, Id = new Guid() };
+                        Genre genre = new() { Name = model.GenreName, Id = new Guid() };
                         dataManager.Genres.SaveGenre(genre);
+                        model.GenreName = genre.Name;
+                        model.GenreId = genre.Id;
+                    }
+                    else
+                    {
+                        foreach (var genre in sortGenres)
+                        {
+                            model.GenreName = genre.Name;
+                            model.GenreId = genre.Id;
+                        }
                     }
                 }
                 else
                 {
-                    model.Genre = "Неизвестный жанр";
+                    model.GenreName = "Неизвестный жанр";
                 }
                 model.DateAdded = DateTime.Now;
                 dataManager.Books.SaveBook(model);
@@ -101,6 +124,22 @@ namespace ElLIb.Areas.Moderator.Controllers
             }
             return View(model);
         }
+        public IActionResult WarningDeleteGenre(Guid id)
+        {
+            var genre = dataManager.Genres.GetGenreById(id);
+            IQueryable<Book> books = dataManager.Books.GetBooks();
+            var sortBooks = from b in books where b.GenreId == genre.Id select b;
+            if (sortBooks.Any())
+            {
+                return View(new GenreViewModel { Id = id, Name = genre.Name });
+            }
+            return RedirectToAction(nameof(BooksController.DeleteGenre), nameof(BooksController).CutController(), new GenreViewModel { Id = id });
+        }
+        public IActionResult DeleteGenre(GenreViewModel model)
+        {
+            dataManager.Genres.DeleteGenre(model.Id);
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+        }
         public IActionResult AddAuthor(Guid id)
         {
             var entity = id == default ? new Author() : dataManager.Author.GetAuthorById(id);
@@ -111,14 +150,6 @@ namespace ElLIb.Areas.Moderator.Controllers
         {
             if (model.Id != default)
             {
-                Author author = dataManager.Author.GetAuthorById(model.Id);
-                var books = dataManager.Books.GetBooks();
-                var sortBooks = from b in books where b.Author == author.Name orderby b.Title select b;
-                foreach (var book in sortBooks)
-                {
-                    book.Author = model.Name;
-                    dataManager.Books.SaveBook(book);
-                }
                 dataManager.Author.SaveAuthor(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
@@ -136,6 +167,22 @@ namespace ElLIb.Areas.Moderator.Controllers
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(model);
+        }
+        public IActionResult WarningDeleteAuthor(Guid id)
+        {
+            var author = dataManager.Author.GetAuthorById(id);
+            IQueryable<Book> books = dataManager.Books.GetBooks();
+            var sortBooks = from b in books where b.AuthorId == author.Id select b;
+            if (sortBooks.Any())
+            {
+                return View(new AuthorViewModel {Id = id, Name = author.Name });
+            }
+            return RedirectToAction(nameof(BooksController.DeleteAuthor), nameof(BooksController).CutController(), new AuthorViewModel {Id = id });
+        }
+        public IActionResult DeleteAuthor(AuthorViewModel model)
+        {
+            dataManager.Author.DeleteAuthor(model.Id);
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
         [HttpPost]
         public IActionResult Delete(Guid id)

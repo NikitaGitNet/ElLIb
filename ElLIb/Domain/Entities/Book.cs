@@ -16,11 +16,16 @@ namespace ElLIb.Domain.Entities
         public bool IsBooking { get; set; }
         public override string Text { get; set; }
         [Display(Name = "Автор книги, Заполнить в формате - Фамилия Имя Отчество")]
-        public string Author { get; set; }
+        public string AuthorName { get; set; }
+        public Guid AuthorId { get; set; }
+        [ForeignKey("AuthorId")]
+        public Author Author { get; set; }
         [Display(Name = "Жанр книги")]
-        public string Genre { get; set; }
+        public string GenreName { get; set; }
+        public Guid GenreId { get; set; }
+        [ForeignKey("GenreId")]
+        public Genre Genre { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Booking> Bookings { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
     }
 }

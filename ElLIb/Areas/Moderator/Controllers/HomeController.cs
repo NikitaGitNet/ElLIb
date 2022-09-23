@@ -26,8 +26,8 @@ namespace ElLIb.Areas.Moderator.Controllers
             {
                 BookViewModel bookViewModel = new()
                 {
-                    Author = book.Author,
-                    Genre = book.Genre,
+                    Author = book.AuthorName,
+                    Genre = book.GenreName,
                     Id = book.Id,
                     IsBooking = book.IsBooking,
                     SubTitle = book.SubTitle,

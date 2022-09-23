@@ -39,83 +39,57 @@ namespace ElLIb.Areas.Admin.Controllers
                         titleImageFile.CopyTo(stream);
                     }
                 }
-                if (model.Author != null)
+                if (model.AuthorName != null)
                 {
                     var authors = dataManager.Author.GetAuthors();
-                    var sortAuthors = from a in authors where model.Author == a.Name select a;
+                    var sortAuthors = from a in authors where model.AuthorName == a.Name select a;
                     if (sortAuthors.Count() <= 0)
                     {
-                        Author author = new() { Name = model.Author, Id = new Guid() };
+                        Author author = new() { Name = model.AuthorName, Id = new Guid() };
                         dataManager.Author.SaveAuthor(author);
+                        model.AuthorName = author.Name;
+                        model.AuthorId = author.Id;
                     }
+                    else
+                    {
+                        foreach (var author in sortAuthors)
+                        {
+                            model.AuthorName = author.Name;
+                            model.AuthorId = author.Id;
+                        }
+                    }
+
                 }
                 else
                 {
-                    model.Author = "Неизвестный автор";
+                    model.AuthorName = "Неизвестный автор";
                 }
-                if (model.Genre != null)
+                if (model.GenreName != null)
                 {
                     var genres = dataManager.Genres.GetGenres();
-                    var sortGenres = from g in genres where model.Genre == g.Name select g;
+                    var sortGenres = from g in genres where model.GenreName == g.Name select g;
                     if (sortGenres.Count() <= 0)
                     {
-                        Genre genre = new() { Name = model.Genre, Id = new Guid() };
+                        Genre genre = new() { Name = model.GenreName, Id = new Guid() };
                         dataManager.Genres.SaveGenre(genre);
+                        model.GenreName = genre.Name;
+                        model.GenreId = genre.Id;
+                    }
+                    else
+                    {
+                        foreach (var genre in sortGenres)
+                        {
+                            model.GenreName = genre.Name;
+                            model.GenreId = genre.Id;
+                        }
                     }
                 }
                 else
                 {
-                    model.Genre = "Неизвестный жанр";
+                    model.GenreName = "Неизвестный жанр";
                 }
                 model.DateAdded = DateTime.Now;
                 dataManager.Books.SaveBook(model);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-            }
-            return View(model);
-        }
-        public IActionResult AddGenre(Guid id)
-        {
-            var entity = id == default ? new Genre() : dataManager.Genres.GetGenreById(id);
-            return View(entity);
-        }
-        [HttpPost]
-        public IActionResult AddGenre(Genre model)
-        {
-            if (ModelState.IsValid)
-            {
-                IQueryable<Genre> genres = dataManager.Genres.GetGenres();
-                foreach (var genre in genres)
-                {
-                    if (model.Name == genre.Name)
-                    {
-                        return View("ErrorGenre");
-                    }
-                }
-                dataManager.Genres.SaveGenre(model);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-            }
-            return View(model);
-        }
-        
-        public IActionResult AddAuthor(Guid id)
-        {
-            var entity = id == default ? new Author() : dataManager.Author.GetAuthorById(id);
-            return View(entity);
-        }
-        [HttpPost]
-        public IActionResult AddAuthor(Author model)
-        {
-            if (ModelState.IsValid)
-            {
-                IQueryable<Author> authors = dataManager.Author.GetAuthors();
-                foreach (var author in authors)
-                {
-                    if (model.Name == author.Name)
-                    {
-                        return View("ErrorAuthor");
-                    }
-                }
-                dataManager.Author.SaveAuthor(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(model);

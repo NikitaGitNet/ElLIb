@@ -38,7 +38,7 @@
                     <div class="OnceBookElement">
                         <a>@entity.Name</a>
                         <a asp-area="Moderator" asp-controller="Books" asp-action="AddGenre" asp-route-id="@entity.Id">редактировать</a>
-                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Moderator" asp-controller="Books" asp-action="Delete" method="post">
+                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Moderator" asp-controller="Books" asp-action="WarningDeleteGenre" method="post">
                             <input type="hidden" name="id" value="@entity.Id">
                             <a class="Alert" href="#" onclick="document.getElementById('form-@entity.Id').submit();">Удалить</a>
                         </form>
@@ -54,7 +54,7 @@
                     <div class="OnceBookElement">
                         <a>@entity.Name</a>
                         <a asp-area="Moderator" asp-controller="Books" asp-action="AddAuthor" asp-route-id="@entity.Id">редактировать</a>
-                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Moderator" asp-controller="Books" asp-action="Delete" method="post">
+                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Moderator" asp-controller="Books" asp-action="WarningDeleteAuthor" method="post">
                             <input type="hidden" name="id" value="@entity.Id">
                             <a class="Alert" href="#" onclick="document.getElementById('form-@entity.Id').submit();">Удалить</a>
                         </form>

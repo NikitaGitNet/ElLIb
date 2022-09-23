@@ -20,7 +20,6 @@ namespace ElLIb.Domain.Repositories.EntityFramework
         public Book GetBookById(Guid id)
         {
             return context.Books
-                .Include(x => x.Ratings)
                 .Include(x => x.Comments)
                 .FirstOrDefault(x => x.Id == id);
         }

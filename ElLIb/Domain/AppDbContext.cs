@@ -94,8 +94,10 @@ namespace ElLIb.Domain
                 IsBooking = false,
                 Text = "Ваха 40к",
                 TitleImagePath = "1655641005121914702.jpg",
-                Genre = "Фэнтези",
-                Author = "Жафаров Ильнур Наильевич",
+                GenreName = "Хоррор",
+                GenreId = new Guid("e4ac715f-a600-4d01-8a09-5439c7b689b3"),
+                AuthorName = "Жафаров Ильнур Наильевич",
+                AuthorId = new Guid("ff9b30ce-ad2e-48ce-b811-e45481b55043")
             });
             builder.Entity<Book>().HasData(new Book
             {
@@ -105,8 +107,10 @@ namespace ElLIb.Domain
                 IsBooking = false,
                 Text = "Ваха 40к",
                 TitleImagePath = "1655641009118970804.jpg",
-                Genre = "Фэнтези",
-                Author = "Букин Генадий Валентинович",
+                GenreName = "Фэнтези",
+                GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
+                AuthorName = "Букин Генадий Валентинович",
+                AuthorId = new Guid("c07ada61-d847-43eb-b2eb-8e32adcd64f4")
             });
             builder.Entity<Genre>().HasData(new Genre
             {
@@ -118,41 +122,7 @@ namespace ElLIb.Domain
                 Id = new Guid("e4ac715f-a600-4d01-8a09-5439c7b689b3"),
                 Name = "Хоррор"
             });
-            builder.Entity<Genre>().HasData(new Genre
-            {
-                Id = new Guid("9d0ecde8-9021-463d-a254-9ba7ce69f185"),
-                Name = "Фантастика"
-            });
-            builder.Entity<Genre>().HasData(new Genre
-            {
-                Id = new Guid("61fd92c6-d6d9-41ed-a6eb-78afdffb85b7"),
-                Name = "Учебник"
-            });
-            builder.Entity<Genre>().HasData(new Genre
-            {
-                Id = new Guid("42ecbaab-e685-4b3a-a82b-cd2960ceb903"),
-                Name = "Русская классика"
-            });
-            builder.Entity<Genre>().HasData(new Genre
-            {
-                Id = new Guid("819dc305-79e5-4f60-82c1-b91ebfba98cd"),
-                Name = "Зарубежная классика"
-            });
-            builder.Entity<Genre>().HasData(new Genre
-            {
-                Id = new Guid("ea16a380-f6f3-466f-af74-59e67a94174f"),
-                Name = "Детективы"
-            });
-            builder.Entity<Genre>().HasData(new Genre
-            {
-                Id = new Guid("5666ece9-8655-4f9b-aeee-dc24679dc0d3"),
-                Name = "Приключения"
-            });
-            builder.Entity<Genre>().HasData(new Genre
-            {
-                Id = new Guid("784c6187-e8cc-441a-bc8d-a484fe5b5afc"),
-                Name = "Научная литература"
-            });
+            
             builder.Entity<Genre>().HasData(new Genre
             {
                 Id = new Guid("a24f8429-67e3-418a-a479-4059e19ca643"),

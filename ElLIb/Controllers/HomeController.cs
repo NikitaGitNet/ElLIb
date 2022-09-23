@@ -21,5 +21,9 @@ namespace ElLIb.Controllers
         {
             return View(dataManager.TextFields.GetTextFieldByCodeWord("PageContacts"));
         }
+        public IActionResult MobileHeader()
+        {
+            return View();
+        }
     }
 }

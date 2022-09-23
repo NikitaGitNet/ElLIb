@@ -21,5 +21,7 @@ namespace ElLIb.Models
         [DataType(DataType.Password)]
         [Display(Name = "Подтвердить пароль")]
         public string PasswordConfirm { get; set; }
+        public bool MaxLengthName { get; set; }
+        public bool UniqueName  { get; set; }
     }
 }

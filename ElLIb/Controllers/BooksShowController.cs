@@ -8,14 +8,18 @@ using ElLIb.Models.Book;
 using ElLIb.Models.Comment;
 using ElLIb.Models.Genre;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace ElLIb.Controllers
 {
     public class BooksShowController : Controller
     {
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly DataManager dataManager;
-        public BooksShowController(DataManager dataManager)
+        public BooksShowController(DataManager dataManager, IHttpContextAccessor httpContextAccessor)
         {
+            this.httpContextAccessor = httpContextAccessor;
             this.dataManager = dataManager;
         }
         public IActionResult Index(BookViewModel model)
@@ -23,12 +27,13 @@ namespace ElLIb.Controllers
             if (model.Id != default)
             {
                 Book book = dataManager.Books.GetBookById(model.Id);
-
+                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<AddCommentModel> comments = new();
                 foreach (var i in book.Comments)
                 {
                     AddCommentModel comment = new()
                     {
+                        UserId = i.UserId,
                         BookId = book.Id,
                         CommentText = i.Text,
                         UserEmail = i.UserEmail,
@@ -38,13 +43,8 @@ namespace ElLIb.Controllers
                     };
                     comments.Add(comment);
                 }
-                double overallRating = 0;
-                foreach (var item in book.Ratings)
-                {
-                    overallRating += item.RatingValue;
-                }
                 IQueryable<AddCommentModel> qComments = comments.AsQueryable();
-                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking, Author = book.Author, Genre = book.Genre, DateAdded = book.DateAdded, Rating = overallRating / book.Ratings.Count });
+                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking, Author = book.AuthorName, Genre = book.GenreName, DateAdded = book.DateAdded, CurentUserId =  userId});
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             var books = dataManager.Books.GetBooks();
@@ -54,8 +54,8 @@ namespace ElLIb.Controllers
             {
                 BookViewModel book = new() 
                 { 
-                    Author = item.Author,
-                    Genre = item.Genre,
+                    Author = item.AuthorName,
+                    Genre = item.GenreName,
                     Id = item.Id,
                     IsBooking = item.IsBooking,
                     SubTitle = item.SubTitle,
@@ -75,15 +75,15 @@ namespace ElLIb.Controllers
             {
                 Author author = dataManager.Author.GetAuthorById(id);
                 var books = dataManager.Books.GetBooks();
-                var booksByAuthor = from b in books where b.Author == author.Name orderby b.Title select b;
+                var booksByAuthor = from b in books where b.AuthorId == author.Id orderby b.Title select b;
                 List<BookViewModel> booksViewModels = new();
                 foreach (var book in booksByAuthor)
                 {
                     BookViewModel bookViewModel = new()
                     { 
                         IsBooking = book.IsBooking,
-                        Author = book.Author,
-                        Genre = book.Genre,
+                        Author = book.AuthorName,
+                        Genre = book.GenreName,
                         Id = book.Id,
                         Title = book.Title,
                         Text = book.Text,
@@ -121,15 +121,15 @@ namespace ElLIb.Controllers
             {
                 Genre genre = dataManager.Genres.GetGenreById(id);
                 var books = dataManager.Books.GetBooks();
-                var booksByGenre = from b in books where b.Genre == genre.Name orderby b.Title select b;
+                var booksByGenre = from b in books where b.GenreId == genre.Id orderby b.Title select b;
                 List<BookViewModel> booksViewModels = new();
                 foreach (var book in booksByGenre)
                 {
                     BookViewModel bookViewModel = new()
                     {
                         IsBooking = book.IsBooking,
-                        Author = book.Author,
-                        Genre = book.Genre,
+                        Author = book.AuthorName,
+                        Genre = book.GenreName,
                         Id = book.Id,
                         Title = book.Title,
                         Text = book.Text,

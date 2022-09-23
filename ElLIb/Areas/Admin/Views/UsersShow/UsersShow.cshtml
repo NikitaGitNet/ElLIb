@@ -7,14 +7,17 @@
     <ul>
         @foreach (var user in Model.Users)
         {
-            <li>
+            @if (user.UserName != "admin" && user.UserName != "moderator")
+            {
+                <li>
                 <p>Электронная почта: @user.Email</p>
                 <p>Имя пользователя: @user.UserName</p>
                 <a asp-area="Admin" asp-controller="UsersShow" asp-action="ShowCurentUser" asp-route-id="@user.Id">
                 <h2 class="H2Title">Перейти к пользователю</h2>
                 </a>
                 <hr>
-            </li>  
+                </li>
+            }   
         }
     </ul>
 </div>

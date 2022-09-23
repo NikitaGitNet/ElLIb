@@ -63,8 +63,23 @@ namespace ElLIb.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
+                model.MaxLengthName = false;
+                model.UniqueName = false;
+                IQueryable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
+                var sortUsers = from u in users where u.UserName == model.UserName select u;
+                if (sortUsers.Any())
+                {
+                    model.UniqueName = true;
+                    return View(model);
+                }
+                if (model.UserName.Length > 20)
+                {
+                    model.MaxLengthName = true;
+                    return View(model);
+                }
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CreateOn = DateTime.Now};
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

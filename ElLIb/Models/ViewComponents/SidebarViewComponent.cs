@@ -26,8 +26,8 @@ namespace ElLIb.Models.ViewCompanents
                 {
                     BookViewModel book = new()
                     {
-                        Author = item.Author,
-                        Genre = item.Genre,
+                        Author = item.AuthorName,
+                        Genre = item.GenreName,
                         Id = item.Id,
                         IsBooking = item.IsBooking,
                         SubTitle = item.SubTitle,

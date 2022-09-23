@@ -124,5 +124,13 @@ namespace ElLIb.Areas.Admin.Controllers
             await userManager.DeleteAsync(user);
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(UserModel model)
+        {
+            ApplicationUser user = await userManager.FindByIdAsync(model.Id);
+            user.PasswordHash = userManager.PasswordHasher.HashPassword(user, model.Password);
+            var result = await userManager.UpdateAsync(user);
+            return View(new UserModel {Password = model.Password });
+        }
     }
 }

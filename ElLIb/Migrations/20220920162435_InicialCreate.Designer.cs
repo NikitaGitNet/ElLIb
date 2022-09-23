@@ -4,14 +4,16 @@ using ElLIb.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ElLIb.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220920162435_InicialCreate")]
+    partial class InicialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,14 +93,14 @@ namespace ElLIb.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aaa5ced4-1532-430d-ab2c-872415a234cc",
-                            CreateOn = new DateTime(2022, 9, 22, 3, 5, 59, 228, DateTimeKind.Local).AddTicks(5449),
+                            ConcurrencyStamp = "834f6371-f213-44f0-98b8-f3783d6a66bb",
+                            CreateOn = new DateTime(2022, 9, 20, 19, 24, 35, 31, DateTimeKind.Local).AddTicks(698),
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM+mgBBVlGf6BpjAc26hVxQ98mDqzcKopqAJwz+GbKvc9P5Me8Fg1NgfvXReeE+cvQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEm1km9oChOZbC6H8SWNzueBFAIkhZPXk5DXKDlFmsyY+G3CqsZzfFoTQpAlsfjYcQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -108,14 +110,14 @@ namespace ElLIb.Migrations
                         {
                             Id = "86d55f40-9544-4d92-aa24-cc5693a5fd96",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "81ec2cc8-dcc5-4abe-b808-db8cc429ac97",
-                            CreateOn = new DateTime(2022, 9, 22, 3, 5, 59, 230, DateTimeKind.Local).AddTicks(8182),
+                            ConcurrencyStamp = "85cbe063-d02f-4328-b792-115b4a9f2033",
+                            CreateOn = new DateTime(2022, 9, 20, 19, 24, 35, 34, DateTimeKind.Local).AddTicks(118),
                             Email = "moderator@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MODERATOR@EMAIL.COM",
                             NormalizedUserName = "MODERATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAELo/Lm3BNhePTTB30a6J2Pq6kHJohdRUWdg+FezahnncbhMWUmO+LdAQrR9sbwSHmA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE8gXgxaUo1VI6ujRp7j4yyTzPUnnq2hFZc+clCIKlUxjF+pEXQxbV/7J++VdxsfjQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -214,7 +216,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"),
                             AuthorId = new Guid("ff9b30ce-ad2e-48ce-b811-e45481b55043"),
                             AuthorName = "Жафаров Ильнур Наильевич",
-                            DateAdded = new DateTime(2022, 9, 22, 0, 5, 59, 231, DateTimeKind.Utc).AddTicks(2207),
+                            DateAdded = new DateTime(2022, 9, 20, 16, 24, 35, 34, DateTimeKind.Utc).AddTicks(4230),
                             GenreId = new Guid("e4ac715f-a600-4d01-8a09-5439c7b689b3"),
                             GenreName = "Хоррор",
                             IsBooking = false,
@@ -228,7 +230,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"),
                             AuthorId = new Guid("c07ada61-d847-43eb-b2eb-8e32adcd64f4"),
                             AuthorName = "Букин Генадий Валентинович",
-                            DateAdded = new DateTime(2022, 9, 22, 0, 5, 59, 231, DateTimeKind.Utc).AddTicks(5087),
+                            DateAdded = new DateTime(2022, 9, 20, 16, 24, 35, 34, DateTimeKind.Utc).AddTicks(7132),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фэнтези",
                             IsBooking = false,
@@ -406,7 +408,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2022, 9, 22, 0, 5, 59, 231, DateTimeKind.Utc).AddTicks(98),
+                            DateAdded = new DateTime(2022, 9, 20, 16, 24, 35, 34, DateTimeKind.Utc).AddTicks(2045),
                             Text = "Сейчас здесь пусто, содержание заполняется администратором",
                             Title = "Главная"
                         },
@@ -414,7 +416,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
                             CodeWord = "PageBooks",
-                            DateAdded = new DateTime(2022, 9, 22, 0, 5, 59, 231, DateTimeKind.Utc).AddTicks(1737),
+                            DateAdded = new DateTime(2022, 9, 20, 16, 24, 35, 34, DateTimeKind.Utc).AddTicks(3697),
                             Text = "Сейчас здесь пусто, содержание заполняется администратором",
                             Title = "Книги"
                         },
@@ -422,7 +424,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2022, 9, 22, 0, 5, 59, 231, DateTimeKind.Utc).AddTicks(1766),
+                            DateAdded = new DateTime(2022, 9, 20, 16, 24, 35, 34, DateTimeKind.Utc).AddTicks(3727),
                             Text = "Сейчас здесь пусто, содержание заполняется администратором",
                             Title = "Контакты"
                         });
@@ -458,14 +460,14 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
-                            ConcurrencyStamp = "1d1c42ab-b972-47b5-833b-104ba09a4265",
+                            ConcurrencyStamp = "ba860d6e-55d5-4e99-952a-15e7930ab9a2",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5e84bf2c-585f-42dc-a868-73157016ec70",
-                            ConcurrencyStamp = "516c54d8-e33f-4c23-9c8d-18cc704329e8",
+                            ConcurrencyStamp = "3951c3f4-dc7e-4b0e-ad59-4697eaee4383",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });

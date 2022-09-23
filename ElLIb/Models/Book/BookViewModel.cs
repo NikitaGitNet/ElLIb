@@ -21,6 +21,7 @@ namespace ElLIb.Models.Book
         public string Genre { get; set; }
         [Display(Name = "Жанр")]
         public string TitleImagePath { get; set; }
+        public string CurentUserId { get; set; }
         public string Text { get; set; }
         public bool IsBooking { get; set; }
         public string CommentText { get;set; }
