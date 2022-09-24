@@ -93,6 +93,22 @@ namespace ElLIb.Areas.Admin.Controllers
 
         }
         [HttpPost]
+        public IActionResult SearchByEmail(UserModel model)
+        {
+            if (model.UserEmail != null)
+            {
+                IQueryable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
+                var sortUsers = from u in users where model.UserEmail.ToUpper() == u.Email.ToUpper() select u;
+                ApplicationUser applicationUser = new();
+                foreach (var user in sortUsers)
+                {
+                    applicationUser = user;
+                }
+                return RedirectToAction(nameof(UsersShowController.ShowCurentUser), nameof(UsersShowController).CutController(), new UserModel {Id = applicationUser.Id });
+            }
+            return RedirectToAction(nameof(UsersShowController.UsersShow), nameof(UsersShowController).CutController());
+        }
+        [HttpPost]
         public IActionResult CancelUser(UserModel model)
         {
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);

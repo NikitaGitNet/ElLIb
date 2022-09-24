@@ -27,7 +27,12 @@ namespace ElLIb.Controllers
             if (model.Id != default)
             {
                 Book book = dataManager.Books.GetBookById(model.Id);
-                var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                string userId = default;
+                if (User.Identity.IsAuthenticated)
+                {
+                    userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                }
+                
                 List<AddCommentModel> comments = new();
                 foreach (var i in book.Comments)
                 {
