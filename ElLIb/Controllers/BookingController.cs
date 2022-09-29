@@ -21,19 +21,26 @@ namespace ElLIb.Controllers
         private readonly DataManager dataManager;
         private readonly IWebHostEnvironment hostingEnviroment;
         private readonly IHttpContextAccessor httpContextAccessor;
-        public BookingController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> signInManager;
+        public BookingController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this.dataManager = dataManager;
             this.hostingEnviroment = hostingEnviroment;
             this.httpContextAccessor = httpContextAccessor;
             this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         [HttpPost]
-        public IActionResult Booking(BookViewModel model)
+        public async Task<IActionResult> Booking(BookViewModel model)
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
+            if (user == null)
+            {
+                await signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
             if (user.Bookings.Count < 5)
             {
                 Book book = dataManager.Books.GetBookById(model.Id);

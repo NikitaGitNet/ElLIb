@@ -20,18 +20,25 @@ namespace ElLIb.Controllers
         private readonly IWebHostEnvironment hostingEnviroment;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly UserManager<ApplicationUser> userManager;
-        public BookingShowController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> signInManager;
+        public BookingShowController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this.dataManager = dataManager;
             this.hostingEnviroment = hostingEnviroment;
             this.httpContextAccessor = httpContextAccessor;
             this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
+            if (user == null)
+            {
+                await signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
             if (user.Bookings.Count != 0)
             {
                 List<BookingViewModel> bookings = new();

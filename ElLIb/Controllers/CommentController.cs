@@ -6,10 +6,12 @@ using ElLIb.Models.Comment;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ElLIb.Areas.Admin.Controllers
 {
@@ -18,18 +20,25 @@ namespace ElLIb.Areas.Admin.Controllers
         private readonly DataManager dataManager;
         private readonly IWebHostEnvironment hostingEnviroment;
         private readonly IHttpContextAccessor httpContextAccessor;
-        public CommentController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor)
+        private readonly SignInManager<ApplicationUser> signInManager;
+        public CommentController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor, SignInManager<ApplicationUser> signInManager)
         {
             this.dataManager = dataManager;
             this.hostingEnviroment = hostingEnviroment;
             this.httpContextAccessor = httpContextAccessor;
+            this.signInManager = signInManager;
         }
      
         [HttpPost]
-        public IActionResult Write(AddCommentModel model)
+        public async Task<IActionResult> Write(AddCommentModel model)
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
+            if (user == null)
+            {
+                await signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
             Comment comment = new();
             if (ModelState.IsValid && model.CommentText != null)
             {

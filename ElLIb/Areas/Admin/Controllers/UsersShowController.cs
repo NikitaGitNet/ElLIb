@@ -116,6 +116,7 @@ namespace ElLIb.Areas.Admin.Controllers
                 dataManager.Comment.DeleteCommentRange(model.Id);
             }
             await userManager.FindByIdAsync(model.Id);
+            await userManager.IsLockedOutAsync(user);
             await userManager.DeleteAsync(user);
 
             return View("Delete");
