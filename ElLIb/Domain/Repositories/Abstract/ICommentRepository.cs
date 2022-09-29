@@ -10,5 +10,6 @@ namespace ElLIb.Domain.Repositories.Abstract
         Comment GetCommentById(Guid id);
         void SaveComment(Comment entity);
         void DeleteComment(Guid id);
+        void DeleteCommentRange(string id);
     }
 }

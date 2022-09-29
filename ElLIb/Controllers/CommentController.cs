@@ -33,14 +33,18 @@ namespace ElLIb.Areas.Admin.Controllers
             Comment comment = new();
             if (ModelState.IsValid && model.CommentText != null)
             {
-                comment.UserId = userId;
-                comment.BookId = model.Id;
-                comment.Text = model.CommentText;
-                comment.UserName = user.UserName;
-                comment.UserId = user.Id;
-                comment.CreateOn = DateTime.Now;
-                dataManager.Comment.SaveComment(comment);
-                return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel {Id = model.Id });
+                if (User.Identity.IsAuthenticated)
+                {
+                    comment.UserId = userId;
+                    comment.BookId = model.Id;
+                    comment.Text = model.CommentText;
+                    comment.UserName = user.UserName;
+                    comment.UserId = user.Id;
+                    comment.CreateOn = DateTime.Now;
+                    dataManager.Comment.SaveComment(comment);
+                    return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel { Id = model.Id });
+                }
+                
             }
             return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel { Id = model.Id, CommentText = model.CommentText });
         }

@@ -39,5 +39,12 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             context.Comments.Remove(new Comment() { Id = id });
             context.SaveChanges();
         }
+        public void DeleteCommentRange(string id)
+        {
+            var cooments = GetComments();
+            var sortCooments = from b in cooments where b.UserId == id select b;
+            context.Comments.RemoveRange(sortCooments);
+            context.SaveChanges();
+        }
     }
 }

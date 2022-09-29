@@ -39,17 +39,14 @@
             }
             <hr>
         }
-        <form style="display: inline-block;" id="form-@Model.Id" asp-area="Admin" asp-controller="UsersShow" asp-action="CancelUser" method="post">
-            <input type="hidden" name="id" value="@Model.Id">
-            <a class="glo" href="#" onclick="document.getElementById('form-@Model.Id').submit();">Анулировать брони</a>
-        </form>
+        
     }
     else
     {   
         <p>У пользователя пока нет броней</p>
-        <form id="form-@Model.Id" asp-area="Admin" asp-controller="UsersShow" asp-action="Delete" method="post">
-            <input type="hidden" name="id" value="@Model.Id">
-            <a class="glo" href="#" onclick="document.getElementById('form-@Model.Id').submit();">Удалить пользователя</a>
-        </form>
     }
+    <form id="form-@Model.Id" asp-area="Admin" asp-controller="UsersShow" asp-action="Delete" method="post">
+        <input type="hidden" name="id" value="@Model.Id">
+        <a class="glo" href="#" onclick="document.getElementById('form-@Model.Id').submit();">Удалить пользователя</a>
+    </form>
     

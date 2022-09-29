@@ -10,5 +10,6 @@ namespace ElLIb.Domain.Repositories.Abstract
         Booking GetBookingById(Guid id);
         void SaveBooking(Booking entity);
         void DeleteBooking(Guid id);
+        void DeleteBookingRange(string id);
     }
 }

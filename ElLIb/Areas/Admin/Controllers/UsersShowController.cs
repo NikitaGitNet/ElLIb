@@ -49,45 +49,33 @@ namespace ElLIb.Areas.Admin.Controllers
         public IActionResult ShowCurentUser(UserModel model)
         {
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
-            if (user.Bookings.Count != 0 || user.Comments.Count != 0)
+            if (user.Bookings != null)
             {
-                List<AddCommentModel> comments = new();
-                List<BookingViewModel> bookings = new();
                 if (user.Bookings.Count != 0)
                 {
-                    foreach (var i in user.Bookings)
+                    List<BookingViewModel> bookings = new();
+                    if (user.Bookings.Count != 0)
                     {
-                        BookingViewModel booking = new()
+                        foreach (var i in user.Bookings)
                         {
-                            IssueBooking = i.IssueBooking,
-                            UserEmail = i.UserEmail,
-                            UserId = user.Id,
-                            CreateOn = i.CreateOn,
-                            FinishedOn = i.FinishedOn,
-                            BookId = i.BookId,
-                            BooksTitle = i.BooksTitle,
-                            Id = i.Id
-                        };
-                        bookings.Add(booking);
-                    } 
-                }
-                if (user.Comments.Count != 0)
-                {
-                    foreach (var i in user.Comments)
-                    {
-                        AddCommentModel comment = new()
-                        {
-                            CommentText = i.Text,
-                            UserEmail = i.UserEmail,
-                            Id = i.Id,
-                            BookId = i.BookId
-                        };
-                        comments.Add(comment);
+                            BookingViewModel booking = new()
+                            {
+                                IssueBooking = i.IssueBooking,
+                                UserEmail = i.UserEmail,
+                                UserId = user.Id,
+                                CreateOn = i.CreateOn,
+                                FinishedOn = i.FinishedOn,
+                                BookId = i.BookId,
+                                BooksTitle = i.BooksTitle,
+                                Id = i.Id
+                            };
+                            bookings.Add(booking);
+                        }
                     }
+
+                    IQueryable<BookingViewModel> qBookings = bookings.AsQueryable();
+                    return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = qBookings, CreateOn = user.CreateOn });
                 }
-                IQueryable<BookingViewModel> qBookings = bookings.AsQueryable();
-                IQueryable<AddCommentModel> qComments = comments.AsQueryable();
-                return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = qBookings, CreateOn = user.CreateOn, Comments = qComments });
             }
             return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = null, CreateOn = user.CreateOn, Comments = null});
 
@@ -109,7 +97,7 @@ namespace ElLIb.Areas.Admin.Controllers
             return RedirectToAction(nameof(UsersShowController.UsersShow), nameof(UsersShowController).CutController());
         }
         [HttpPost]
-        public IActionResult CancelUser(UserModel model)
+        public async Task<IActionResult> Delete(UserModel model)
         {
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
             if (user.Bookings != null)
@@ -121,24 +109,16 @@ namespace ElLIb.Areas.Admin.Controllers
                     book.IsBooking = false;
                     dataManager.Books.SaveBook(book);
                 }
+                dataManager.Booking.DeleteBookingRange(model.Id);
             }
-            foreach (var comment in user.Comments)
+            if (user.Comments != null)
             {
-                comment.User = null;
-                comment.UserId = null;
-                dataManager.Comment.SaveComment(comment);
+                dataManager.Comment.DeleteCommentRange(model.Id);
             }
-            user.Comments = null;
-            user.Bookings = null;
-            dataManager.ApplicationUser.SaveApplicationUser(user);
-            return RedirectToAction(nameof(UsersShowController.ShowCurentUser), nameof(UsersShowController).CutController(), new UserModel { Id = model.Id });
-        }
-        [HttpPost]
-        public async Task<IActionResult> Delete(string id)
-        {
-            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(id);
+            await userManager.FindByIdAsync(model.Id);
             await userManager.DeleteAsync(user);
-            return View();
+
+            return View("Delete");
         }
         [HttpPost]
         public async Task<IActionResult> ChangePassword(UserModel model)

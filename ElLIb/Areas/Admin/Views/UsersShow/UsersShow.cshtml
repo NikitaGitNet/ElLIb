@@ -21,9 +21,7 @@
                 <li>
                 <p>Электронная почта: @user.Email</p>
                 <p>Имя пользователя: @user.UserName</p>
-                <a asp-area="Admin" asp-controller="UsersShow" asp-action="ShowCurentUser" asp-route-id="@user.Id">
-                <h2 class="H2Title">Перейти к пользователю</h2>
-                </a>
+                <a class="glo" asp-area="Admin" asp-controller="UsersShow" asp-action="ShowCurentUser" asp-route-id="@user.Id">Перейти к пользователю</a>
                 <hr>
                 </li>
             }   

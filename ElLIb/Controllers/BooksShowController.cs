@@ -53,7 +53,7 @@ namespace ElLIb.Controllers
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             var books = dataManager.Books.GetBooks();
-            var sortBooks = from b in books orderby b.DateAdded select b;
+            var sortBooks = from b in books orderby b.Title select b;
             List<BookViewModel> booksViewModel = new();
             foreach (var item in sortBooks)
             {

@@ -72,7 +72,8 @@ namespace ElLIb.Domain
             {
                 Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                 CodeWord = "PageIndex",
-                Title = "Главная"
+                Title = "Главная",
+                Text = "<h2>Добро пожаловать в нашу библиотеку</h2><p>Эта <strong>Библиотека</strong> лучшая в мире и это не только мое мнение. Наша задача сделать литературу доступной для всех желающих. Предлагаем вам пройти регистрацию и начать пользоваться</p>"
             });
             builder.Entity<TextField>().HasData(new TextField 
             { 
@@ -84,7 +85,8 @@ namespace ElLIb.Domain
             {
                 Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                 CodeWord = "PageContacts",
-                Title = "Контакты"
+                Title = "Контакты",
+                Text = "<h2>Мои контакты</h2><p>Почта: cr.xeller@mail.ru</p><p>Телеграм: @NikitaGitNet</p>"
             });
             builder.Entity<Book>().HasData(new Book
             {

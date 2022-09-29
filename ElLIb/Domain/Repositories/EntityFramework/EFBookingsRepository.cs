@@ -38,5 +38,12 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             context.Bookings.Remove(new Booking() { Id = id });
             context.SaveChanges();
         }
+        public void DeleteBookingRange(string id)
+        {
+            var bookings = GetBookings();
+            var sortBookings = from b in bookings where b.UserId == id select b;
+            context.Bookings.RemoveRange(sortBookings);
+            context.SaveChanges();
+        }
     }
 }
