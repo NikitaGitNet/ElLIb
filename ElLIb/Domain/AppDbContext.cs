@@ -216,7 +216,7 @@ namespace ElLIb.Domain
                 GenreName = "Мировая классика",
                 GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                 AuthorName = "Айн Рэнд",
-                AuthorId = new Guid("33a9c3e4-be82-40dd-8c06-4f29b0ac732a")
+                AuthorId = new Guid("2acdaae8-d1ce-4995-bc07-537f77cc74bc")
             });
             builder.Entity<Book>().HasData(new Book
             {
@@ -451,6 +451,19 @@ namespace ElLIb.Domain
                 GenreId = new Guid("e5372338-ee97-408b-82c2-ab7e3ca6d145"),
                 AuthorName = "Себастьян Жондо",
                 AuthorId = new Guid("a9cfc2d7-f079-4205-8750-c48acbd2f231")
+            });
+            builder.Entity<Book>().HasData(new Book
+            {
+                Id = new Guid("8c47f19c-a91e-4524-8004-220fa1734c25"),
+                Title = "Черный ангел",
+                SubTitle = "Довольно неплохой тайтл по сталкеру",
+                IsBooking = false,
+                Text = "В зоне зародилась новая аномалия",
+                TitleImagePath = "166136-vyacheslav-shalygin-chernyy-angel.webp",
+                GenreName = "Фантастика",
+                GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
+                AuthorName = "Вячеслав Шалыгин",
+                AuthorId = new Guid("30254b73-712a-48d4-bf0b-412216a90ade")
             });
 
             builder.Entity<Genre>().HasData(new Genre

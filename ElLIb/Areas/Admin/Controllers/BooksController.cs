@@ -63,6 +63,7 @@ namespace ElLIb.Areas.Admin.Controllers
                 else
                 {
                     model.AuthorName = "Неизвестный автор";
+                    model.AuthorId = new Guid("0bf3eaaa-107f-434e-85bc-49653b07515a");
                 }
                 if (model.GenreName != null)
                 {
@@ -87,6 +88,7 @@ namespace ElLIb.Areas.Admin.Controllers
                 else
                 {
                     model.GenreName = "Неизвестный жанр";
+                    model.GenreId = new Guid("e5372338-ee97-408b-82c2-ab7e3ca6d145");
                 }
                 model.DateAdded = DateTime.Now;
                 dataManager.Books.SaveBook(model);

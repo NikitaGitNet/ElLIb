@@ -10,6 +10,15 @@
     <div class="div-box">
         <a class="glo" asp-controller="BooksShow" asp-action="SearchByAuthor">Поиск по автору</a>
         <a class="glo" asp-controller="BooksShow" asp-action="SearchByGenre">Поиск по жанру</a>
+        <form asp-controller="BooksShow" asp-action="SearchByName" method="post" enctype="multipart/form-data"> 
+        <div class="div-box">
+            <h2>Поиск по названию</h2>
+            <div class="inputBox">
+                <input type="text" name="name">
+            </div>
+            <input style="display: inline-block;" type="submit" class="glo" value="Найти">
+        </div>
+    </form>
     </div>
 <ul class="big-image-list">
     @foreach (var entity in Model.Books)

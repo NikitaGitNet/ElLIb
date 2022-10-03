@@ -170,5 +170,35 @@ namespace ElLIb.Controllers
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
             return View(new GenresListViewModel { Genres = qGenre });
         }
+        public IActionResult SearchByName(string name)
+        {
+            if (name != null)
+            {
+                IQueryable<Book> books = dataManager.Books.GetBooks();
+                var sortBooks = from b in books where b.Title.ToUpper().Contains(name.ToUpper()) select b;
+                if (sortBooks.Any())
+                {
+                    List<BookViewModel> booksViewModels = new();
+                    foreach (var book in sortBooks)
+                    {
+                        BookViewModel bookViewModel = new()
+                        {
+                            IsBooking = book.IsBooking,
+                            Author = book.AuthorName,
+                            Genre = book.GenreName,
+                            Id = book.Id,
+                            Title = book.Title,
+                            Text = book.Text,
+                            TitleImagePath = book.TitleImagePath,
+                            SubTitle = book.SubTitle
+                        };
+                        booksViewModels.Add(bookViewModel);
+                    }
+                    IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
+                    return View("ShowBooksSort", new BooksListViewModel { Books = qBooks });
+                }
+            }
+            return View("NullPage");
+        }
     }
 }

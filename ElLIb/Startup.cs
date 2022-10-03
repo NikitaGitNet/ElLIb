@@ -39,7 +39,9 @@ namespace ElLIb
             services.AddTransient<IRatingRepository, EFRatingRepository>();
             services.AddTransient<DataManager>();
 
+            //Для подключения с PostgreSQL
             services.AddDbContext<AppDbContext>(x => x.UseNpgsql(Config.ConnectionString));
+            //Для подключения к MS SQL
             //services.AddDbContext<AppDbContext>(x=>x.UseSqlServer(Config.ConnectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
