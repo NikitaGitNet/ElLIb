@@ -27,6 +27,10 @@ namespace ElLIb.Controllers
             if (model.Id != default)
             {
                 Book book = dataManager.Books.GetBookById(model.Id);
+                if (book == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
                 string userId = default;
                 if (User.Identity.IsAuthenticated)
                 {

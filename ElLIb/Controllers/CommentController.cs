@@ -34,9 +34,14 @@ namespace ElLIb.Areas.Admin.Controllers
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
+            Book book = dataManager.Books.GetBookById(model.Id);
             if (user == null)
             {
                 await signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            if (book == null)
+            {
                 return RedirectToAction("Index", "Home");
             }
             Comment comment = new();

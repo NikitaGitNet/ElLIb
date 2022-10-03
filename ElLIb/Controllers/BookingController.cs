@@ -36,9 +36,14 @@ namespace ElLIb.Controllers
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
+            Book book1 = dataManager.Books.GetBookById(model.Id);
             if (user == null)
             {
                 await signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            if (book1 == null)
+            {
                 return RedirectToAction("Index", "Home");
             }
             if (user.Bookings.Count < 5)
