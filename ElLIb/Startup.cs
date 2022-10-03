@@ -39,7 +39,8 @@ namespace ElLIb
             services.AddTransient<IRatingRepository, EFRatingRepository>();
             services.AddTransient<DataManager>();
 
-            services.AddDbContext<AppDbContext>(x=>x.UseSqlServer(Config.ConnectionString));
+            services.AddDbContext<AppDbContext>(x => x.UseNpgsql(Config.ConnectionString));
+            //services.AddDbContext<AppDbContext>(x=>x.UseSqlServer(Config.ConnectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
             {
