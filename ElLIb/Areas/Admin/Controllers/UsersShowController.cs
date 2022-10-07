@@ -48,36 +48,40 @@ namespace ElLIb.Areas.Admin.Controllers
         }
         public IActionResult ShowCurentUser(UserModel model)
         {
-            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
-            if (user.Bookings != null)
+            if (model != null)
             {
-                if (user.Bookings.Count != 0)
+                ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
+                if (user.Bookings != null)
                 {
-                    List<BookingViewModel> bookings = new();
                     if (user.Bookings.Count != 0)
                     {
-                        foreach (var i in user.Bookings)
+                        List<BookingViewModel> bookings = new();
+                        if (user.Bookings.Count != 0)
                         {
-                            BookingViewModel booking = new()
+                            foreach (var i in user.Bookings)
                             {
-                                IssueBooking = i.IssueBooking,
-                                UserEmail = i.UserEmail,
-                                UserId = user.Id,
-                                CreateOn = i.CreateOn,
-                                FinishedOn = i.FinishedOn,
-                                BookId = i.BookId,
-                                BooksTitle = i.BooksTitle,
-                                Id = i.Id
-                            };
-                            bookings.Add(booking);
+                                BookingViewModel booking = new()
+                                {
+                                    IssueBooking = i.IssueBooking,
+                                    UserEmail = i.UserEmail,
+                                    UserId = user.Id,
+                                    CreateOn = i.CreateOn,
+                                    FinishedOn = i.FinishedOn,
+                                    BookId = i.BookId,
+                                    BooksTitle = i.BooksTitle,
+                                    Id = i.Id
+                                };
+                                bookings.Add(booking);
+                            }
                         }
-                    }
 
-                    IQueryable<BookingViewModel> qBookings = bookings.AsQueryable();
-                    return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = qBookings, CreateOn = user.CreateOn });
+                        IQueryable<BookingViewModel> qBookings = bookings.AsQueryable();
+                        return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = qBookings, CreateOn = user.CreateOn });
+                    }
                 }
+                return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = null, CreateOn = user.CreateOn, Comments = null });
             }
-            return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = null, CreateOn = user.CreateOn, Comments = null});
+            return RedirectToAction(nameof(UsersShowController.UsersShow), nameof(UsersShowController).CutController());
 
         }
         [HttpPost]
@@ -86,13 +90,21 @@ namespace ElLIb.Areas.Admin.Controllers
             if (model.UserEmail != null)
             {
                 IQueryable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
-                var sortUsers = from u in users where model.UserEmail.ToUpper() == u.Email.ToUpper() select u;
-                ApplicationUser applicationUser = new();
+                var sortUsers = from user in users where user.Email.ToUpper().Contains(model.UserEmail.ToUpper()) select user;
+                List<UserViewModel> userViewModels = new();
                 foreach (var user in sortUsers)
                 {
-                    applicationUser = user;
+                    UserViewModel userViewModel = new()
+                    { 
+                        Email = user.Email,
+                        UserName = user.UserName,
+                        CreateOn = user.CreateOn,
+                        Id = user.Id
+                    };
+                    userViewModels.Add(userViewModel);
                 }
-                return RedirectToAction(nameof(UsersShowController.ShowCurentUser), nameof(UsersShowController).CutController(), new UserModel {Id = applicationUser.Id });
+                //return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController(), new UsersListViewModel {Users = userViewModels });
+                return View("UsersShow", new UsersListViewModel { Users = userViewModels });
             }
             return RedirectToAction(nameof(UsersShowController.UsersShow), nameof(UsersShowController).CutController());
         }

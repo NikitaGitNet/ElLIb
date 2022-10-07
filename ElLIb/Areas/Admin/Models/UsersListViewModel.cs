@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 namespace ElLIb.Areas.Admin.Models
 {
     public class UsersListViewModel
     {
-        public IQueryable<UserViewModel> Users { get; set; }
+        public IEnumerable<UserViewModel> Users { get; set; }
     }
 }

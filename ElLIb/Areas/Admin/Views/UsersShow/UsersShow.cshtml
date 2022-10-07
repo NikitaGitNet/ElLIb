@@ -3,15 +3,6 @@
     TextField textField = ViewBag.TextField;
 }
 <div>
-    <form asp-area="Admin" asp-controller="UsersShow" asp-action="SearchByEmail" method="post" enctype="multipart/form-data"> 
-        <div class="div-box">
-            <h2>Поиск по адресу почты</h2>
-            <div class="inputBox">
-                <input type="text" name="UserEmail">
-            </div>
-            <input style="display: inline-block;" type="submit" class="glo" value="Найти">
-        </div>
-    </form>
     <h2>Список пользователей:</h2>
     <ul>
         @foreach (var user in Model.Users)

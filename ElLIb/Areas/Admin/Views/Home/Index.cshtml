@@ -1,4 +1,4 @@
-﻿@model BooksListViewModel
+﻿@model UsersListViewModel
 @{
     string strTitle = "Панель администратора";
     ViewBag.Title = strTitle;
@@ -14,30 +14,18 @@
     <div>
         <h3>Управление пользователями</h3>
         <div>
-            <a class="glo" asp-area="Admin" asp-controller="UsersShow" asp-action="UsersShow">Управление пользователями</a>
+            <a class="glo" asp-area="Admin" asp-controller="UsersShow" asp-action="UsersShow">Показать всех пользователей</a>
         </div>
-        <h3>Управление библиотекой</h3>
+        <form asp-area="Admin" asp-controller="UsersShow" asp-action="SearchByEmail" method="post" enctype="multipart/form-data"> 
         <div class="div-box">
-            <a class="glo" asp-area="Admin" asp-controller="Books" asp-action="Edit" asp-route-id="">Добавить книгу</a>
-        </div>
-        <h3>Наши книги:</h3>
-        <div class="BooksShow">
-            <div>
-                @foreach (var entity in Model.Books)
-                {
-                    <div class="OnceBookElement">
-                        <a asp-area="" asp-controller="BooksShow" asp-action="Index" asp-route-id="@entity.Id">
-                            @($"{entity.Title}")
-                        </a>
-                        <a asp-area="Admin" asp-controller="Books" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
-                        <form style="display: inline-block;" id="form-@entity.Id" asp-area="Admin" asp-controller="Books" asp-action="Delete" method="post">
-                            <input type="hidden" name="id" value="@entity.Id">
-                            <a class="Alert" href="#" onclick="document.getElementById('form-@entity.Id').submit();">Удалить</a>
-                        </form>
-                    </div>
-                }
+            <h2>Поиск по адресу почты</h2>
+            <div class="inputBox">
+                <input type="text" name="UserEmail">
             </div>
+            <input style="display: inline-block;" type="submit" class="glo" value="Найти">
         </div>
+    </form>
+        
     </div>
     
 </div>

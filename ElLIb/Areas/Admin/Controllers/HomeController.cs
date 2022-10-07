@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using ElLIb.Models.Genre;
 using ElLIb.Models.Author;
+using ElLIb.Areas.Admin.Models;
 
 namespace ElLIb.Areas.Admin.Controllers
 {
@@ -18,29 +19,9 @@ namespace ElLIb.Areas.Admin.Controllers
             this.dataManager = dataManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(UsersListViewModel usersList)
         {
-            var books = dataManager.Books.GetBooks();
-            var sortBooks = from b in books orderby b.Title select b;
-            List <BookViewModel> booksViewModels = new ();
-            foreach (var book in sortBooks)
-            {
-                BookViewModel bookViewModel = new() 
-                { 
-                    Author = book.AuthorName,
-                    Genre = book.GenreName,
-                    Id = book.Id,
-                    IsBooking = book.IsBooking,
-                    SubTitle = book.SubTitle,
-                    Title = book.Title,
-                    Text = book.Text,
-                    TitleImagePath = book.TitleImagePath,
-                };
-                booksViewModels.Add(bookViewModel);
-            }
-            
-            IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-            return View(new BooksListViewModel {Books = qBooks});
+            return View();
         }
     }
 }
