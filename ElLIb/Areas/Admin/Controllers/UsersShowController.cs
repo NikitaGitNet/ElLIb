@@ -27,8 +27,8 @@ namespace ElLIb.Areas.Admin.Controllers
 
         public IActionResult UsersShow()
         {
-            var users = dataManager.ApplicationUser.GetApplicationUsers();
-            var sortUsers = from u in users orderby u.UserName select u;
+            IEnumerable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
+            var sortUsers = from user in users orderby user.UserName select user;
             List<UserViewModel> usersViewModel = new();
             foreach (var user in sortUsers)
             {
@@ -43,53 +43,44 @@ namespace ElLIb.Areas.Admin.Controllers
                 };
                 usersViewModel.Add(userViewModel);
             }
-            IQueryable<UserViewModel> qUsers = usersViewModel.AsQueryable();
-            return View(new UsersListViewModel {Users = qUsers });
+            return View(new UsersListViewModel {Users = usersViewModel });
         }
         public IActionResult ShowCurentUser(UserModel model)
         {
+            //тестить на работоспособность, переделал условную конструкцию
             if (model != null)
             {
                 ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
-                if (user.Bookings != null)
+                if (user.Bookings.Any())
                 {
-                    if (user.Bookings.Count != 0)
+                    List<BookingViewModel> bookings = new();
+                    foreach (var i in user.Bookings)
                     {
-                        List<BookingViewModel> bookings = new();
-                        if (user.Bookings.Count != 0)
+                        BookingViewModel booking = new()
                         {
-                            foreach (var i in user.Bookings)
-                            {
-                                BookingViewModel booking = new()
-                                {
-                                    IssueBooking = i.IssueBooking,
-                                    UserEmail = i.UserEmail,
-                                    UserId = user.Id,
-                                    CreateOn = i.CreateOn,
-                                    FinishedOn = i.FinishedOn,
-                                    BookId = i.BookId,
-                                    BooksTitle = i.BooksTitle,
-                                    Id = i.Id
-                                };
-                                bookings.Add(booking);
-                            }
-                        }
-
-                        IQueryable<BookingViewModel> qBookings = bookings.AsQueryable();
-                        return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = qBookings, CreateOn = user.CreateOn });
+                            IssueBooking = i.IssueBooking,
+                            UserEmail = i.UserEmail,
+                            UserId = user.Id,
+                            CreateOn = i.CreateOn,
+                            FinishedOn = i.FinishedOn,
+                            BookId = i.BookId,
+                            BooksTitle = i.BooksTitle,
+                            Id = i.Id
+                        };
+                        bookings.Add(booking);
                     }
+                    return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = bookings, CreateOn = user.CreateOn });
                 }
                 return View(new UserModel { Id = user.Id, UserEmail = user.Email, UserName = user.UserName, Bookings = null, CreateOn = user.CreateOn, Comments = null });
             }
             return RedirectToAction(nameof(UsersShowController.UsersShow), nameof(UsersShowController).CutController());
-
         }
         [HttpPost]
         public IActionResult SearchByEmail(UserModel model)
         {
             if (model.UserEmail != null)
             {
-                IQueryable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
+                IEnumerable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
                 var sortUsers = from user in users where user.Email.ToUpper().Contains(model.UserEmail.ToUpper()) select user;
                 List<UserViewModel> userViewModels = new();
                 foreach (var user in sortUsers)
@@ -103,6 +94,7 @@ namespace ElLIb.Areas.Admin.Controllers
                     };
                     userViewModels.Add(userViewModel);
                 }
+                //посмотреть можно ли через редирект
                 //return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController(), new UsersListViewModel {Users = userViewModels });
                 return View("UsersShow", new UsersListViewModel { Users = userViewModels });
             }
@@ -111,8 +103,9 @@ namespace ElLIb.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(UserModel model)
         {
+            //тестить на работоспособность, переделал условную конструкцию
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
-            if (user.Bookings != null)
+            if (user.Bookings.Any())
             {
                 foreach (var booking in user.Bookings)
                 {
@@ -123,14 +116,13 @@ namespace ElLIb.Areas.Admin.Controllers
                 }
                 dataManager.Booking.DeleteBookingRange(model.Id);
             }
-            if (user.Comments != null)
+            if (user.Comments.Any())
             {
                 dataManager.Comment.DeleteCommentRange(model.Id);
             }
             await userManager.FindByIdAsync(model.Id);
             await userManager.IsLockedOutAsync(user);
             await userManager.DeleteAsync(user);
-
             return View("Delete");
         }
         [HttpPost]

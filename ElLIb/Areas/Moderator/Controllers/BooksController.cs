@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -22,7 +23,6 @@ namespace ElLIb.Areas.Moderator.Controllers
             this.dataManager = dataManager;
             this.hostingEnviroment = hostingEnviroment;
         }
-
         public IActionResult Edit(Guid id)
         {
             var entity = id == default ? new Book() : dataManager.Books.GetBookById(id);
@@ -36,16 +36,16 @@ namespace ElLIb.Areas.Moderator.Controllers
                 if (titleImageFile != null)
                 {
                     model.TitleImagePath = titleImageFile.FileName;
-                    using (var stream = new FileStream(Path.Combine(hostingEnviroment.WebRootPath, "images/", titleImageFile.FileName), FileMode.Create))
+                    using (FileStream stream = new FileStream(Path.Combine(hostingEnviroment.WebRootPath, "images/", titleImageFile.FileName), FileMode.Create))
                     {
                         titleImageFile.CopyTo(stream);
                     }
                 }
                 if (model.AuthorName != null)
                 {
-                    var authors = dataManager.Author.GetAuthors();
-                    var sortAuthors = from a in authors where model.AuthorName == a.Name select a;
-                    if (sortAuthors.Count() <= 0)
+                    IEnumerable<Author> authors = dataManager.Author.GetAuthors();
+                    var sortAuthors = from author in authors where model.AuthorName.ToUpper() == author.Name.ToUpper() select author;
+                    if (sortAuthors.Count() == 0)
                     {
                         Author author = new() { Name = model.AuthorName, Id = new Guid() };
                         dataManager.Author.SaveAuthor(author);
@@ -60,7 +60,6 @@ namespace ElLIb.Areas.Moderator.Controllers
                             model.AuthorId = author.Id;
                         }
                     }
-
                 }
                 else
                 {

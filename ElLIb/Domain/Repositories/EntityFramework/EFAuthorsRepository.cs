@@ -3,6 +3,7 @@ using ElLIb.Domain.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace ElLIb.Domain.Repositories.EntityFramework
 {
@@ -13,7 +14,7 @@ namespace ElLIb.Domain.Repositories.EntityFramework
         {
             this.context = context;
         }
-        public IQueryable<Author> GetAuthors()
+        public IEnumerable<Author> GetAuthors()
         {
             return context.Authors;
         }

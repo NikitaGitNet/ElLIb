@@ -30,25 +30,23 @@ namespace ElLIb.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
-
         [HttpPost]
         public async Task<IActionResult> Booking(BookViewModel model)
         {
-            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
-            Book book1 = dataManager.Books.GetBookById(model.Id);
             if (user == null)
             {
                 await signInManager.SignOutAsync();
                 return RedirectToAction("Index", "Home");
             }
-            if (book1 == null)
+            Book book = dataManager.Books.GetBookById(model.Id);
+            if (book == null)
             {
                 return RedirectToAction("Index", "Home");
             }
             if (user.Bookings.Count < 5)
             {
-                Book book = dataManager.Books.GetBookById(model.Id);
                 book.IsBooking = true;
                 Booking booking = new()
                 {
@@ -65,15 +63,13 @@ namespace ElLIb.Controllers
             }
             return View("~/Views/BookingShow/LimitBooking.cshtml");
         }
-        
         [HttpPost]
         public IActionResult Delete(Booking booking)
         {
-            var book = dataManager.Books.GetBookById(booking.BookId);
+            Book book = dataManager.Books.GetBookById(booking.BookId);
             dataManager.Booking.DeleteBooking(booking.Id);
             book.IsBooking = false;
             dataManager.Books.SaveBook(book);
-
             return RedirectToAction(nameof(BookingShowController.Index), nameof(BookingShowController).CutController());
         }
         

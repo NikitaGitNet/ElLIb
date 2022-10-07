@@ -9,8 +9,8 @@ namespace ElLIb.Models.Book
 {
     public class BooksListViewModel
     {
-        public IQueryable<BookViewModel> Books { get; set; }
-        public IQueryable<GenreViewModel> Genres { get; set; }
-        public IQueryable<AuthorViewModel> Authors { get; set; }
+        public IEnumerable<BookViewModel> Books { get; set; }
+        public IEnumerable<GenreViewModel> Genres { get; set; }
+        public IEnumerable<AuthorViewModel> Authors { get; set; }
     }
 }

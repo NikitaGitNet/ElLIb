@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using ElLIb.Domain;
+using System.Collections.Generic;
 
 namespace ElLIb.Controllers
 {
@@ -68,7 +69,7 @@ namespace ElLIb.Controllers
             {
                 model.MaxLengthName = false;
                 model.UniqueName = false;
-                IQueryable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
+                IEnumerable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
                 var sortUsers = from u in users where u.UserName == model.UserName select u;
                 if (sortUsers.Any())
                 {
@@ -80,7 +81,7 @@ namespace ElLIb.Controllers
                     model.MaxLengthName = true;
                     return View(model);
                 }
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, CreateOn = DateTime.Now};
+                ApplicationUser user = new() { UserName = model.UserName, Email = model.Email, CreateOn = DateTime.Now};
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

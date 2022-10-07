@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ElLIb.Models.Author
 {
     public class AuthorListViewModel
     {
-        public IQueryable<AuthorViewModel> Authors { get; set; }
+        public IEnumerable<AuthorViewModel> Authors { get; set; }
     }
 }

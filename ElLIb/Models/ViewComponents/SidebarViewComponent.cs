@@ -39,6 +39,7 @@ namespace ElLIb.Models.ViewCompanents
                     count++;
                 }
             }
+            //Поменять интерфейс
             IQueryable<BookViewModel> qBooks = booksViewModel.AsQueryable();
             return Task.FromResult((IViewComponentResult)View("Default", new BooksListViewModel {Books = qBooks }));
         }

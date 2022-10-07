@@ -9,7 +9,7 @@ namespace ElLIb.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        IQueryable<Book> Books { get; set; }
+        ICollection<Book> Books { get; set; }
 
     }
 }

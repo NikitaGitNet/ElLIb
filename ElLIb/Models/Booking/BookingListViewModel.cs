@@ -1,8 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 namespace ElLIb.Models.Booking
 {
     public class BookingListViewModel
     {
-        public IQueryable<BookingViewModel> Bookings { get; set; }
+        public IEnumerable<BookingViewModel> Bookings { get; set; }
     }
 }

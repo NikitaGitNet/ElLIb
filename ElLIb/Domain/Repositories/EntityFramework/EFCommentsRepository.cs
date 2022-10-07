@@ -2,6 +2,7 @@
 using ElLIb.Domain.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ElLIb.Domain.Repositories.EntityFramework
@@ -14,7 +15,7 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             this.context = context;
         }
 
-        public IQueryable<Comment> GetComments()
+        public IEnumerable<Comment> GetComments()
         {
             return context.Comments;
         }

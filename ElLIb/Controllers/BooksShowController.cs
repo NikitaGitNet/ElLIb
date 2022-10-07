@@ -36,146 +36,141 @@ namespace ElLIb.Controllers
                 {
                     userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 }
-                
                 List<AddCommentModel> comments = new();
-                foreach (var i in book.Comments)
+                foreach (var comment in book.Comments)
                 {
-                    AddCommentModel comment = new()
+                    AddCommentModel commentModel = new()
                     {
-                        UserId = i.UserId,
+                        UserId = comment.UserId,
                         BookId = book.Id,
-                        CommentText = i.Text,
-                        UserEmail = i.UserEmail,
-                        Id = i.Id,
-                        UserName = i.UserName,
-                        CreatedDate = i.CreateOn
+                        CommentText = comment.Text,
+                        UserEmail = comment.UserEmail,
+                        Id = comment.Id,
+                        UserName = comment.UserName,
+                        CreatedDate = comment.CreateOn
                     };
-                    comments.Add(comment);
+                    comments.Add(commentModel);
                 }
-                IQueryable<AddCommentModel> qComments = comments.AsQueryable();
-                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = qComments, IsBooking = book.IsBooking, Author = book.AuthorName, Genre = book.GenreName, DateAdded = book.DateAdded, CurentUserId =  userId});
+                return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = comments, IsBooking = book.IsBooking, Author = book.AuthorName, Genre = book.GenreName, DateAdded = book.DateAdded, CurentUserId =  userId});
             }
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            var books = dataManager.Books.GetBooks();
-            var sortBooks = from b in books orderby b.Title select b;
-            List<BookViewModel> booksViewModel = new();
-            foreach (var item in sortBooks)
+            IEnumerable<Book> books = dataManager.Books.GetBooks();
+            var sortBooks = from book in books orderby book.Title select book;
+            List<BookViewModel> booksViewModels = new();
+            foreach (var book in sortBooks)
             {
-                BookViewModel book = new() 
+                BookViewModel bookModel = new() 
                 { 
-                    Author = item.AuthorName,
-                    Genre = item.GenreName,
-                    Id = item.Id,
-                    IsBooking = item.IsBooking,
-                    SubTitle = item.SubTitle,
-                    Text = item.Text,
-                    Title = item.Title,
-                    TitleImagePath = item.TitleImagePath,
-                    DateAdded = item.DateAdded
+                    Author = book.AuthorName,
+                    Genre = book.GenreName,
+                    Id = book.Id,
+                    IsBooking = book.IsBooking,
+                    SubTitle = book.SubTitle,
+                    Text = book.Text,
+                    Title = book.Title,
+                    TitleImagePath = book.TitleImagePath,
+                    DateAdded = book.DateAdded
                 };
-                booksViewModel.Add(book);
+                booksViewModels.Add(bookModel);
             }
-            IQueryable<BookViewModel> qBooks = booksViewModel.AsQueryable();
-            return View(new BooksListViewModel {Books = qBooks});
+            return View(new BooksListViewModel {Books = booksViewModels });
         }
         public IActionResult SearchByAuthor(Guid id)
         {
             if (id != default)
             {
                 Author author = dataManager.Author.GetAuthorById(id);
-                var books = dataManager.Books.GetBooks();
-                var booksByAuthor = from b in books where b.AuthorId == author.Id orderby b.Title select b;
-                List<BookViewModel> booksViewModels = new();
-                foreach (var book in booksByAuthor)
+                IEnumerable<Book> books = dataManager.Books.GetBooks();
+                var sortBooksByAuthor = from book in books where book.AuthorId == author.Id orderby book.Title select book;
+                if (sortBooksByAuthor.Any())
                 {
-                    BookViewModel bookViewModel = new()
-                    { 
-                        IsBooking = book.IsBooking,
-                        Author = book.AuthorName,
-                        Genre = book.GenreName,
-                        Id = book.Id,
-                        Title = book.Title,
-                        Text = book.Text,
-                        TitleImagePath = book.TitleImagePath,
-                        SubTitle = book.SubTitle
-                    };
-                    booksViewModels.Add(bookViewModel);
-                }
-                IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-                if (qBooks.Any())
-                {
-                    return View("ShowBooksSort", new BooksListViewModel { Books = qBooks });
+                    List<BookViewModel> bookViewModels = new();
+                    foreach (var book in sortBooksByAuthor)
+                    {
+                        BookViewModel bookViewModel = new()
+                        {
+                            IsBooking = book.IsBooking,
+                            Author = book.AuthorName,
+                            Genre = book.GenreName,
+                            Id = book.Id,
+                            Title = book.Title,
+                            Text = book.Text,
+                            TitleImagePath = book.TitleImagePath,
+                            SubTitle = book.SubTitle
+                        };
+                        bookViewModels.Add(bookViewModel);
+                    }
+                    return View("ShowBooksSort", new BooksListViewModel { Books = bookViewModels });
                 }
                 return View("NullPage");
             }
-            var authors = dataManager.Author.GetAuthors();
+            IEnumerable<Author> authors = dataManager.Author.GetAuthors();
             var sortAuthorsByName = from author in authors orderby author.Name select author;
-            List<AuthorViewModel> authorsViewModels = new();
-            foreach (var item in sortAuthorsByName)
+            List<AuthorViewModel> authorViewModels = new();
+            foreach (var author in sortAuthorsByName)
             {
-                AuthorViewModel author = new()
+                AuthorViewModel authorModel = new()
                 { 
-                    Id = item.Id,
-                    Name = item.Name
+                    Id = author.Id,
+                    Name = author.Name
                 };
-                authorsViewModels.Add(author);
+                authorViewModels.Add(authorModel);
             }
-            IQueryable<AuthorViewModel> qAuthors = authorsViewModels.AsQueryable();
+            //Посмотреть на сколько нужна хуйня ниже
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            return View(new AuthorListViewModel{Authors = qAuthors });
+            return View(new AuthorListViewModel{Authors = authorViewModels});
         }
         public IActionResult SearchByGenre(Guid id)
         {
             if (id != default)
             {
                 Genre genre = dataManager.Genres.GetGenreById(id);
-                var books = dataManager.Books.GetBooks();
-                var booksByGenre = from b in books where b.GenreId == genre.Id orderby b.Title select b;
-                List<BookViewModel> booksViewModels = new();
-                foreach (var book in booksByGenre)
+                IEnumerable<Book> books = dataManager.Books.GetBooks();
+                var sortBooksByGenre = from book in books where book.GenreId == genre.Id orderby book.Title select book;
+                if (sortBooksByGenre.Any())
                 {
-                    BookViewModel bookViewModel = new()
+                    List<BookViewModel> booksViewModels = new();
+                    foreach (var book in sortBooksByGenre)
                     {
-                        IsBooking = book.IsBooking,
-                        Author = book.AuthorName,
-                        Genre = book.GenreName,
-                        Id = book.Id,
-                        Title = book.Title,
-                        Text = book.Text,
-                        TitleImagePath = book.TitleImagePath,
-                        SubTitle = book.SubTitle
-                    };
-                    booksViewModels.Add(bookViewModel);
-                }
-                IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-                if (qBooks.Any())
-                {
-                    return View("ShowBooksSort", new BooksListViewModel { Books = qBooks });
+                        BookViewModel bookModel = new()
+                        {
+                            IsBooking = book.IsBooking,
+                            Author = book.AuthorName,
+                            Genre = book.GenreName,
+                            Id = book.Id,
+                            Title = book.Title,
+                            Text = book.Text,
+                            TitleImagePath = book.TitleImagePath,
+                            SubTitle = book.SubTitle
+                        };
+                        booksViewModels.Add(bookModel);
+                    }
+                    return View("ShowBooksSort", new BooksListViewModel { Books = booksViewModels });
                 }
                 return View("NullPage");
             }
-            var genres = dataManager.Genres.GetGenres();
+            IEnumerable<Genre> genres = dataManager.Genres.GetGenres();
             var sortGenresByName = from genre in genres orderby genre.Name select genre;
             List<GenreViewModel> genresViewModels = new();
-            foreach (var item in sortGenresByName)
+            foreach (var genre in sortGenresByName)
             {
-                GenreViewModel genre = new()
+                GenreViewModel genreModel = new()
                 { 
-                    Id = item.Id,
-                    Name = item.Name
+                    Id = genre.Id,
+                    Name = genre.Name
                 };
-                genresViewModels.Add(genre);
+                genresViewModels.Add(genreModel);
             }
-            IQueryable<GenreViewModel> qGenre = genresViewModels.AsQueryable();
+            //посмотреть нужна ли строчка кода ниже
             ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            return View(new GenresListViewModel { Genres = qGenre });
+            return View(new GenresListViewModel { Genres = genresViewModels });
         }
         public IActionResult SearchByName(string name)
         {
             if (name != null)
             {
-                IQueryable<Book> books = dataManager.Books.GetBooks();
-                var sortBooks = from b in books where b.Title.ToUpper().Contains(name.ToUpper()) select b;
+                IEnumerable<Book> books = dataManager.Books.GetBooks();
+                var sortBooks = from book in books where book.Title.ToUpper().Contains(name.ToUpper()) select book;
                 if (sortBooks.Any())
                 {
                     List<BookViewModel> booksViewModels = new();
@@ -194,8 +189,7 @@ namespace ElLIb.Controllers
                         };
                         booksViewModels.Add(bookViewModel);
                     }
-                    IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-                    return View("ShowBooksSort", new BooksListViewModel { Books = qBooks });
+                    return View("ShowBooksSort", new BooksListViewModel { Books = booksViewModels });
                 }
             }
             return View("NullPage");
