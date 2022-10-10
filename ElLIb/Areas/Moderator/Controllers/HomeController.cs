@@ -1,4 +1,5 @@
 ﻿using ElLIb.Domain;
+using ElLIb.Domain.Entities;
 using ElLIb.Models.Author;
 using ElLIb.Models.Book;
 using ElLIb.Models.Genre;
@@ -19,10 +20,10 @@ namespace ElLIb.Areas.Moderator.Controllers
 
         public IActionResult Index()
         {
-            var books = dataManager.Books.GetBooks();
-            var sortBooks = from b in books orderby b.Title select b;
+            IEnumerable<Book> books = dataManager.Books.GetBooks();
+            var sortBooks = from book in books orderby book.Title select book;
             List<BookViewModel> booksViewModels = new();
-            foreach (var book in sortBooks)
+            foreach (Book book in sortBooks)
             {
                 BookViewModel bookViewModel = new()
                 {
@@ -37,8 +38,8 @@ namespace ElLIb.Areas.Moderator.Controllers
                 };
                 booksViewModels.Add(bookViewModel);
             }
-            var genres = dataManager.Genres.GetGenres();
-            var sortGenres = from g in genres orderby g.Name select g;
+            IEnumerable<Genre> genres = dataManager.Genres.GetGenres();
+            var sortGenres = from genre in genres orderby genre.Name select genre;
             List<GenreViewModel> genreViewModels = new();
             foreach (var genre in sortGenres)
             {
@@ -49,8 +50,8 @@ namespace ElLIb.Areas.Moderator.Controllers
                 };
                 genreViewModels.Add(model);
             }
-            var authors = dataManager.Author.GetAuthors();
-            var sortAuthors = from a in authors orderby a.Name select a;
+            IEnumerable<Author> authors = dataManager.Author.GetAuthors();
+            var sortAuthors = from author in authors orderby author.Name select author;
             List<AuthorViewModel> authorVeiwModels = new();
             foreach (var author in sortAuthors)
             {
@@ -61,10 +62,7 @@ namespace ElLIb.Areas.Moderator.Controllers
                 };
                 authorVeiwModels.Add(model);
             }
-            IQueryable<AuthorViewModel> qAuthors = authorVeiwModels.AsQueryable();
-            IQueryable<GenreViewModel> qGenres = genreViewModels.AsQueryable();
-            IQueryable<BookViewModel> qBooks = booksViewModels.AsQueryable();
-            return View(new BooksListViewModel { Books = qBooks, Authors = qAuthors, Genres = qGenres });
+            return View(new BooksListViewModel { Books = booksViewModels, Authors = authorVeiwModels, Genres = genreViewModels });
         }
     }
 }

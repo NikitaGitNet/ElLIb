@@ -1,8 +1,8 @@
 ﻿using ElLIb.Domain;
+using ElLIb.Domain.Entities;
 using ElLIb.Models.Booking;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace ElLIb.Areas.Moderator.Controllers
 {
@@ -17,11 +17,10 @@ namespace ElLIb.Areas.Moderator.Controllers
         [HttpPost]
         public IActionResult Delete(BookingViewModel booking)
         {
-            var book = dataManager.Books.GetBookById(booking.BookId);
+            Book book = dataManager.Books.GetBookById(booking.BookId);
             dataManager.Booking.DeleteBooking(booking.Id);
             book.IsBooking = false;
             dataManager.Books.SaveBook(book);
-
             return RedirectToAction(nameof(BookingController.Show), nameof(BookingController).CutController());
         }
     }

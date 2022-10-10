@@ -45,51 +45,49 @@ namespace ElLIb.Areas.Moderator.Controllers
                 {
                     IEnumerable<Author> authors = dataManager.Author.GetAuthors();
                     var sortAuthors = from author in authors where model.AuthorName.ToUpper() == author.Name.ToUpper() select author;
-                    if (sortAuthors.Count() == 0)
+                    if (sortAuthors.Any())
                     {
-                        Author author = new() { Name = model.AuthorName, Id = new Guid() };
+                        // может не работать, надо тестить
+                        model.AuthorName = sortAuthors.First().Name;
+                        model.AuthorId = sortAuthors.First().Id;
+                    }
+                    else
+                    {
+                        Author author = new(){Name = model.AuthorName, Id = new Guid()};
                         dataManager.Author.SaveAuthor(author);
                         model.AuthorName = author.Name;
                         model.AuthorId = author.Id;
                     }
-                    else
-                    {
-                        foreach (var author in sortAuthors)
-                        {
-                            model.AuthorName = author.Name;
-                            model.AuthorId = author.Id;
-                        }
-                    }
                 }
                 else
                 {
-                    model.AuthorName = "Неизвестный автор";
-                    model.AuthorId = new Guid("0bf3eaaa-107f-434e-85bc-49653b07515a");
+                    // может не работать, надо тестить
+                    model.AuthorName = UnknownAuthor.Name;
+                    model.AuthorId = new Guid(UnknownAuthor.Id);
                 }
                 if (model.GenreName != null)
                 {
                     var genres = dataManager.Genres.GetGenres();
                     var sortGenres = from g in genres where model.GenreName == g.Name select g;
-                    if (sortGenres.Count() <= 0)
+                    if (sortGenres.Any())
+                    {
+                        // может не работать, надо тестить
+                        model.GenreId = sortGenres.First().Id;
+                        model.GenreName = sortGenres.First().Name;
+                    }
+                    else
                     {
                         Genre genre = new() { Name = model.GenreName, Id = new Guid() };
                         dataManager.Genres.SaveGenre(genre);
                         model.GenreName = genre.Name;
                         model.GenreId = genre.Id;
                     }
-                    else
-                    {
-                        foreach (var genre in sortGenres)
-                        {
-                            model.GenreName = genre.Name;
-                            model.GenreId = genre.Id;
-                        }
-                    }
                 }
                 else
                 {
-                    model.GenreName = "Неизвестный жанр";
-                    model.GenreId = new Guid("e5372338-ee97-408b-82c2-ab7e3ca6d145");
+                    // может не работать, надо тестить
+                    model.GenreName = UnknownGenre.Name;
+                    model.GenreId = new Guid(UnknownGenre.Id);
                 }
                 model.DateAdded = DateTime.Now;
                 dataManager.Books.SaveBook(model);
@@ -112,7 +110,7 @@ namespace ElLIb.Areas.Moderator.Controllers
             }
             if (ModelState.IsValid)
             {
-                IQueryable<Genre> genres = dataManager.Genres.GetGenres();
+                IEnumerable<Genre> genres = dataManager.Genres.GetGenres();
                 foreach (var genre in genres)
                 {
                     if (model.Name == genre.Name)
@@ -127,9 +125,9 @@ namespace ElLIb.Areas.Moderator.Controllers
         }
         public IActionResult WarningDeleteGenre(Guid id)
         {
-            var genre = dataManager.Genres.GetGenreById(id);
-            IQueryable<Book> books = dataManager.Books.GetBooks();
-            var sortBooks = from b in books where b.GenreId == genre.Id select b;
+            Genre genre = dataManager.Genres.GetGenreById(id);
+            IEnumerable<Book> books = dataManager.Books.GetBooks();
+            var sortBooks = from book in books where book.GenreId == genre.Id select book;
             if (sortBooks.Any())
             {
                 return View(new GenreViewModel { Id = id, Name = genre.Name });
@@ -156,7 +154,7 @@ namespace ElLIb.Areas.Moderator.Controllers
             }
             if (ModelState.IsValid)
             {
-                IQueryable<Author> authors = dataManager.Author.GetAuthors();
+                IEnumerable<Author> authors = dataManager.Author.GetAuthors();
                 foreach (var author in authors)
                 {
                     if (model.Name == author.Name)
@@ -171,9 +169,9 @@ namespace ElLIb.Areas.Moderator.Controllers
         }
         public IActionResult WarningDeleteAuthor(Guid id)
         {
-            var author = dataManager.Author.GetAuthorById(id);
-            IQueryable<Book> books = dataManager.Books.GetBooks();
-            var sortBooks = from b in books where b.AuthorId == author.Id select b;
+            Author author = dataManager.Author.GetAuthorById(id);
+            IEnumerable<Book> books = dataManager.Books.GetBooks();
+            var sortBooks = from book in books where book.AuthorId == author.Id select book;
             if (sortBooks.Any())
             {
                 return View(new AuthorViewModel {Id = id, Name = author.Name });
