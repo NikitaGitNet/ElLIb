@@ -25,7 +25,6 @@ namespace ElLIb.Models.Book
         public string Text { get; set; }
         public bool IsBooking { get; set; }
         public string CommentText { get;set; }
-        public double Rating {get; set; }
         public DateTime DateAdded { get; set; }
         public IEnumerable<AddCommentModel> Comments { get; set; }
     }

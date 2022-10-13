@@ -41,8 +41,8 @@ namespace ElLIb.Domain.Repositories.EntityFramework
         }
         public void DeleteBookingRange(string id)
         {
-            var bookings = GetBookings();
-            var sortBookings = from b in bookings where b.UserId == id select b;
+            IEnumerable<Booking> bookings = GetBookings();
+            var sortBookings = from booking in bookings where booking.UserId == id select booking;
             context.Bookings.RemoveRange(sortBookings);
             context.SaveChanges();
         }

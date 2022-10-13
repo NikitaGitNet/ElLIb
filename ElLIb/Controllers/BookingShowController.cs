@@ -25,7 +25,6 @@ namespace ElLIb.Controllers
             this.httpContextAccessor = httpContextAccessor;
             this.signInManager = signInManager;
         }
-
         public async Task<IActionResult> Index()
         {
             string userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -35,7 +34,6 @@ namespace ElLIb.Controllers
                 await signInManager.SignOutAsync();
                 return RedirectToAction("Index", "Home");
             }
-            // проверить на работоспособность изменил условие ниже
             if (user.Bookings.Any())
             {
                 List<BookingViewModel> bookings = new();
@@ -54,9 +52,9 @@ namespace ElLIb.Controllers
                     };
                     bookings.Add(booking);
                 }
-                return View("~/Views/BookingShow/Show.cshtml", new UserModel { Id = user.Id, UserName = user.UserName, Bookings = bookings, UserEmail = user.Email });
+                return View("Show", new UserModel { Id = user.Id, UserName = user.UserName, Bookings = bookings, UserEmail = user.Email });
             }
-            return View("~/Views/BookingShow/NullPage.cshtml");
+            return View("NullPage");
         }
     }
 }

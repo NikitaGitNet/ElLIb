@@ -59,9 +59,9 @@ namespace ElLIb.Controllers
                 };
                 dataManager.Booking.SaveBooking(booking);
                 dataManager.Books.SaveBook(book);
-                return View("~/Views/BookingShow/Booking.cshtml", new BookingViewModel { BookId = booking.BookId, CreateOn = booking.CreateOn, FinishedOn = booking.FinishedOn, Id = booking.Id, UserEmail = booking.UserEmail, UserId = booking.UserId, BooksTitle = booking.BooksTitle });
+                return View(new BookingViewModel { BookId = booking.BookId, CreateOn = booking.CreateOn, FinishedOn = booking.FinishedOn, Id = booking.Id, UserEmail = booking.UserEmail, UserId = booking.UserId, BooksTitle = booking.BooksTitle });
             }
-            return View("~/Views/BookingShow/LimitBooking.cshtml");
+            return View("LimitBooking");
         }
         [HttpPost]
         public IActionResult Delete(Booking booking)

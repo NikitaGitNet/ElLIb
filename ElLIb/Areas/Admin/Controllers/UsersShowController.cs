@@ -24,7 +24,6 @@ namespace ElLIb.Areas.Admin.Controllers
             this.dataManager = dataManager;
             this.userManager = userManager;
         }
-
         public IActionResult UsersShow()
         {
             IEnumerable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
@@ -47,7 +46,6 @@ namespace ElLIb.Areas.Admin.Controllers
         }
         public IActionResult ShowCurentUser(UserModel model)
         {
-            //тестить на работоспособность, переделал условную конструкцию
             if (model != null)
             {
                 ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
@@ -94,8 +92,6 @@ namespace ElLIb.Areas.Admin.Controllers
                     };
                     userViewModels.Add(userViewModel);
                 }
-                //посмотреть можно ли через редирект
-                //return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController(), new UsersListViewModel {Users = userViewModels });
                 return View("UsersShow", new UsersListViewModel { Users = userViewModels });
             }
             return RedirectToAction(nameof(UsersShowController.UsersShow), nameof(UsersShowController).CutController());
@@ -103,7 +99,6 @@ namespace ElLIb.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(UserModel model)
         {
-            //тестить на работоспособность, переделал условную конструкцию
             ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
             if (user.Bookings.Any())
             {
@@ -120,7 +115,6 @@ namespace ElLIb.Areas.Admin.Controllers
             {
                 dataManager.Comment.DeleteCommentRange(model.Id);
             }
-            await userManager.FindByIdAsync(model.Id);
             await userManager.IsLockedOutAsync(user);
             await userManager.DeleteAsync(user);
             return View("Delete");
@@ -130,7 +124,7 @@ namespace ElLIb.Areas.Admin.Controllers
         {
             ApplicationUser user = await userManager.FindByIdAsync(model.Id);
             user.PasswordHash = userManager.PasswordHasher.HashPassword(user, model.Password);
-            var result = await userManager.UpdateAsync(user);
+            await userManager.UpdateAsync(user);
             return View(new UserModel {Password = model.Password });
         }
     }

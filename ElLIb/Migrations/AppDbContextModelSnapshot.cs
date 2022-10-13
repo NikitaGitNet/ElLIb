@@ -90,14 +90,14 @@ namespace ElLIb.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "75d9e1e5-dda6-497a-87ba-67c3da42fe61",
-                            CreateOn = new DateTime(2022, 10, 6, 18, 41, 20, 339, DateTimeKind.Local).AddTicks(6511),
+                            ConcurrencyStamp = "91dd8d70-d70e-45bf-9d49-f802fddd982a",
+                            CreateOn = new DateTime(2022, 10, 13, 19, 15, 2, 21, DateTimeKind.Local).AddTicks(1128),
                             Email = "my@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MY@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC9OSQ5gbd20R22pyz1cGpHOiP/i2TcZ+36kdjGhTcXiumdzi3a5sJZ7yQv6N+IeWg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENZazmUvukagtm9uNgju0UdEZtFxHinM3WlGQ/8OG6OB/9GWSQY0Aa9QjpBSdaA0Ww==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -107,14 +107,14 @@ namespace ElLIb.Migrations
                         {
                             Id = "86d55f40-9544-4d92-aa24-cc5693a5fd96",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "223eb6dd-0893-4b3c-9242-f1568c8bd99e",
-                            CreateOn = new DateTime(2022, 10, 6, 18, 41, 20, 341, DateTimeKind.Local).AddTicks(9971),
+                            ConcurrencyStamp = "920481c8-565e-45a8-a2a4-1fd6c63bfc0f",
+                            CreateOn = new DateTime(2022, 10, 13, 19, 15, 2, 23, DateTimeKind.Local).AddTicks(3222),
                             Email = "moderator@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MODERATOR@EMAIL.COM",
                             NormalizedUserName = "MODERATOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF4K60Be38L42Z1Ii5o20h9+liYvM+09ruaivOxDmhXRadVlvL5vv8+YXUgMbJv3ew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHKWoEKHjNGwhzo5ShXlGusjskYy/a1SpMDu58h6x9FzfSnla0R2tOXRYjxbx8jIKQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -328,7 +328,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("0d23f2ec-2b54-4dd9-b52b-b7c83a23dd0a"),
                             AuthorId = new Guid("ff9b30ce-ad2e-48ce-b811-e45481b55043"),
                             AuthorName = "Жафаров Ильнур",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(4133),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 23, DateTimeKind.Utc).AddTicks(7454),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -342,7 +342,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("b2566eb6-2108-46ad-bc5f-b3a660d60d1b"),
                             AuthorId = new Guid("c07ada61-d847-43eb-b2eb-8e32adcd64f4"),
                             AuthorName = "Букин Генадий",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7069),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(372),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -356,7 +356,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("f59c2a21-0f24-469a-b7cc-495146124310"),
                             AuthorId = new Guid("ebcbdb38-9d81-4cba-9f6b-b0edb5d6bffa"),
                             AuthorName = "Уильям Голдинг",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7127),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(408),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -370,7 +370,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("ba99c9bb-23fb-4238-8491-f11101b8b6fa"),
                             AuthorId = new Guid("e5c68c75-9b15-4424-b062-b91c7f4b6332"),
                             AuthorName = "Габриэль Гарсиа",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7159),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(436),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -384,7 +384,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("814f9c1c-9fef-42ba-acbe-857e234f31a8"),
                             AuthorId = new Guid("4f91476b-4021-4581-b729-78c8fede5d3f"),
                             AuthorName = "Дмитрий Глуховский",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7230),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(510),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -398,7 +398,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("629555f5-a728-4d49-b9c5-754e06c5baef"),
                             AuthorId = new Guid("9c37a892-1e81-4120-b8be-de6833215e67"),
                             AuthorName = "Василий Орехов",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7261),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(542),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -412,7 +412,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("e895336e-deb2-4a70-a5b6-38cbd1501507"),
                             AuthorId = new Guid("d695cfa5-04cd-40ac-b0d7-307a8a876860"),
                             AuthorName = "Андрей Левицкий",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7286),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(572),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -426,7 +426,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("ebb65c65-bac4-4215-8c4b-dcda8faa6e25"),
                             AuthorId = new Guid("fa10b14c-e352-4eac-91ae-982cb3fd3982"),
                             AuthorName = "Роман Глушков",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7310),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(597),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -440,7 +440,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("1cb4916a-5755-4784-bed0-a69db6311504"),
                             AuthorId = new Guid("33a9c3e4-be82-40dd-8c06-4f29b0ac732a"),
                             AuthorName = "Захар Петров",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7336),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(622),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -454,7 +454,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("058b6f8f-b5c6-4b4f-9124-2c213cb3edfa"),
                             AuthorId = new Guid("2acdaae8-d1ce-4995-bc07-537f77cc74bc"),
                             AuthorName = "Айн Рэнд",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7362),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(656),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -468,7 +468,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("8236e6e4-f03c-48ff-849a-a1e7d0d48cae"),
                             AuthorId = new Guid("bb1a20f6-4406-4fe3-bf82-b3b31453667b"),
                             AuthorName = "Стивен Кинг",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7384),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(681),
                             GenreId = new Guid("e4ac715f-a600-4d01-8a09-5439c7b689b3"),
                             GenreName = "Хоррор",
                             IsBooking = false,
@@ -482,7 +482,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("e89bd603-cda2-4bad-94d7-68862640a58d"),
                             AuthorId = new Guid("bb1a20f6-4406-4fe3-bf82-b3b31453667b"),
                             AuthorName = "Стивен Кинг",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7407),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(706),
                             GenreId = new Guid("e4ac715f-a600-4d01-8a09-5439c7b689b3"),
                             GenreName = "Хоррор",
                             IsBooking = false,
@@ -496,7 +496,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("1b12fa4b-ad1a-45e1-ba9a-c67ea054e317"),
                             AuthorId = new Guid("afe48adb-b2a8-4d40-aef2-2816ec837304"),
                             AuthorName = "Валентин Катаев",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7429),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(730),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -510,7 +510,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("45723e77-c301-4ac5-b6bc-2f5561fe453e"),
                             AuthorId = new Guid("bb1a20f6-4406-4fe3-bf82-b3b31453667b"),
                             AuthorName = "Стивен Кинг",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7452),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(754),
                             GenreId = new Guid("e4ac715f-a600-4d01-8a09-5439c7b689b3"),
                             GenreName = "Хоррор",
                             IsBooking = false,
@@ -524,7 +524,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("c0a214e6-aa17-40ad-90fe-e1f465022102"),
                             AuthorId = new Guid("bb1a20f6-4406-4fe3-bf82-b3b31453667b"),
                             AuthorName = "Стивен Кинг",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7475),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(778),
                             GenreId = new Guid("e4ac715f-a600-4d01-8a09-5439c7b689b3"),
                             GenreName = "Хоррор",
                             IsBooking = false,
@@ -538,7 +538,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("893ed244-ed74-4618-b101-3e88b726d128"),
                             AuthorId = new Guid("a40e7075-54fc-4015-9488-1b32652b96e4"),
                             AuthorName = "Олдос Хаксли",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7498),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(803),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -552,7 +552,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("ba3af0e2-6a4c-4070-aa0c-0ffc0027d60f"),
                             AuthorId = new Guid("a6ffa373-2b5a-424e-b5ed-835678fd0d92"),
                             AuthorName = "Джордж Оруэл",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7523),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(828),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -566,7 +566,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("0b6dbc1a-0ab8-4e00-b620-bf517abe8789"),
                             AuthorId = new Guid("7785baef-d027-4c00-be4f-237846c9c318"),
                             AuthorName = "Артур Конан Дойл",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7550),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(854),
                             GenreId = new Guid("c500c41b-6b66-424b-b8d8-bf88e8f76a9e"),
                             GenreName = "Детектив",
                             IsBooking = false,
@@ -580,7 +580,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("85b7a108-6e59-43ec-946f-39baf40d49fe"),
                             AuthorId = new Guid("65b1fd9e-36d4-4965-bd3f-66a3e4859426"),
                             AuthorName = "Наиль Выборнов",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7602),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(933),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -594,7 +594,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("9326fb09-8557-4cdf-a2e5-6a3cf65ff252"),
                             AuthorId = new Guid("ee09b74a-99ff-4f41-a04b-5957c2d8c3b6"),
                             AuthorName = "Эрих Мария Ремарк",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7625),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(957),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -608,7 +608,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("8638a5fa-e30d-41a0-9db2-1493d38044eb"),
                             AuthorId = new Guid("1198ab8d-59e8-4ce8-a4ee-98cce1f65eec"),
                             AuthorName = "Рей Брэдбери",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7649),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(982),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -622,7 +622,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("c3922ccf-dcfa-4c35-90bc-cc9dbc5e8902"),
                             AuthorId = new Guid("a6ffa373-2b5a-424e-b5ed-835678fd0d92"),
                             AuthorName = "Джордж Оруэл",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7674),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(1007),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -636,7 +636,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("50259038-7e6f-402e-a80a-4a85a9cf8afe"),
                             AuthorId = new Guid("3cbe84ba-9744-4cef-9dd9-815c7c53e133"),
                             AuthorName = "Сергей Лукьяненко",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7696),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(1031),
                             GenreId = new Guid("87bbe432-9779-4488-a769-0c067a65aecd"),
                             GenreName = "Приключения",
                             IsBooking = false,
@@ -650,7 +650,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("d0528761-f101-4f4f-b0fc-0a970a2026bd"),
                             AuthorId = new Guid("3f40c815-4d3f-42f7-92e8-10543306465f"),
                             AuthorName = "Алексей Гришин",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7722),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(1056),
                             GenreId = new Guid("87bbe432-9779-4488-a769-0c067a65aecd"),
                             GenreName = "Приключения",
                             IsBooking = false,
@@ -664,7 +664,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("19f4d611-5a6a-4cf1-bcde-02e85081bb18"),
                             AuthorId = new Guid("549ceae8-770c-4cd1-8ca8-c7f13bd7ba64"),
                             AuthorName = "Николай Свечин",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7744),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(1081),
                             GenreId = new Guid("79500809-b481-49a6-aeb6-869b86f9901e"),
                             GenreName = "Мировая классика",
                             IsBooking = false,
@@ -678,7 +678,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("8fbc3dd1-8d19-454e-8aa3-a31749ea66be"),
                             AuthorId = new Guid("5ac34184-f039-43da-8594-35e33c820882"),
                             AuthorName = "Дмитрий Шелег",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7767),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(1105),
                             GenreId = new Guid("c500c41b-6b66-424b-b8d8-bf88e8f76a9e"),
                             GenreName = "Детектив",
                             IsBooking = false,
@@ -692,7 +692,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("94271f11-d6b7-43a8-b516-1b0f78f5cf10"),
                             AuthorId = new Guid("b573b21d-544f-4072-a595-b427b54247a2"),
                             AuthorName = "Джон Перкинс",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7790),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(1129),
                             GenreId = new Guid("008fb99c-c826-4ee2-bf89-e60f1ffaf6a9"),
                             GenreName = "Научная литература",
                             IsBooking = false,
@@ -706,7 +706,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("213f74db-5ffd-4123-bd8c-e07c63c02c03"),
                             AuthorId = new Guid("a9cfc2d7-f079-4205-8750-c48acbd2f231"),
                             AuthorName = "Себастьян Жондо",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7814),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(1154),
                             GenreId = new Guid("e5372338-ee97-408b-82c2-ab7e3ca6d145"),
                             GenreName = "Неизвестный жанр",
                             IsBooking = false,
@@ -720,7 +720,7 @@ namespace ElLIb.Migrations
                             Id = new Guid("8c47f19c-a91e-4524-8004-220fa1734c25"),
                             AuthorId = new Guid("30254b73-712a-48d4-bf0b-412216a90ade"),
                             AuthorName = "Вячеслав Шалыгин",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(7836),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 24, DateTimeKind.Utc).AddTicks(1178),
                             GenreId = new Guid("da589ab3-c70c-4d96-9ea9-867fedea69ff"),
                             GenreName = "Фантастика",
                             IsBooking = false,
@@ -851,30 +851,6 @@ namespace ElLIb.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ElLIb.Domain.Entities.Rating", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BookId")
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("RatingValue")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Ratings");
-                });
-
             modelBuilder.Entity("ElLIb.Domain.Entities.TextField", b =>
                 {
                     b.Property<Guid>("Id")
@@ -918,7 +894,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("63dc8fa6-07ae-4391-8916-e057f71239ce"),
                             CodeWord = "PageIndex",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(1764),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 23, DateTimeKind.Utc).AddTicks(5007),
                             Text = "<h2>Добро пожаловать в нашу библиотеку</h2><p>Эта <strong>Библиотека</strong> лучшая в мире и это не только мое мнение. Наша задача сделать литературу доступной для всех желающих. Предлагаем вам пройти регистрацию и начать пользоваться</p>",
                             Title = "Главная"
                         },
@@ -926,7 +902,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("70bf165a-700a-4156-91c0-e83fce0a277f"),
                             CodeWord = "PageBooks",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(3662),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 23, DateTimeKind.Utc).AddTicks(6917),
                             Text = "Сейчас здесь пусто, содержание заполняется администратором",
                             Title = "Книги"
                         },
@@ -934,7 +910,7 @@ namespace ElLIb.Migrations
                         {
                             Id = new Guid("4aa76a4c-c59d-409a-84c1-06e6487a137a"),
                             CodeWord = "PageContacts",
-                            DateAdded = new DateTime(2022, 10, 6, 15, 41, 20, 342, DateTimeKind.Utc).AddTicks(3692),
+                            DateAdded = new DateTime(2022, 10, 13, 16, 15, 2, 23, DateTimeKind.Utc).AddTicks(6948),
                             Text = "<h2>Мои контакты</h2><p>Почта: cr.xeller@mail.ru</p><p>Телеграм: @NikitaGitNet</p>",
                             Title = "Контакты"
                         });
@@ -969,14 +945,14 @@ namespace ElLIb.Migrations
                         new
                         {
                             Id = "8af10569-b018-4fe7-a380-7d6a14c70b74",
-                            ConcurrencyStamp = "ebde78ab-caa1-46f5-976f-d40e15ad17f1",
+                            ConcurrencyStamp = "0abe3bc2-ae7d-440b-b4b9-993df551d71f",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "5e84bf2c-585f-42dc-a868-73157016ec70",
-                            ConcurrencyStamp = "7a47d2bb-4029-423d-aeb3-439c34f4cbbd",
+                            ConcurrencyStamp = "ab5c14ef-e15a-4333-a457-1d8e6bb09cc5",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         });
@@ -1144,23 +1120,6 @@ namespace ElLIb.Migrations
 
                     b.HasOne("ElLIb.Domain.Entities.ApplicationUser", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Book");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ElLIb.Domain.Entities.Rating", b =>
-                {
-                    b.HasOne("ElLIb.Domain.Entities.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ElLIb.Domain.Entities.ApplicationUser", "User")
-                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Book");

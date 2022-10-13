@@ -1,6 +1,7 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
 using ElLIb.Models.Author;
+using ElLIb.Models.Book;
 using ElLIb.Models.Genre;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Hosting;
@@ -47,7 +48,6 @@ namespace ElLIb.Areas.Moderator.Controllers
                     var sortAuthors = from author in authors where model.AuthorName.ToUpper() == author.Name.ToUpper() select author;
                     if (sortAuthors.Any())
                     {
-                        // может не работать, надо тестить
                         model.AuthorName = sortAuthors.First().Name;
                         model.AuthorId = sortAuthors.First().Id;
                     }
@@ -61,7 +61,6 @@ namespace ElLIb.Areas.Moderator.Controllers
                 }
                 else
                 {
-                    // может не работать, надо тестить
                     model.AuthorName = UnknownAuthor.Name;
                     model.AuthorId = new Guid(UnknownAuthor.Id);
                 }
@@ -71,7 +70,6 @@ namespace ElLIb.Areas.Moderator.Controllers
                     var sortGenres = from g in genres where model.GenreName == g.Name select g;
                     if (sortGenres.Any())
                     {
-                        // может не работать, надо тестить
                         model.GenreId = sortGenres.First().Id;
                         model.GenreName = sortGenres.First().Name;
                     }
@@ -85,7 +83,6 @@ namespace ElLIb.Areas.Moderator.Controllers
                 }
                 else
                 {
-                    // может не работать, надо тестить
                     model.GenreName = UnknownGenre.Name;
                     model.GenreId = new Guid(UnknownGenre.Id);
                 }
@@ -95,93 +92,49 @@ namespace ElLIb.Areas.Moderator.Controllers
             }
             return View(model);
         }
-        public IActionResult AddGenre(Guid id)
+        public IActionResult SearchByName(BookViewModel model)
         {
-            var entity = id == default ? new Genre() : dataManager.Genres.GetGenreById(id);
-            return View(entity);
-        }
-        [HttpPost]
-        public IActionResult AddGenre(Genre model)
-        {
-            if (model.Id != default)
+            if (model.Title != null)
             {
-                dataManager.Genres.SaveGenre(model);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-            }
-            if (ModelState.IsValid)
-            {
-                IEnumerable<Genre> genres = dataManager.Genres.GetGenres();
-                foreach (var genre in genres)
+                IEnumerable<Book> books = dataManager.Books.GetBooks();
+                var sortBooks = from book in books where book.Title.ToUpper().Contains(model.Title.ToUpper()) select book;
+                List<BookViewModel> bookViewModels = new();
+                foreach (var book in sortBooks)
                 {
-                    if (model.Name == genre.Name)
+                    BookViewModel bookViewModel = new()
                     {
-                        return View("ErrorGenre");
-                    }
+                        Title = book.Title,
+                        Id = book.Id,
+                        Author = book.AuthorName,
+                        Genre = book.GenreName,
+                        IsBooking = book.IsBooking,
+                        TitleImagePath = book.TitleImagePath
+                    };
+                    bookViewModels.Add(bookViewModel);
                 }
-                dataManager.Genres.SaveGenre(model);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                return View("BooksShow", new BooksListViewModel { Books = bookViewModels});
             }
-            return View(model);
+            return RedirectToAction(nameof(BooksController.BooksShow), nameof(BooksController).CutController());
         }
-        public IActionResult WarningDeleteGenre(Guid id)
+        public IActionResult BooksShow()
         {
-            Genre genre = dataManager.Genres.GetGenreById(id);
             IEnumerable<Book> books = dataManager.Books.GetBooks();
-            var sortBooks = from book in books where book.GenreId == genre.Id select book;
-            if (sortBooks.Any())
+            var sortBooks = from book in books orderby book.Title select book;
+            List<BookViewModel> booksViewModels = new();
+            foreach (Book book in sortBooks)
             {
-                return View(new GenreViewModel { Id = id, Name = genre.Name });
-            }
-            return RedirectToAction(nameof(BooksController.DeleteGenre), nameof(BooksController).CutController(), new GenreViewModel { Id = id });
-        }
-        public IActionResult DeleteGenre(GenreViewModel model)
-        {
-            dataManager.Genres.DeleteGenre(model.Id);
-            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-        }
-        public IActionResult AddAuthor(Guid id)
-        {
-            var entity = id == default ? new Author() : dataManager.Author.GetAuthorById(id);
-            return View(entity);
-        }
-        [HttpPost]
-        public IActionResult AddAuthor(Author model)
-        {
-            if (model.Id != default)
-            {
-                dataManager.Author.SaveAuthor(model);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
-            }
-            if (ModelState.IsValid)
-            {
-                IEnumerable<Author> authors = dataManager.Author.GetAuthors();
-                foreach (var author in authors)
+                BookViewModel bookViewModel = new()
                 {
-                    if (model.Name == author.Name)
-                    {
-                        return View("ErrorAuthor");
-                    }
-                }
-                dataManager.Author.SaveAuthor(model);
-                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                    Author = book.AuthorName,
+                    Genre = book.GenreName,
+                    Id = book.Id,
+                    IsBooking = book.IsBooking,
+                    Title = book.Title,
+                    TitleImagePath = book.TitleImagePath,
+                };
+                booksViewModels.Add(bookViewModel);
             }
-            return View(model);
-        }
-        public IActionResult WarningDeleteAuthor(Guid id)
-        {
-            Author author = dataManager.Author.GetAuthorById(id);
-            IEnumerable<Book> books = dataManager.Books.GetBooks();
-            var sortBooks = from book in books where book.AuthorId == author.Id select book;
-            if (sortBooks.Any())
-            {
-                return View(new AuthorViewModel {Id = id, Name = author.Name });
-            }
-            return RedirectToAction(nameof(BooksController.DeleteAuthor), nameof(BooksController).CutController(), new AuthorViewModel {Id = id });
-        }
-        public IActionResult DeleteAuthor(AuthorViewModel model)
-        {
-            dataManager.Author.DeleteAuthor(model.Id);
-            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+            return View(new BooksListViewModel{Books = booksViewModels});
         }
         [HttpPost]
         public IActionResult Delete(Guid id)

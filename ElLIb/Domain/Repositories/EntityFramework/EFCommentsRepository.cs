@@ -42,8 +42,8 @@ namespace ElLIb.Domain.Repositories.EntityFramework
         }
         public void DeleteCommentRange(string id)
         {
-            var cooments = GetComments();
-            var sortCooments = from b in cooments where b.UserId == id select b;
+            IEnumerable<Comment> cooments = GetComments();
+            var sortCooments = from comment in cooments where comment.UserId == id select comment;
             context.Comments.RemoveRange(sortCooments);
             context.SaveChanges();
         }
