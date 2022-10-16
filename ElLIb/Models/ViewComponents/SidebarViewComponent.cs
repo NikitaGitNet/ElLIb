@@ -1,23 +1,24 @@
-﻿using ElLIb.Domain;
-using ElLIb.Models.Book;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using ElLIb.Domain.Interfaces;
+using ElLIb.Domain.Entities;
+using ElLIb.Models.Book;
 
 namespace ElLIb.Models.ViewCompanents
 {
     public class SidebarViewComponent : ViewComponent
     {
-        private readonly DataManager dataManager;
-        public SidebarViewComponent(DataManager dataManager)
+        private readonly IRepository<Domain.Entities.Book> bookRepository;
+        public SidebarViewComponent(IRepository<Domain.Entities.Book> bookRepository)
         {
-            this.dataManager = dataManager;
+            this.bookRepository = bookRepository;
         }
         public Task<IViewComponentResult> InvokeAsync()
         {
-            var books = dataManager.Books.GetBooks();
-            var sortBooks = from b in books orderby b.DateAdded descending select b;
+            IEnumerable<Domain.Entities.Book> books = bookRepository.GetAll();
+            var sortBooks = from book in books orderby book.DateAdded descending select book;
             List<BookViewModel> booksViewModel = new();
             int count = 0;
             foreach (var item in sortBooks)
