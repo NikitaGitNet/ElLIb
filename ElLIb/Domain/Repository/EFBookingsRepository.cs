@@ -1,28 +1,28 @@
 ﻿using ElLIb.Domain.Entities;
-using ElLIb.Domain.Repositories.Abstract;
+using ElLIb.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElLIb.Domain.Repositories.EntityFramework
+namespace ElLIb.Domain.Repository
 {
-    public class EFBookingsRepository : IBookingRepository
+    public class EFBookingsRepository : IRepository<Booking>
     {
         private readonly AppDbContext context;
         public EFBookingsRepository(AppDbContext context)
         {
             this.context = context;
         }
-        public IEnumerable<Booking> GetBookings()
+        public IEnumerable<Booking> GetAll()
         {
             return context.Bookings;
         }
-        public Booking GetBookingById(Guid id)
+        public Booking GetById(Guid id)
         {
             return context.Bookings.FirstOrDefault(x => x.Id == id);
         }
-        public void SaveBooking(Booking entity)
+        public void Save(Booking entity)
         {
             if (entity.Id == default)
             {
@@ -34,17 +34,21 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteBooking(Guid id)
+        public void Delete(Guid id)
         {
             context.Bookings.Remove(new Booking() { Id = id });
             context.SaveChanges();
         }
-        public void DeleteBookingRange(string id)
+        public void DeleteRange(string id)
         {
-            IEnumerable<Booking> bookings = GetBookings();
+            IEnumerable<Booking> bookings = GetAll();
             var sortBookings = from booking in bookings where booking.UserId == id select booking;
             context.Bookings.RemoveRange(sortBookings);
             context.SaveChanges();
+        }
+        public Booking GetByCodeWord(string codeWord)
+        {
+            throw new NotImplementedException();
         }
     }
 }

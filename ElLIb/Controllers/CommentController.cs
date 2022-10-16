@@ -1,6 +1,7 @@
 ﻿using ElLIb.Controllers;
 using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Book;
 using ElLIb.Models.Comment;
 using ElLIb.Service;
@@ -17,24 +18,27 @@ namespace ElLIb.Areas.Admin.Controllers
 {
     public class CommentController : Controller
     {
-        private readonly DataManager dataManager;
+        private readonly IRepository<Comment> commentRepository;
+        private readonly IRepository<ApplicationUser> userRepository;
+        private readonly IRepository<Book> bookRepository;
         private readonly IWebHostEnvironment hostingEnviroment;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public CommentController(DataManager dataManager, IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor, SignInManager<ApplicationUser> signInManager)
+        public CommentController(IWebHostEnvironment hostingEnviroment, IHttpContextAccessor httpContextAccessor, SignInManager<ApplicationUser> signInManager, IRepository<Comment> commentRepository, IRepository<ApplicationUser> userRepository, IRepository<Book> bookRepository)
         {
-            this.dataManager = dataManager;
+            this.commentRepository = commentRepository;
             this.hostingEnviroment = hostingEnviroment;
             this.httpContextAccessor = httpContextAccessor;
             this.signInManager = signInManager;
+            this.userRepository = userRepository;
+            this.bookRepository = bookRepository;
         }
-     
         [HttpPost]
         public async Task<IActionResult> Write(AddCommentModel model)
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
-            Book book = dataManager.Books.GetBookById(model.Id);
+            ApplicationUser user = userRepository.GetById(new Guid(userId));
+            Book book = bookRepository.GetById(model.Id);
             if (user == null)
             {
                 await signInManager.SignOutAsync();
@@ -55,17 +59,16 @@ namespace ElLIb.Areas.Admin.Controllers
                     comment.UserName = user.UserName;
                     comment.UserId = user.Id;
                     comment.CreateOn = DateTime.Now;
-                    dataManager.Comment.SaveComment(comment);
+                    commentRepository.Save(comment);
                     return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel { Id = model.Id });
-                }
-                
+                } 
             }
             return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel { Id = model.Id, CommentText = model.CommentText });
         }
         [HttpPost]
         public IActionResult Delete(AddCommentModel model)
         {
-            dataManager.Comment.DeleteComment(model.Id);
+            commentRepository.Delete(model.Id);
             return RedirectToAction(nameof(BooksShowController.Index), nameof(BooksShowController).CutController(), new BookViewModel { Id = model.BookId });
         }
     }

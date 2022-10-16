@@ -1,30 +1,30 @@
 ﻿using ElLIb.Domain.Entities;
-using ElLIb.Domain.Repositories.Abstract;
+using ElLIb.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElLIb.Domain.Repositories.EntityFramework
+namespace ElLIb.Domain.Repository
 {
-    public class EFBooksRepository : IBooksRepository
+    public class EFBooksRepository : IRepository<Book>
     {
         private readonly AppDbContext context;
         public EFBooksRepository(AppDbContext context)
         {
             this.context = context;
         }
-        public IEnumerable<Book> GetBooks()
+        public IEnumerable<Book> GetAll()
         {
             return context.Books;
         }
-        public Book GetBookById(Guid id)
+        public Book GetById(Guid id)
         {
             return context.Books
                 .Include(x => x.Comments)
                 .FirstOrDefault(x => x.Id == id);
         }
-        public void SaveBook(Book entity)
+        public void Save(Book entity)
         {
             if (entity.Id == default)
             {
@@ -36,10 +36,18 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteBook(Guid id)
+        public void Delete(Guid id)
         {
             context.Books.Remove(new Book() { Id = id });
             context.SaveChanges();
+        }
+        public void DeleteRange(string id)
+        {
+            throw new NotImplementedException();
+        }
+        public Book GetByCodeWord(string codeWord)
+        {
+            throw new NotImplementedException();
         }
     }
 }

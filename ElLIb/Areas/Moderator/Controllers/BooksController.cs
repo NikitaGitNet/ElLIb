@@ -1,5 +1,6 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Author;
 using ElLIb.Models.Book;
 using ElLIb.Models.Genre;
@@ -17,16 +18,20 @@ namespace ElLIb.Areas.Moderator.Controllers
     [Area("Moderator")]
     public class BooksController : Controller
     {
-        private readonly DataManager dataManager;
+        private readonly IRepository<Book> bookRepository;
+        private readonly IRepository<Author> authorRepository;
+        private readonly IRepository<Genre> genreRepository;
         private readonly IWebHostEnvironment hostingEnviroment;
-        public BooksController(DataManager dataManager, IWebHostEnvironment hostingEnviroment)
+        public BooksController(IRepository<Book> bookRepository, IWebHostEnvironment hostingEnviroment, IRepository<Author> authorRepository, IRepository<Genre> genreRepository)
         {
-            this.dataManager = dataManager;
+            this.bookRepository = bookRepository;
             this.hostingEnviroment = hostingEnviroment;
+            this.authorRepository = authorRepository;
+            this.genreRepository = genreRepository;
         }
         public IActionResult Edit(Guid id)
         {
-            var entity = id == default ? new Book() : dataManager.Books.GetBookById(id);
+            var entity = id == default ? new Book() : bookRepository.GetById(id);
             return View(entity);
         }
         [HttpPost]
@@ -44,7 +49,7 @@ namespace ElLIb.Areas.Moderator.Controllers
                 }
                 if (model.AuthorName != null)
                 {
-                    IEnumerable<Author> authors = dataManager.Author.GetAuthors();
+                    IEnumerable<Author> authors = authorRepository.GetAll();
                     var sortAuthors = from author in authors where model.AuthorName.ToUpper() == author.Name.ToUpper() select author;
                     if (sortAuthors.Any())
                     {
@@ -54,7 +59,7 @@ namespace ElLIb.Areas.Moderator.Controllers
                     else
                     {
                         Author author = new(){Name = model.AuthorName, Id = new Guid()};
-                        dataManager.Author.SaveAuthor(author);
+                        authorRepository.Save(author);
                         model.AuthorName = author.Name;
                         model.AuthorId = author.Id;
                     }
@@ -66,8 +71,8 @@ namespace ElLIb.Areas.Moderator.Controllers
                 }
                 if (model.GenreName != null)
                 {
-                    var genres = dataManager.Genres.GetGenres();
-                    var sortGenres = from g in genres where model.GenreName == g.Name select g;
+                    IEnumerable<Genre> genres = genreRepository.GetAll();
+                    var sortGenres = from genre in genres where model.GenreName == genre.Name select genre;
                     if (sortGenres.Any())
                     {
                         model.GenreId = sortGenres.First().Id;
@@ -76,7 +81,7 @@ namespace ElLIb.Areas.Moderator.Controllers
                     else
                     {
                         Genre genre = new() { Name = model.GenreName, Id = new Guid() };
-                        dataManager.Genres.SaveGenre(genre);
+                        genreRepository.Save(genre);
                         model.GenreName = genre.Name;
                         model.GenreId = genre.Id;
                     }
@@ -87,7 +92,7 @@ namespace ElLIb.Areas.Moderator.Controllers
                     model.GenreId = new Guid(UnknownGenre.Id);
                 }
                 model.DateAdded = DateTime.Now;
-                dataManager.Books.SaveBook(model);
+                bookRepository.Save(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(model);
@@ -96,7 +101,7 @@ namespace ElLIb.Areas.Moderator.Controllers
         {
             if (model.Title != null)
             {
-                IEnumerable<Book> books = dataManager.Books.GetBooks();
+                IEnumerable<Book> books = bookRepository.GetAll();
                 var sortBooks = from book in books where book.Title.ToUpper().Contains(model.Title.ToUpper()) select book;
                 List<BookViewModel> bookViewModels = new();
                 foreach (var book in sortBooks)
@@ -118,7 +123,7 @@ namespace ElLIb.Areas.Moderator.Controllers
         }
         public IActionResult BooksShow()
         {
-            IEnumerable<Book> books = dataManager.Books.GetBooks();
+            IEnumerable<Book> books = bookRepository.GetAll();
             var sortBooks = from book in books orderby book.Title select book;
             List<BookViewModel> booksViewModels = new();
             foreach (Book book in sortBooks)
@@ -139,7 +144,7 @@ namespace ElLIb.Areas.Moderator.Controllers
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
-            dataManager.Books.DeleteBook(id);
+            bookRepository.Delete(id);
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
     }

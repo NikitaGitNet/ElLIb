@@ -1,32 +1,32 @@
 ﻿using ElLIb.Domain.Entities;
-using ElLIb.Domain.Repositories.Abstract;
+using ElLIb.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElLIb.Domain.Repositories.EntityFramework
+namespace ElLIb.Domain.Repository
 {
-    public class EFTextFieldsRepository : ITextFieldsRepository
+    public class EFTextFieldsRepository : IRepository<TextField>
     {
         private readonly AppDbContext context;
         public EFTextFieldsRepository(AppDbContext context)
         {
             this.context = context;
         }
-        public IEnumerable<TextField> GetTextFields()
-        { 
+        public IEnumerable<TextField> GetAll()
+        {
             return context.TextFields;
         }
-        public TextField GetTextFieldById(Guid id)
-        { 
+        public TextField GetById(Guid id)
+        {
             return context.TextFields.FirstOrDefault(x => x.Id == id);
         }
-        public TextField GetTextFieldByCodeWord(string codeWord)
+        public TextField GetByCodeWord(string codeWord)
         {
             return context.TextFields.FirstOrDefault(x => x.CodeWord == codeWord);
         }
-        public void SaveTextField(TextField entity)
+        public void Save(TextField entity)
         {
             if (entity.Id == default)
             {
@@ -38,10 +38,14 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteTextField(Guid id)
+        public void Delete(Guid id)
         {
-            context.TextFields.Remove(new TextField() {Id = id});
+            context.TextFields.Remove(new TextField() { Id = id });
             context.SaveChanges();
+        }
+        public void DeleteRange(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

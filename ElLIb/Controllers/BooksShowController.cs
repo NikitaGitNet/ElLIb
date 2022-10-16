@@ -10,23 +10,30 @@ using ElLIb.Models.Genre;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using ElLIb.Domain.Interfaces;
 
 namespace ElLIb.Controllers
 {
     public class BooksShowController : Controller
     {
         private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly DataManager dataManager;
-        public BooksShowController(DataManager dataManager, IHttpContextAccessor httpContextAccessor)
+        private readonly IRepository<Book> bookRepository;
+        private readonly IRepository<Author> authorRepository;
+        private readonly IRepository<Genre> genreRepository;
+        private readonly IRepository<TextField> textFieldRepository;
+        public BooksShowController(IHttpContextAccessor httpContextAccessor, IRepository<Book> bookRepository, IRepository<Author> authorRepository, IRepository<Genre> genreRepository, IRepository<TextField> textFieldRepository)
         {
+            this.genreRepository = genreRepository;
+            this.authorRepository = authorRepository;
+            this.bookRepository = bookRepository;
             this.httpContextAccessor = httpContextAccessor;
-            this.dataManager = dataManager;
+            this.textFieldRepository = textFieldRepository;
         }
         public IActionResult Index(BookViewModel model)
         {
             if (model.Id != default)
             {
-                Book book = dataManager.Books.GetBookById(model.Id);
+                Book book = bookRepository.GetById(model.Id);
                 if (book == null)
                 {
                     return RedirectToAction("Index", "Home");
@@ -53,8 +60,8 @@ namespace ElLIb.Controllers
                 }
                 return View("Show", new BookViewModel { Text = book.Text, SubTitle = book.SubTitle, Title = book.Title, Id = book.Id, TitleImagePath = book.TitleImagePath, Comments = comments, IsBooking = book.IsBooking, Author = book.AuthorName, Genre = book.GenreName, DateAdded = book.DateAdded, CurentUserId =  userId});
             }
-            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            IEnumerable<Book> books = dataManager.Books.GetBooks();
+            ViewBag.TextField = textFieldRepository.GetByCodeWord("PageBooks");
+            IEnumerable<Book> books = bookRepository.GetAll();
             var sortBooks = from book in books orderby book.Title select book;
             List<BookViewModel> booksViewModels = new();
             foreach (var book in sortBooks)
@@ -79,8 +86,8 @@ namespace ElLIb.Controllers
         {
             if (id != default)
             {
-                Author author = dataManager.Author.GetAuthorById(id);
-                IEnumerable<Book> books = dataManager.Books.GetBooks();
+                Author author = authorRepository.GetById(id);
+                IEnumerable<Book> books = bookRepository.GetAll();
                 var sortBooksByAuthor = from book in books where book.AuthorId == author.Id orderby book.Title select book;
                 if (sortBooksByAuthor.Any())
                 {
@@ -104,7 +111,7 @@ namespace ElLIb.Controllers
                 }
                 return View("NullPage");
             }
-            IEnumerable<Author> authors = dataManager.Author.GetAuthors();
+            IEnumerable<Author> authors = authorRepository.GetAll();
             var sortAuthorsByName = from author in authors orderby author.Name select author;
             List<AuthorViewModel> authorViewModels = new();
             foreach (var author in sortAuthorsByName)
@@ -117,15 +124,15 @@ namespace ElLIb.Controllers
                 authorViewModels.Add(authorModel);
             }
             //Посмотреть на сколько нужна хуйня ниже
-            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
+            ViewBag.TextField = textFieldRepository.GetByCodeWord("PageBooks");
             return View(new AuthorListViewModel{Authors = authorViewModels});
         }
         public IActionResult SearchByGenre(Guid id)
         {
             if (id != default)
             {
-                Genre genre = dataManager.Genres.GetGenreById(id);
-                IEnumerable<Book> books = dataManager.Books.GetBooks();
+                Genre genre = genreRepository.GetById(id);
+                IEnumerable<Book> books = bookRepository.GetAll();
                 var sortBooksByGenre = from book in books where book.GenreId == genre.Id orderby book.Title select book;
                 if (sortBooksByGenre.Any())
                 {
@@ -149,7 +156,7 @@ namespace ElLIb.Controllers
                 }
                 return View("NullPage");
             }
-            IEnumerable<Genre> genres = dataManager.Genres.GetGenres();
+            IEnumerable<Genre> genres = genreRepository.GetAll();
             var sortGenresByName = from genre in genres orderby genre.Name select genre;
             List<GenreViewModel> genresViewModels = new();
             foreach (var genre in sortGenresByName)
@@ -161,15 +168,14 @@ namespace ElLIb.Controllers
                 };
                 genresViewModels.Add(genreModel);
             }
-            //посмотреть нужна ли строчка кода ниже
-            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
+            ViewBag.TextField = textFieldRepository.GetByCodeWord("PageBooks");
             return View(new GenresListViewModel { Genres = genresViewModels });
         }
         public IActionResult SearchByName(string name)
         {
             if (name != null)
             {
-                IEnumerable<Book> books = dataManager.Books.GetBooks();
+                IEnumerable<Book> books = bookRepository.GetAll();
                 var sortBooks = from book in books where book.Title.ToUpper().Contains(name.ToUpper()) select book;
                 if (sortBooks.Any())
                 {

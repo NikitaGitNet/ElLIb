@@ -1,5 +1,6 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Booking;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,10 +12,12 @@ namespace ElLIb.Areas.Moderator.Controllers
     [Area("Moderator")]
     public class BookingController : Controller
     {
-        private readonly DataManager dataManager;
-        public BookingController(DataManager dataManager)
+        private readonly IRepository<Booking> bookingRepository;
+        private readonly IRepository<TextField> textFieldRepository;
+        public BookingController(IRepository<Booking> bookingRepository, IRepository<TextField> textFieldRepository)
         {
-            this.dataManager = dataManager;
+            this.bookingRepository = bookingRepository;
+            this.textFieldRepository = textFieldRepository;
         }
 
         public IActionResult Show(Guid id)
@@ -23,7 +26,7 @@ namespace ElLIb.Areas.Moderator.Controllers
             {
                 try
                 {
-                    Booking booking = dataManager.Booking.GetBookingById(id);
+                    Booking booking = bookingRepository.GetById(id);
                     return View("~/Areas/Moderator/Views/Booking/CurentBookingShow.cshtml", new BookingViewModel { BookId = booking.BookId, BooksTitle = booking.BooksTitle, FinishedOn = booking.FinishedOn, CreateOn = booking.CreateOn, Id = booking.Id, IssueBooking = booking.IssueBooking, UserEmail = booking.UserEmail, UserId = booking.UserId });
                 }
                 catch
@@ -32,9 +35,9 @@ namespace ElLIb.Areas.Moderator.Controllers
                 }
                 
             }
-            var bookings = dataManager.Booking.GetBookings();
-            var sortBooks = from b in bookings orderby b.CreateOn select b;
-            List<BookingViewModel> bookingViewModels = new List<BookingViewModel>();
+            var bookings = bookingRepository.GetAll();
+            var sortBooks = from booking in bookings orderby booking.CreateOn select booking;
+            List<BookingViewModel> bookingViewModels = new();
             foreach (var item in sortBooks)
             {
                 BookingViewModel booking = new()
@@ -50,17 +53,16 @@ namespace ElLIb.Areas.Moderator.Controllers
                 };
                 bookingViewModels.Add(booking);
             }
-            IQueryable<BookingViewModel> qBookings = bookingViewModels.AsQueryable();
-            ViewBag.TextField = dataManager.TextFields.GetTextFieldByCodeWord("PageBooks");
-            return View("BookingShow", new BookingListViewModel {Bookings = qBookings});
+            ViewBag.TextField = textFieldRepository.GetByCodeWord("PageBooks");
+            return View("BookingShow", new BookingListViewModel {Bookings = bookingViewModels });
         }
         [HttpPost]
         public IActionResult IssueBooking(Guid id)
         {
-            var booking = dataManager.Booking.GetBookingById(id);
+            var booking = bookingRepository.GetById(id);
             booking.IssueBooking = true;
             booking.FinishedOn = DateTime.Now.AddDays(7);
-            dataManager.Booking.SaveBooking(booking);
+            bookingRepository.Save(booking);
             return View(new BookingViewModel {FinishedOn=booking.FinishedOn, Id = booking.Id,  BooksTitle = booking.BooksTitle, CreateOn = booking.CreateOn, BookId = booking.BookId, IssueBooking = booking.IssueBooking, UserEmail = booking.UserEmail, UserId = booking.UserId });
         }
     }

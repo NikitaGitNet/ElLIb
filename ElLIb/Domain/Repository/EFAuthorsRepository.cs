@@ -1,28 +1,28 @@
 ﻿using ElLIb.Domain.Entities;
-using ElLIb.Domain.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using ElLIb.Domain.Interfaces;
 
-namespace ElLIb.Domain.Repositories.EntityFramework
+namespace ElLIb.Domain.Repository
 {
-    public class EFAuthorsRepository : IAuthorRepository
+    public class EFAuthorsRepository : IRepository<Author>
     {
         private readonly AppDbContext context;
         public EFAuthorsRepository(AppDbContext context)
         {
             this.context = context;
         }
-        public IEnumerable<Author> GetAuthors()
+        public IEnumerable<Author> GetAll()
         {
             return context.Authors;
         }
-        public Author GetAuthorById(Guid id)
+        public Author GetById(Guid id)
         {
             return context.Authors.FirstOrDefault(x => x.Id == id);
         }
-        public void SaveAuthor(Author entity)
+        public void Save(Author entity)
         {
             if (entity.Id == default)
             {
@@ -34,10 +34,18 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteAuthor(Guid id)
+        public void Delete(Guid id)
         {
             context.Authors.Remove(new Author() { Id = id });
             context.SaveChanges();
+        }
+        public void DeleteRange(string id)
+        {
+            throw new NotImplementedException();
+        }
+        public Author GetByCodeWord(string codeWord)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Booking;
 using ElLIb.Models.User;
 using Microsoft.AspNetCore.Hosting;
@@ -16,19 +17,21 @@ namespace ElLIb.Controllers
 {
     public class BookingShowController : Controller
     {
-        private readonly DataManager dataManager;
+        private readonly IRepository<Booking> bookingRepository;
+        private readonly IRepository<ApplicationUser> userRepository;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public BookingShowController(DataManager dataManager, IHttpContextAccessor httpContextAccessor, SignInManager<ApplicationUser> signInManager)
+        public BookingShowController(IHttpContextAccessor httpContextAccessor, SignInManager<ApplicationUser> signInManager, IRepository<Booking> bookingRepository, IRepository<ApplicationUser> userRepository)
         {
-            this.dataManager = dataManager;
+            this.bookingRepository = bookingRepository;
             this.httpContextAccessor = httpContextAccessor;
             this.signInManager = signInManager;
+            this.userRepository = userRepository;
         }
         public async Task<IActionResult> Index()
         {
             string userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(userId);
+            ApplicationUser user = userRepository.GetById(new Guid(userId));
             if (user == null)
             {
                 await signInManager.SignOutAsync();

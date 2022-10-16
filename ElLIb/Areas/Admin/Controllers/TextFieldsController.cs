@@ -1,5 +1,6 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Domain.Interfaces;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,15 +9,14 @@ namespace ElLIb.Areas.Admin.Controllers
     [Area("Admin")]
     public class TextFieldsController : Controller
     {
-        private readonly DataManager dataManager;
-        public TextFieldsController(DataManager dataManager)
+        private readonly IRepository<TextField> textFieldRepository;
+        public TextFieldsController(IRepository<TextField> textFieldRepository)
         {
-            this.dataManager = dataManager;
+            this.textFieldRepository = textFieldRepository;
         }
-
         public IActionResult Edit(string codeWord)
         {
-            var entity = dataManager.TextFields.GetTextFieldByCodeWord(codeWord);
+            var entity = textFieldRepository.GetByCodeWord(codeWord);
             return View(entity);
         }
         [HttpPost]
@@ -24,7 +24,7 @@ namespace ElLIb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                dataManager.TextFields.SaveTextField(model);
+                textFieldRepository.Save(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(model);

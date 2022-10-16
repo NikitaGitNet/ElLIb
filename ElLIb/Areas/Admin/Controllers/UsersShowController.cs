@@ -1,6 +1,7 @@
 ﻿using ElLIb.Areas.Admin.Models;
 using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Booking;
 using ElLIb.Models.Comment;
 using ElLIb.Models.User;
@@ -17,16 +18,22 @@ namespace ElLIb.Areas.Admin.Controllers
     [Area("Admin")]
     public class UsersShowController : Controller
     {
-        private readonly DataManager dataManager;
         private readonly UserManager<ApplicationUser> userManager;
-        public UsersShowController(DataManager dataManager, UserManager<ApplicationUser> userManager)
+        private readonly IRepository<ApplicationUser> userRepository;
+        private readonly IRepository<Book> bookRepository;
+        private readonly IRepository<Booking> bookingRepository;
+        private readonly IRepository<Comment> commentRepository;
+        public UsersShowController(UserManager<ApplicationUser> userManager, IRepository<Book> bookRepository, IRepository<ApplicationUser> userRepository, IRepository<Booking> bookingRepository, IRepository<Comment> commentRepository)
         {
-            this.dataManager = dataManager;
             this.userManager = userManager;
+            this.bookRepository = bookRepository;
+            this.userRepository = userRepository;
+            this.bookingRepository = bookingRepository;
+            this.commentRepository = commentRepository;
         }
         public IActionResult UsersShow()
         {
-            IEnumerable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
+            IEnumerable<ApplicationUser> users = userRepository.GetAll();
             var sortUsers = from user in users orderby user.UserName select user;
             List<UserViewModel> usersViewModel = new();
             foreach (var user in sortUsers)
@@ -48,7 +55,7 @@ namespace ElLIb.Areas.Admin.Controllers
         {
             if (model != null)
             {
-                ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
+                ApplicationUser user = userRepository.GetById(new Guid(model.Id));
                 if (user.Bookings.Any())
                 {
                     List<BookingViewModel> bookings = new();
@@ -78,7 +85,7 @@ namespace ElLIb.Areas.Admin.Controllers
         {
             if (model.UserEmail != null)
             {
-                IEnumerable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
+                IEnumerable<ApplicationUser> users = userRepository.GetAll();
                 var sortUsers = from user in users where user.Email.ToUpper().Contains(model.UserEmail.ToUpper()) select user;
                 List<UserViewModel> userViewModels = new();
                 foreach (var user in sortUsers)
@@ -99,21 +106,21 @@ namespace ElLIb.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(UserModel model)
         {
-            ApplicationUser user = dataManager.ApplicationUser.GetApplicationUserById(model.Id);
+            ApplicationUser user = userRepository.GetById(new Guid(model.Id));
             if (user.Bookings.Any())
             {
                 foreach (var booking in user.Bookings)
                 {
                     Guid bookId = booking.BookId;
-                    Book book = dataManager.Books.GetBookById(bookId);
+                    Book book = bookRepository.GetById(bookId);
                     book.IsBooking = false;
-                    dataManager.Books.SaveBook(book);
+                    bookRepository.Save(book);
                 }
-                dataManager.Booking.DeleteBookingRange(model.Id);
+                bookingRepository.DeleteRange(model.Id);
             }
             if (user.Comments.Any())
             {
-                dataManager.Comment.DeleteCommentRange(model.Id);
+                commentRepository.DeleteRange(model.Id);
             }
             await userManager.IsLockedOutAsync(user);
             await userManager.DeleteAsync(user);
@@ -125,7 +132,7 @@ namespace ElLIb.Areas.Admin.Controllers
             ApplicationUser user = await userManager.FindByIdAsync(model.Id);
             user.PasswordHash = userManager.PasswordHasher.HashPassword(user, model.Password);
             await userManager.UpdateAsync(user);
-            return View(new UserModel {Password = model.Password });
+            return View(new UserModel {Password = model.Password});
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using ElLIb.Domain.Entities;
-using ElLIb.Domain.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ElLIb.Domain.Interfaces;
 
-namespace ElLIb.Domain.Repositories.EntityFramework
+namespace ElLIb.Domain.Repository
 {
-    public class EFApplicationUserRepository : IApplicationUserRepository
+    public class EFApplicationUserRepository : IRepository<ApplicationUser>
     {
         private readonly AppDbContext context;
         public EFApplicationUserRepository(AppDbContext context)
@@ -15,19 +15,20 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             this.context = context;
         }
 
-        public IEnumerable<ApplicationUser> GetApplicationUsers()
+        public IEnumerable<ApplicationUser> GetAll()
         {
             return context.ApplicationUsers;
         }
-        public ApplicationUser GetApplicationUserById(string id)
+        public ApplicationUser GetById(Guid id)
         {
+            string userId = id.ToString();
             return context.ApplicationUsers
-                .Include(x=>x.Comments)
+                .Include(x => x.Comments)
                 .Include(x => x.Bookings)
-                .FirstOrDefault(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == userId);
 
         }
-        public void SaveApplicationUser(ApplicationUser entity)
+        public void Save(ApplicationUser entity)
         {
             if (entity.Id == default)
             {
@@ -39,10 +40,19 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteApplicationUser(string id)
+        public void Delete(Guid id)
         {
-            context.ApplicationUsers.Remove(new ApplicationUser() { Id = id });
+            string userId = id.ToString();
+            context.ApplicationUsers.Remove(new ApplicationUser() { Id = userId });
             context.SaveChanges();
+        }
+        public void DeleteRange(string id)
+        {
+            throw new NotImplementedException();
+        }
+        public ApplicationUser GetByCodeWord(string codeWord)
+        {
+            throw new NotImplementedException();
         }
     }
 }

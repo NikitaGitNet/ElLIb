@@ -1,5 +1,6 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Author;
 using ElLIb.Models.Book;
 using ElLIb.Models.Genre;
@@ -12,15 +13,18 @@ namespace ElLIb.Areas.Moderator.Controllers
     [Area("Moderator")]
     public class HomeController : Controller
     {
-        private readonly DataManager dataManager;
-        public HomeController(DataManager dataManager)
+        private readonly IRepository<Book> bookRepository;
+        private readonly IRepository<Genre> genreRepository;
+        private readonly IRepository<Author> authorRepository;
+        public HomeController(IRepository<Book> bookRepository, IRepository<Genre> genreRepository, IRepository<Author> authorRepository)
         {
-            this.dataManager = dataManager;
+            this.bookRepository = bookRepository;
+            this.genreRepository = genreRepository;
+            this.authorRepository = authorRepository;
         }
-
         public IActionResult Index()
         {
-            IEnumerable<Book> books = dataManager.Books.GetBooks();
+            IEnumerable<Book> books = bookRepository.GetAll();
             var sortBooks = from book in books orderby book.Title select book;
             List<BookViewModel> booksViewModels = new();
             foreach (Book book in sortBooks)
@@ -38,7 +42,7 @@ namespace ElLIb.Areas.Moderator.Controllers
                 };
                 booksViewModels.Add(bookViewModel);
             }
-            IEnumerable<Genre> genres = dataManager.Genres.GetGenres();
+            IEnumerable<Genre> genres = genreRepository.GetAll();
             var sortGenres = from genre in genres orderby genre.Name select genre;
             List<GenreViewModel> genreViewModels = new();
             foreach (var genre in sortGenres)
@@ -50,7 +54,7 @@ namespace ElLIb.Areas.Moderator.Controllers
                 };
                 genreViewModels.Add(model);
             }
-            IEnumerable<Author> authors = dataManager.Author.GetAuthors();
+            IEnumerable<Author> authors = authorRepository.GetAll();
             var sortAuthors = from author in authors orderby author.Name select author;
             List<AuthorViewModel> authorVeiwModels = new();
             foreach (var author in sortAuthors)

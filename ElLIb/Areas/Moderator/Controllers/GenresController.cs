@@ -1,5 +1,6 @@
 ﻿using ElLIb.Domain;
 using ElLIb.Domain.Entities;
+using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Genre;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Hosting;
@@ -13,16 +14,18 @@ namespace ElLIb.Areas.Moderator.Controllers
     [Area("Moderator")]
     public class GenresController : Controller
     {
-        private readonly DataManager dataManager;
+        private readonly IRepository<Genre> genreRepository;
         private readonly IWebHostEnvironment hostingEnviroment;
-        public GenresController(DataManager dataManager, IWebHostEnvironment hostingEnviroment)
+        private readonly IRepository<Book> bookRepository;
+        public GenresController(IRepository<Genre> genreRepository, IWebHostEnvironment hostingEnviroment, IRepository<Book> bookRepository)
         {
-            this.dataManager = dataManager;
+            this.genreRepository = genreRepository;
             this.hostingEnviroment = hostingEnviroment;
+            this.bookRepository = bookRepository;
         }
         public IActionResult AddGenre(Guid id)
         {
-            var entity = id == default ? new Genre() : dataManager.Genres.GetGenreById(id);
+            var entity = id == default ? new Genre() : genreRepository.GetById(id);
             return View(entity);
         }
         [HttpPost]
@@ -30,12 +33,12 @@ namespace ElLIb.Areas.Moderator.Controllers
         {
             if (model.Id != default)
             {
-                dataManager.Genres.SaveGenre(model);
+                genreRepository.Save(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             if (ModelState.IsValid)
             {
-                IEnumerable<Genre> genres = dataManager.Genres.GetGenres();
+                IEnumerable<Genre> genres = genreRepository.GetAll();
                 foreach (var genre in genres)
                 {
                     if (model.Name == genre.Name)
@@ -43,15 +46,15 @@ namespace ElLIb.Areas.Moderator.Controllers
                         return View("ErrorGenre");
                     }
                 }
-                dataManager.Genres.SaveGenre(model);
+                genreRepository.Save(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
             return View(model);
         }
         public IActionResult WarningDeleteGenre(Guid id)
         {
-            Genre genre = dataManager.Genres.GetGenreById(id);
-            IEnumerable<Book> books = dataManager.Books.GetBooks();
+            Genre genre = genreRepository.GetById(id);
+            IEnumerable<Book> books = bookRepository.GetAll();
             var sortBooks = from book in books where book.GenreId == genre.Id select book;
             if (sortBooks.Any())
             {
@@ -61,7 +64,7 @@ namespace ElLIb.Areas.Moderator.Controllers
         }
         public IActionResult DeleteGenre(GenreViewModel model)
         {
-            dataManager.Genres.DeleteGenre(model.Id);
+            genreRepository.Delete(model.Id);
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
     }

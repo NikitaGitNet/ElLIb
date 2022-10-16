@@ -1,7 +1,7 @@
 using ElLIb.Domain;
 using ElLIb.Domain.Entities;
-using ElLIb.Domain.Repositories.Abstract;
-using ElLIb.Domain.Repositories.EntityFramework;
+using ElLIb.Domain.Interfaces;
+using ElLIb.Domain.Repository;
 using ElLIb.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,14 +29,13 @@ namespace ElLIb
             Configuration.Bind("Project", new Config());
 
             services.AddHttpContextAccessor();
-            services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>();
-            services.AddTransient<IBooksRepository, EFBooksRepository>();
-            services.AddTransient<ICommentRepository, EFCommentsRepository>();
-            services.AddTransient<IBookingRepository, EFBookingsRepository>();
-            services.AddTransient<IApplicationUserRepository, EFApplicationUserRepository>();
-            services.AddTransient<IGenresRepository, EFGenresRepository>();
-            services.AddTransient<IAuthorRepository, EFAuthorsRepository>();
-            services.AddTransient<DataManager>();
+            services.AddTransient<IRepository<TextField>, EFTextFieldsRepository>();
+            services.AddTransient<IRepository<Book>, EFBooksRepository>();
+            services.AddTransient<IRepository<Comment>, EFCommentsRepository>();
+            services.AddTransient<IRepository<Booking>, EFBookingsRepository>();
+            services.AddTransient<IRepository<ApplicationUser>, EFApplicationUserRepository>();
+            services.AddTransient<IRepository<Genre>, EFGenresRepository>();
+            services.AddTransient<IRepository<Author>, EFAuthorsRepository>();
 
             //Для подключения с PostgreSQL
             services.AddDbContext<AppDbContext>(x => x.UseNpgsql(Config.ConnectionString));

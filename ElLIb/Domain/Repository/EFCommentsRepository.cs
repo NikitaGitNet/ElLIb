@@ -1,29 +1,28 @@
 ﻿using ElLIb.Domain.Entities;
-using ElLIb.Domain.Repositories.Abstract;
+using ElLIb.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElLIb.Domain.Repositories.EntityFramework
+namespace ElLIb.Domain.Repository
 {
-    public class EFCommentsRepository : ICommentRepository
+    public class EFCommentsRepository : IRepository<Comment>
     {
         private readonly AppDbContext context;
         public EFCommentsRepository(AppDbContext context)
         {
             this.context = context;
         }
-
-        public IEnumerable<Comment> GetComments()
+        public IEnumerable<Comment> GetAll()
         {
             return context.Comments;
         }
-        public Comment GetCommentById(Guid id)
+        public Comment GetById(Guid id)
         {
             return context.Comments.FirstOrDefault(x => x.Id == id);
         }
-        public void SaveComment(Comment entity)
+        public void Save(Comment entity)
         {
             if (entity.Id == default)
             {
@@ -35,17 +34,21 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteComment(Guid id)
+        public void Delete(Guid id)
         {
             context.Comments.Remove(new Comment() { Id = id });
             context.SaveChanges();
         }
-        public void DeleteCommentRange(string id)
+        public void DeleteRange(string id)
         {
-            IEnumerable<Comment> cooments = GetComments();
+            IEnumerable<Comment> cooments = GetAll();
             var sortCooments = from comment in cooments where comment.UserId == id select comment;
             context.Comments.RemoveRange(sortCooments);
             context.SaveChanges();
+        }
+        public Comment GetByCodeWord(string codeWord)
+        {
+            throw new NotImplementedException();
         }
     }
 }

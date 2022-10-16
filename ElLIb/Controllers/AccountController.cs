@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using ElLIb.Domain;
 using System.Collections.Generic;
+using ElLIb.Domain.Interfaces;
 
 namespace ElLIb.Controllers
 {
@@ -16,10 +17,10 @@ namespace ElLIb.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly DataManager dataManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, DataManager dataManager)
+        private readonly IRepository<ApplicationUser> userRepository;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IRepository<ApplicationUser> userRepository)
         {
-            this.dataManager = dataManager;
+            this.userRepository = userRepository;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
@@ -68,7 +69,7 @@ namespace ElLIb.Controllers
             {
                 model.MaxLengthName = false;
                 model.UniqueName = false;
-                IEnumerable<ApplicationUser> users = dataManager.ApplicationUser.GetApplicationUsers();
+                IEnumerable<ApplicationUser> users = userRepository.GetAll();
                 var sortUsers = from sortUser in users where sortUser.UserName == model.UserName select sortUser;
                 if (sortUsers.Any())
                 {

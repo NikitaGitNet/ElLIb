@@ -1,28 +1,28 @@
 ﻿using ElLIb.Domain.Entities;
-using ElLIb.Domain.Repositories.Abstract;
+using ElLIb.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ElLIb.Domain.Repositories.EntityFramework
+namespace ElLIb.Domain.Repository
 {
-    public class EFGenresRepository : IGenresRepository
+    public class EFGenresRepository : IRepository<Genre>
     {
         private readonly AppDbContext context;
         public EFGenresRepository(AppDbContext context)
         {
             this.context = context;
         }
-        public IEnumerable<Genre> GetGenres()
+        public IEnumerable<Genre> GetAll()
         {
             return context.Genres;
         }
-        public Genre GetGenreById(Guid id)
+        public Genre GetById(Guid id)
         {
             return context.Genres.FirstOrDefault(x => x.Id == id);
         }
-        public void SaveGenre(Genre entity)
+        public void Save(Genre entity)
         {
             if (entity.Id == default)
             {
@@ -34,10 +34,18 @@ namespace ElLIb.Domain.Repositories.EntityFramework
             }
             context.SaveChanges();
         }
-        public void DeleteGenre(Guid id)
+        public void Delete(Guid id)
         {
             context.Genres.Remove(new Genre() { Id = id });
             context.SaveChanges();
+        }
+        public void DeleteRange(string id)
+        {
+            throw new NotImplementedException();
+        }
+        public Genre GetByCodeWord(string codeWord)
+        {
+            throw new NotImplementedException();
         }
     }
 }
