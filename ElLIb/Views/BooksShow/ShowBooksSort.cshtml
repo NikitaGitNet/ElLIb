@@ -1,4 +1,8 @@
 ﻿@model BooksListViewModel
+@{
+    string strTitle = "Книги по вашему запросу";
+    ViewBag.Title = strTitle;
+}
 <div>
     <ul class="big-image-list">
     @foreach (BookViewModel entity in Model.Books)

@@ -1,5 +1,4 @@
-﻿using ElLIb.Domain;
-using ElLIb.Domain.Entities;
+﻿using ElLIb.Domain.Entities;
 using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Author;
 using ElLIb.Service;
@@ -39,7 +38,7 @@ namespace ElLIb.Areas.Moderator.Controllers
             if (ModelState.IsValid)
             {
                 IEnumerable<Author> authors = authorRepository.GetAll();
-                var sortAuthors = from author in authors where author.Name == model.Name select author;
+                var sortAuthors = from author in authors where author.Name.ToUpper() == model.Name.ToUpper() select author;
                 if (sortAuthors.Any())
                 {
                     return View("ErrorAuthor");

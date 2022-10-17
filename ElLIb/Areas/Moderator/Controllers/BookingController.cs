@@ -1,7 +1,7 @@
-﻿using ElLIb.Domain;
-using ElLIb.Domain.Entities;
+﻿using ElLIb.Domain.Entities;
 using ElLIb.Domain.Interfaces;
 using ElLIb.Models.Booking;
+using ElLIb.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,13 +13,12 @@ namespace ElLIb.Areas.Moderator.Controllers
     public class BookingController : Controller
     {
         private readonly IRepository<Booking> bookingRepository;
-        private readonly IRepository<TextField> textFieldRepository;
-        public BookingController(IRepository<Booking> bookingRepository, IRepository<TextField> textFieldRepository)
+        private readonly IRepository<Book> bookRepository;
+        public BookingController(IRepository<Booking> bookingRepository, IRepository<Book> bookRepository)
         {
             this.bookingRepository = bookingRepository;
-            this.textFieldRepository = textFieldRepository;
+            this.bookRepository = bookRepository;
         }
-
         public IActionResult Show(Guid id)
         {
             if (id != default)
@@ -27,43 +26,50 @@ namespace ElLIb.Areas.Moderator.Controllers
                 try
                 {
                     Booking booking = bookingRepository.GetById(id);
-                    return View("~/Areas/Moderator/Views/Booking/CurentBookingShow.cshtml", new BookingViewModel { BookId = booking.BookId, BooksTitle = booking.BooksTitle, FinishedOn = booking.FinishedOn, CreateOn = booking.CreateOn, Id = booking.Id, IssueBooking = booking.IssueBooking, UserEmail = booking.UserEmail, UserId = booking.UserId });
+                    return View("CurentBookingShow", new BookingViewModel { BookId = booking.BookId, BooksTitle = booking.BooksTitle, FinishedOn = booking.FinishedOn, CreateOn = booking.CreateOn, Id = booking.Id, IssueBooking = booking.IssueBooking, UserEmail = booking.UserEmail, UserId = booking.UserId });
                 }
                 catch
                 {
                     return View("ErrorPage");
                 }
-                
             }
-            var bookings = bookingRepository.GetAll();
-            var sortBooks = from booking in bookings orderby booking.CreateOn select booking;
+            IEnumerable<Booking> bookings = bookingRepository.GetAll();
+            var sortBookings = from booking in bookings orderby booking.CreateOn select booking;
             List<BookingViewModel> bookingViewModels = new();
-            foreach (var item in sortBooks)
+            foreach (var booking in sortBookings)
             {
-                BookingViewModel booking = new()
+                BookingViewModel bookingModel = new()
                 { 
-                    FinishedOn = item.FinishedOn,
-                    BookId = item.BookId,
-                    BooksTitle = item.BooksTitle,
-                    CreateOn = item.CreateOn,
-                    Id = item.Id,
-                    IssueBooking = item.IssueBooking,
-                    UserEmail = item.UserEmail,
-                    UserId = item.UserId
+                    FinishedOn = booking.FinishedOn,
+                    BookId = booking.BookId,
+                    BooksTitle = booking.BooksTitle,
+                    CreateOn = booking.CreateOn,
+                    Id = booking.Id,
+                    IssueBooking = booking.IssueBooking,
+                    UserEmail = booking.UserEmail,
+                    UserId = booking.UserId
                 };
-                bookingViewModels.Add(booking);
+                bookingViewModels.Add(bookingModel);
             }
-            ViewBag.TextField = textFieldRepository.GetByCodeWord("PageBooks");
-            return View("BookingShow", new BookingListViewModel {Bookings = bookingViewModels });
+            return View(new BookingListViewModel {Bookings = bookingViewModels });
         }
         [HttpPost]
         public IActionResult IssueBooking(Guid id)
         {
-            var booking = bookingRepository.GetById(id);
+            Booking booking = bookingRepository.GetById(id);
             booking.IssueBooking = true;
             booking.FinishedOn = DateTime.Now.AddDays(7);
             bookingRepository.Save(booking);
             return View(new BookingViewModel {FinishedOn=booking.FinishedOn, Id = booking.Id,  BooksTitle = booking.BooksTitle, CreateOn = booking.CreateOn, BookId = booking.BookId, IssueBooking = booking.IssueBooking, UserEmail = booking.UserEmail, UserId = booking.UserId });
+        }
+        [HttpPost]
+        public IActionResult Delete(BookingViewModel booking)
+        {
+            Book book = bookRepository.GetById(booking.BookId);
+            bookingRepository.Delete(booking.Id);
+            book.IsBooking = false;
+            bookRepository.Save(book);
+            return RedirectToAction(nameof(BookingController.Show), nameof(BookingController).CutController());
         }
     }
 }

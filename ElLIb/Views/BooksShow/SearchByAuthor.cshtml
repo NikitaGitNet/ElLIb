@@ -1,4 +1,8 @@
 ﻿@model AuthorListViewModel
+@{
+    string strTitle = "Поиск по автору";
+    ViewBag.Title = strTitle;
+}
 <ul>
 @foreach (var item in Model.Authors)
 {

@@ -1,4 +1,8 @@
 ﻿@model Genre
+@{
+    string strTitle = "Добавить жанр";
+    ViewBag.Title = strTitle;
+}
 <div>
     <form asp-area="Moderator" asp-controller="Genres" asp-action="AddGenre" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id">

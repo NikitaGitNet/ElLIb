@@ -1,6 +1,7 @@
 ﻿@model UsersListViewModel
 @{
-    TextField textField = ViewBag.TextField;
+    string strTitle = "Список пользователей";
+    ViewBag.Title = strTitle;
 }
 <div>
     <form asp-area="Admin" asp-controller="UsersShow" asp-action="SearchByEmail" method="post" enctype="multipart/form-data"> 

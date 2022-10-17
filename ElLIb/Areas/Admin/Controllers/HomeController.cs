@@ -1,12 +1,4 @@
-﻿using ElLIb.Domain;
-using ElLIb.Models.Book;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Collections.Generic;
-using System;
-using ElLIb.Models.Genre;
-using ElLIb.Models.Author;
-using ElLIb.Areas.Admin.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ElLIb.Areas.Admin.Controllers
 {

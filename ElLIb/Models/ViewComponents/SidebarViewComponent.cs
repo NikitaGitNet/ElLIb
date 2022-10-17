@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using ElLIb.Domain.Interfaces;
-using ElLIb.Domain.Entities;
 using ElLIb.Models.Book;
 
 namespace ElLIb.Models.ViewCompanents

@@ -1,10 +1,7 @@
 ﻿@model BooksListViewModel
 @{
-    TextField textField = ViewBag.TextField;
-
-    ViewBag.Title = textField.MetaTitle;
-    ViewBag.Description = textField.MetaDescription;
-    ViewBag.Keywords = textField.MetaKeywords;
+    string strTitle = "Книги";
+    ViewBag.Title = strTitle;
 }
 <div>
     <div class="div-box">

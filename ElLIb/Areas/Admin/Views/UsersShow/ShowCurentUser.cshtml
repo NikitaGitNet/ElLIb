@@ -1,6 +1,7 @@
 ﻿@model UserModel
 @{
-    TextField textField = ViewBag.TextField;
+    string strTitle = "Пользователь:" + @Model.UserName;
+    ViewBag.Title = strTitle;
 }
 <h2>Электронная почта: @Model.UserEmail</h2>
 <h2>Имя пользователя: @Model.UserName</h2>
@@ -18,12 +19,10 @@
     </form>
 </div>
 
-
 <hr>
 <h2>Брони пользователя:</h2>
     @if (Model.Bookings != null)
     {
-
         @foreach (var item in Model.Bookings)
         {
             <p>Название книги: @item.BooksTitle</p>
@@ -39,7 +38,6 @@
             }
             <hr>
         }
-        
     }
     else
     {   

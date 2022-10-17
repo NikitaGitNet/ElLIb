@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ElLIb.Models
+namespace ElLIb.Models.Account
 {
     public class RegisterViewModel
     {
@@ -22,6 +22,6 @@ namespace ElLIb.Models
         [Display(Name = "Подтвердить пароль")]
         public string PasswordConfirm { get; set; }
         public bool MaxLengthName { get; set; }
-        public bool UniqueName  { get; set; }
+        public bool UniqueName { get; set; }
     }
 }

@@ -1,4 +1,8 @@
 ﻿@model GenresListViewModel
+@{
+    string strTitle = "Поиск по жанру";
+    ViewBag.Title = strTitle;
+}
 <ul>
 @foreach (var item in Model.Genres)
 {

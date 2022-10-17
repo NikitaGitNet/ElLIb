@@ -1,6 +1,7 @@
 ﻿@model UserModel
 @{
-    TextField textField = ViewBag.TextField;
+    string strTitle = "Брони";
+    ViewBag.Title = strTitle;
 }   
     <h2>Ваши брони, @Model.Bookings.Count()/5:</h2>
     @foreach (var booking in Model.Bookings)

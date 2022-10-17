@@ -1,4 +1,6 @@
 ﻿using ElLIb.Domain.Entities;
+using ElLIb.Models.Author;
+using ElLIb.Models.Genre;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -446,8 +448,8 @@ namespace ElLIb.Domain
                 IsBooking = false,
                 Text = "Я хз, он не говорит",
                 TitleImagePath = "67985997-virzhini-muza-kak-dela-dorogoy-karl-otkrovennye-memuary-telohranitelya-kar.webp",
-                GenreName = "Неизвестный жанр",
-                GenreId = new Guid("e5372338-ee97-408b-82c2-ab7e3ca6d145"),
+                GenreName = UnknownGenre.Name,
+                GenreId = new Guid(UnknownGenre.Id),
                 AuthorName = "Себастьян Жондо",
                 AuthorId = new Guid("a9cfc2d7-f079-4205-8750-c48acbd2f231")
             });
@@ -497,8 +499,8 @@ namespace ElLIb.Domain
             });
             builder.Entity<Genre>().HasData(new Genre
             {
-                Id = new Guid("e5372338-ee97-408b-82c2-ab7e3ca6d145"),
-                Name = "Неизвестный жанр"
+                Id = new Guid(UnknownGenre.Id),
+                Name = UnknownGenre.Name
             });
 
             builder.Entity<Author>().HasData(new Author
@@ -513,8 +515,8 @@ namespace ElLIb.Domain
             });
             builder.Entity<Author>().HasData(new Author
             {
-                Id = new Guid("0bf3eaaa-107f-434e-85bc-49653b07515a"),
-                Name = "Неизвестный автор"
+                Id = new Guid(UnknownAuthor.Id),
+                Name = UnknownAuthor.Name
             });
             builder.Entity<Author>().HasData(new Author
             {

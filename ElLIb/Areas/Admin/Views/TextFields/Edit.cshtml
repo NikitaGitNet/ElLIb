@@ -5,7 +5,6 @@
 }
 <script src="~/js/ckeditor/ckeditor.js"></script>
 
-
 <div>
     <h2>@strTitle</h2>
     <div>
@@ -13,7 +12,6 @@
         <input type="hidden" asp-for="Id">
         <input type="hidden" asp-for="DateAdded">
         <input type="hidden" asp-for="CodeWord">
-
         <div asp-validation-summary="All"></div>
         <div class="div-box">
             <label asp-for="Title"></label>
@@ -24,21 +22,6 @@
             <label asp-for="Text"></label>
             <textarea asp-for="Text"></textarea>
             <span asp-validation-for="Text"></span>
-        </div>
-        <div class="div-box">
-            <label asp-for="MetaTitle"></label>
-            <input asp-for="MetaTitle">
-            <span asp-validation-for="MetaTitle"></span>
-        </div>
-        <div class="div-box">
-            <label asp-for="MetaDescription"></label>
-            <input asp-for="MetaDescription">
-            <span asp-validation-for="MetaDescription"></span>
-        </div>
-        <div class="div-box">
-            <label asp-for="MetaKeywords"></label>
-            <input asp-for="MetaKeywords">
-            <span asp-validation-for="MetaKeywords"></span>
         </div>
         <input type="submit" value="Сохранить" class="glo">
         </form>

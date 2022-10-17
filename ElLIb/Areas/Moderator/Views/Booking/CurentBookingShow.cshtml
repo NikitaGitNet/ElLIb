@@ -1,6 +1,7 @@
 ﻿@model BookingViewModel
 @{
-    TextField textField = ViewBag.TextField;
+    string strTitle = @Model.BooksTitle;
+    ViewBag.Title = strTitle;
 }
 @if (Model.IssueBooking)
 {
@@ -24,7 +25,7 @@
     </form>
 }
 <div>
-    <form asp-area="Moderator" asp-controller="ModeratorBookingShow" asp-action="Delete" method="post" enctype="multipart/form-data">
+    <form asp-area="Moderator" asp-controller="Booking" asp-action="Delete" method="post" enctype="multipart/form-data">
         <div hidden class="div-box">
             <textarea asp-for="BookId"></textarea>
             <span asp-validation-for="BookId"></span>

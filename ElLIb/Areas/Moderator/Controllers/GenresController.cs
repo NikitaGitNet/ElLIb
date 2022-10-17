@@ -39,12 +39,10 @@ namespace ElLIb.Areas.Moderator.Controllers
             if (ModelState.IsValid)
             {
                 IEnumerable<Genre> genres = genreRepository.GetAll();
-                foreach (var genre in genres)
+                var sortGenres = from genre in genres where genre.Name.ToUpper() == model.Name.ToUpper() select genre;
+                if (sortGenres.Any())
                 {
-                    if (model.Name == genre.Name)
-                    {
-                        return View("ErrorGenre");
-                    }
+                    return View("ErrorGenre");
                 }
                 genreRepository.Save(model);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());

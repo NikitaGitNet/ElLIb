@@ -1,6 +1,7 @@
 ﻿@model BookingListViewModel
 @{
-    TextField textField = ViewBag.TextField;
+    string strTitle = "Все брони";
+    ViewBag.Title = strTitle;
 }
 <div>
     <form asp-area="Moderator" asp-controller="Booking" asp-action="Show" method="post" enctype="multipart/form-data"> 
@@ -33,5 +34,4 @@
     {
         <h2>Броней пока нету</h2>
     }
-
 </div>

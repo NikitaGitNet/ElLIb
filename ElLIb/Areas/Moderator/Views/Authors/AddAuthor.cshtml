@@ -1,4 +1,8 @@
 ﻿@model Author
+@{
+    string strTitle = "Добавить автора";
+    ViewBag.Title = strTitle;
+}
 <div>
     <form asp-area="Moderator" asp-controller="Authors" asp-action="AddAuthor" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id">

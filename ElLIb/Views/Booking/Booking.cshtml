@@ -1,4 +1,8 @@
 ﻿@model BookingViewModel
+@{
+    string strTitle = "Бронирование";
+    ViewBag.Title = strTitle;
+}
 <h2>Нижеизложеная информация так же будет доступна в разделе "Брони"</h2>
 <h2>Вы забронировали книгу:</h2>
 <h3>Название книги: @Model.BooksTitle</h3>
